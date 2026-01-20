@@ -155,6 +155,18 @@ export default [
       }
     ]
   }, {
+    path: '/business',
+    component: BasicLayout,
+    meta: { title: '业务申请' },
+    children: [
+      {
+        path: '/business/ownership',
+        name: 'OwnershipApplication',
+        component: () => import('../../views/business/ownership/index.vue'),
+        meta: { title: '权属申请', requireAuth: true },
+      },
+    ]
+  }, {
     path: '/form',
     component: BasicLayout,
     meta: { title: '表单页面' },
