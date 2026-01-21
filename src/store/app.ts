@@ -18,7 +18,7 @@ export const useAppStore = defineStore({
       sideWidth: "220px",
       sideTheme: 'dark',
       greyMode: false,
-      accordion: true,
+      accordion: false,
       tagsTheme: 'concise',
       keepAliveList: [],
       themeVariable: {

@@ -71,4 +71,10 @@ const changeSelectedKey = (key: string) => {
   font-size: 12px!important;
   padding: 3px 0px;
 }
+
+/* 二级子菜单左边距 */
+.layui-nav-tree .layui-nav-child .layui-nav-item a {
+  padding-left: 45px;
+}
+
 </style>

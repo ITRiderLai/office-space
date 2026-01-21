@@ -167,6 +167,30 @@ export default [
       },
     ]
   }, {
+    path: '/unit',
+    component: BasicLayout,
+    meta: { title: '单位管理' },
+    children: [
+      {
+        path: '/unit/card',
+        name: 'UnitCard',
+        component: () => import('../../views/unit/card/index.vue'),
+        meta: { title: '单位卡片', requireAuth: true },
+      },
+    ]
+  }, {
+    path: '/ledger',
+    component: BasicLayout,
+    meta: { title: '数据台账' },
+    children: [
+      {
+        path: '/ledger/lending',
+        name: 'LendingLedger',
+        component: () => import('../../views/ledger/lending/index.vue'),
+        meta: { title: '出借台账', requireAuth: true },
+      },
+    ]
+  }, {
     path: '/form',
     component: BasicLayout,
     meta: { title: '表单页面' },

@@ -14,8 +14,32 @@ const menus = [
     children: [
       {
         id: "/business/ownership",
-        icon: "layui-icon-form",
+        icon: "",
         title: "权属申请"
+      }
+    ]
+  },
+  {
+    id: "/unit",
+    icon: "layui-icon-group",
+    title: "单位管理",
+    children: [
+      {
+        id: "/unit/card",
+        icon: "",
+        title: "单位卡片"
+      }
+    ]
+  },
+  {
+    id: "/ledger",
+    icon: "layui-icon-table",
+    title: "数据台账",
+    children: [
+      {
+        id: "/ledger/lending",
+        icon: "",
+        title: "出借台账"
       }
     ]
   },

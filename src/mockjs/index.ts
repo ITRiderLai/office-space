@@ -2,6 +2,8 @@
 import Mock from'mockjs';
 import user from './user';
 import business from './business';
+import ledger from './ledger';
+import unit from './unit';
 
 Mock.mock(/\/user\/login/,'post',(req: any,res: any) =>{
     return user.getLogin(req,res)
@@ -38,6 +40,36 @@ Mock.mock(/\/building\/list/,'post',(req: any,res: any) =>{
 
 Mock.mock(/\/business\/ownership\/save/,'post',(req: any,res: any) =>{
     return business.saveApplication(req,res)
+});
+
+// 出借台账相关接口
+Mock.mock(/\/ledger\/lending\/list/,'post',(req: any) =>{
+    return ledger.getLendingList(req)
+});
+
+Mock.mock(/\/ledger\/lending\/save/,'post',(req: any) =>{
+    return ledger.saveLending(req)
+});
+
+Mock.mock(/\/ledger\/lending\/delete/,'post',(req: any) =>{
+    return ledger.deleteLending(req)
+});
+
+Mock.mock(/\/ledger\/nature\/options/,'get',() =>{
+    return ledger.getNatureOptions()
+});
+
+// 单位管理相关接口
+Mock.mock(/\/unit\/org-tree/,'post',(req: any) =>{
+    return unit.getOrgTree(req)
+});
+
+Mock.mock(/\/unit\/detail/,'post',(req: any) =>{
+    return unit.getUnitDetail(req)
+});
+
+Mock.mock(/\/unit\/area-calculation/,'post',(req: any) =>{
+    return unit.getAreaCalculation(req)
 });
 
 // 设置延迟模拟真实网络
