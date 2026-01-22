@@ -29,6 +29,7 @@
         v-model:selected-keys="selectedKeys"
         :default-toolbar="false"
         :resize="true"
+        height="100%"
         @row-double="handleRowDouble"
       >
         <template #unitName="{ row }">
@@ -49,7 +50,7 @@
       </div>
       <lay-page
         v-model="pagination.page"
-        :limit="pagination.pageSize"
+        v-model:limit="pagination.pageSize"
         :total="pagination.total"
         :show-page="true"
         :show-limit="true"
@@ -169,14 +170,12 @@ const handleReset = () => {
 }
 
 // 分页变化
-const handlePageChange = (page: number) => {
-  pagination.page = page
+const handlePageChange = () => {
   loadData()
 }
 
 // 每页条数变化
-const handleLimitChange = (limit: number) => {
-  pagination.pageSize = limit
+const handleLimitChange = () => {
   pagination.page = 1
   loadData()
 }
@@ -350,10 +349,22 @@ onMounted(() => {
   background: #fff;
   margin-top: 10px;
   overflow: hidden;
+  min-height: 0;
+}
+
+.table-container :deep(.layui-table) {
+  height: 100%;
 }
 
 .table-container :deep(.layui-table-box) {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-container :deep(.layui-table-body) {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .pagination-container {

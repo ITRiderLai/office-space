@@ -1,99 +1,101 @@
 <template>
   <div class="application-form">
-    <lay-form :model="formData" ref="layFormRef" :rules="rules">
-      <!-- 业务类型 -->
-      <lay-form-item label="业务类型" prop="businessType">
-        <lay-input v-model="formData.businessType" disabled />
-      </lay-form-item>
-
-      <!-- 办理日期 -->
-      <lay-form-item label="办理日期" prop="handleDate" required>
-        <lay-date-picker
-          v-model="formData.handleDate"
-          placeholder="yyyy-MM-dd"
-          style="width: 100%"
-        />
-      </lay-form-item>
+    <lay-form :model="formData" ref="layFormRef">
+      <!-- 首行两列：业务类型 + 办理日期 -->
+      <div class="form-row two-columns">
+        <lay-form-item label="业务类型" prop="businessType">
+          <lay-input v-model="formData.businessType" disabled />
+        </lay-form-item>
+        <lay-form-item label="办理日期" prop="handleDate" required>
+          <lay-date-picker
+            v-model="formData.handleDate"
+            placeholder="请选择"
+            style="width: 100%"
+          />
+        </lay-form-item>
+      </div>
 
       <!-- 来文标题 -->
       <lay-form-item label="来文标题" prop="documentTitle" required>
-        <lay-input v-model="formData.documentTitle" placeholder="请输入来文标题" />
+        <lay-input v-model="formData.documentTitle" placeholder="请输入" />
       </lay-form-item>
 
       <!-- 来文文号 -->
       <lay-form-item label="来文文号" prop="documentNumber" required>
-        <lay-input v-model="formData.documentNumber" placeholder="请输入来文文号" />
+        <lay-input v-model="formData.documentNumber" placeholder="请输入" />
       </lay-form-item>
 
       <!-- 申请单位 -->
       <lay-form-item label="申请单位" prop="applicantUnitId" required>
-        <lay-input
-          v-model="formData.applicantUnitName"
-          placeholder="请选择申请单位"
-          readonly
-          @click="openUnitSelector"
-        >
-          <template #suffix>
-            <lay-icon type="layui-icon-search" style="cursor: pointer" @click="openUnitSelector" />
-          </template>
-        </lay-input>
+        <div class="input-with-buttons">
+          <lay-input
+            v-model="formData.applicantUnitName"
+            placeholder="请输入"
+            readonly
+          />
+          <lay-button type="primary" size="sm" @click="openUnitSelector">选择</lay-button>
+          <lay-button size="sm" @click="clearUnit">清除</lay-button>
+        </div>
       </lay-form-item>
 
       <!-- 关联楼宇 -->
       <lay-form-item label="关联楼宇" prop="relatedBuildingId">
-        <lay-input
-          v-model="formData.relatedBuildingName"
-          placeholder="请选择关联楼宇"
-          readonly
-          @click="openBuildingSelector"
-        >
-          <template #suffix>
-            <lay-icon type="layui-icon-search" style="cursor: pointer" @click="openBuildingSelector" />
-          </template>
-        </lay-input>
+        <div class="input-with-buttons">
+          <lay-input
+            v-model="formData.relatedBuildingName"
+            placeholder="请输入"
+            readonly
+          />
+          <lay-button type="primary" size="sm" @click="openBuildingSelector">选择</lay-button>
+          <lay-button size="sm" @click="clearBuilding">清除</lay-button>
+        </div>
       </lay-form-item>
 
       <!-- 联系人 -->
       <lay-form-item label="联系人" prop="contactPerson">
-        <lay-input v-model="formData.contactPerson" placeholder="请输入联系人" />
+        <lay-input v-model="formData.contactPerson" placeholder="请输入" />
       </lay-form-item>
 
       <!-- 主送单位 -->
       <lay-form-item label="主送单位" prop="mainRecipient">
-        <lay-input v-model="formData.mainRecipient" placeholder="请输入主送单位" />
+        <lay-input v-model="formData.mainRecipient" placeholder="请输入" />
       </lay-form-item>
 
       <!-- 来文正文 -->
       <lay-form-item label="来文正文" prop="documentContent">
-        <lay-upload
-          :multiple="false"
-          @done="handleContentUpload"
-        >
-          <template #preview>
-            <span v-if="formData.documentContentName">{{ formData.documentContentName }}</span>
-          </template>
-        </lay-upload>
+        <div class="upload-wrapper">
+          <lay-upload
+            :multiple="false"
+            accept=".pdf"
+            @done="handleContentUpload"
+          >
+            <lay-button size="sm">
+              <lay-icon type="layui-icon-upload" /> 上传文件
+            </lay-button>
+          </lay-upload>
+          <span class="upload-hint">（上传文件格式为pdf）</span>
+          <span v-if="formData.documentContentName" class="upload-filename">
+            {{ formData.documentContentName }}
+          </span>
+        </div>
       </lay-form-item>
 
       <!-- 来文附件 -->
       <lay-form-item label="来文附件" prop="documentAttachment">
-        <lay-upload
-          :multiple="false"
-          @done="handleAttachmentUpload"
-        >
-          <template #preview>
-            <span v-if="formData.documentAttachmentName">{{ formData.documentAttachmentName }}</span>
-          </template>
-        </lay-upload>
-      </lay-form-item>
-
-      <!-- 保存按钮 -->
-      <lay-form-item>
-        <div class="form-actions">
-          <lay-button type="primary" @click="handleSubmit">
-            <lay-icon type="layui-icon-ok" /> 保存
-          </lay-button>
+        <div class="upload-wrapper">
+          <lay-upload
+            :multiple="true"
+            accept=".pdf"
+            @done="handleAttachmentUpload"
+          >
+            <lay-button size="sm">
+              <lay-icon type="layui-icon-upload" /> 上传文件
+            </lay-button>
+          </lay-upload>
+          <span class="upload-hint">（上传文件格式为pdf）</span>
         </div>
+        <!-- 附件列表 -->
+        <AttachmentTable :attachments="attachmentList" />
       </lay-form-item>
     </lay-form>
 
@@ -176,14 +178,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive } from 'vue'
 import { getUnitList, getBuildingList } from '@/api/module/business'
+import AttachmentTable, { AttachmentFile } from './AttachmentTable.vue'
 
 const props = defineProps<{
   businessType: string
 }>()
-
-const emit = defineEmits(['save'])
 
 // 表单数据
 const formData = reactive({
@@ -198,18 +199,11 @@ const formData = reactive({
   contactPerson: '',
   mainRecipient: '',
   documentContent: null as File | null,
-  documentContentName: '',
-  documentAttachment: null as File | null,
-  documentAttachmentName: ''
+  documentContentName: ''
 })
 
-// 表单验证规则
-const rules = {
-  handleDate: [{ required: true, message: '请选择办理日期' }],
-  documentTitle: [{ required: true, message: '请输入来文标题' }],
-  documentNumber: [{ required: true, message: '请输入来文文号' }],
-  applicantUnitId: [{ required: true, message: '请选择申请单位' }]
-}
+// 附件列表
+const attachmentList = ref<AttachmentFile[]>([])
 
 const layFormRef = ref()
 
@@ -229,8 +223,8 @@ const buildingLoading = ref(false)
 const openUnitSelector = () => {
   unitKeyword.value = ''
   unitList.value = []
-  unitSelectorVisible.value = true  // 先显示弹窗
-  searchUnits()  // 再加载数据
+  unitSelectorVisible.value = true
+  searchUnits()
 }
 
 // 搜索单位
@@ -256,12 +250,18 @@ const selectUnit = (unit: any) => {
   unitSelectorVisible.value = false
 }
 
+// 清除单位
+const clearUnit = () => {
+  formData.applicantUnitId = ''
+  formData.applicantUnitName = ''
+}
+
 // 打开楼宇选择器
 const openBuildingSelector = () => {
   buildingKeyword.value = ''
   buildingList.value = []
-  buildingSelectorVisible.value = true  // 先显示弹窗
-  searchBuildings()  // 再加载数据
+  buildingSelectorVisible.value = true
+  searchBuildings()
 }
 
 // 搜索楼宇
@@ -289,7 +289,13 @@ const selectBuilding = (building: any) => {
   buildingSelectorVisible.value = false
 }
 
-// 文件上传处理
+// 清除楼宇
+const clearBuilding = () => {
+  formData.relatedBuildingId = ''
+  formData.relatedBuildingName = ''
+}
+
+// 来文正文上传处理
 const handleContentUpload = (result: any) => {
   if (result.file) {
     formData.documentContent = result.file
@@ -297,30 +303,38 @@ const handleContentUpload = (result: any) => {
   }
 }
 
+// 来文附件上传处理
 const handleAttachmentUpload = (result: any) => {
   if (result.file) {
-    formData.documentAttachment = result.file
-    formData.documentAttachmentName = result.file.name
+    const file = result.file
+    const now = new Date()
+    const uploadTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`
+
+    attachmentList.value.push({
+      id: String(Date.now()),
+      name: file.name,
+      uploadTime: uploadTime,
+      size: file.size,
+      url: URL.createObjectURL(file)
+    })
   }
 }
 
-// 提交表单
-const handleSubmit = async () => {
-  // 手动验证必填项
-  if (!formData.handleDate) {
-    return alert('请选择办理日期')
+// 获取表单数据
+const getFormData = () => {
+  return {
+    ...formData,
+    attachments: attachmentList.value
   }
-  if (!formData.documentTitle) {
-    return alert('请输入来文标题')
-  }
-  if (!formData.documentNumber) {
-    return alert('请输入来文文号')
-  }
-  if (!formData.applicantUnitId) {
-    return alert('请选择申请单位')
-  }
+}
 
-  emit('save', { ...formData })
+// 验证表单
+const validate = (): string | null => {
+  if (!formData.handleDate) return '请选择办理日期'
+  if (!formData.documentTitle) return '请输入来文标题'
+  if (!formData.documentNumber) return '请输入来文文号'
+  if (!formData.applicantUnitId) return '请选择申请单位'
+  return null
 }
 
 // 重置表单
@@ -336,21 +350,20 @@ const resetForm = () => {
   formData.mainRecipient = ''
   formData.documentContent = null
   formData.documentContentName = ''
-  formData.documentAttachment = null
-  formData.documentAttachmentName = ''
+  attachmentList.value = []
 }
 
 // 暴露方法
 defineExpose({
+  getFormData,
+  validate,
   resetForm
 })
 </script>
 
 <style scoped>
 .application-form {
-  padding: 20px 40px;
-  max-width: 800px;
-  margin: 0 auto;
+  padding: 20px;
 }
 
 .application-form :deep(.layui-form-item) {
@@ -358,18 +371,48 @@ defineExpose({
 }
 
 .application-form :deep(.layui-form-label) {
-  width: 100px;
+  width: 80px;
   text-align: right;
 }
 
-.application-form :deep(.layui-input-block) {
-  margin-left: 120px;
-  max-width: 500px;
+/* 首行两列布局 */
+.form-row.two-columns {
+  display: flex;
+  gap: 40px;
 }
 
-.form-actions {
-  margin-left: 120px;
-  padding-top: 10px;
+.form-row.two-columns :deep(.layui-form-item) {
+  flex: 1;
+  margin-bottom: 15px;
+}
+
+/* 输入框带按钮 */
+.input-with-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-with-buttons :deep(.layui-input-wrapper) {
+  flex: 1;
+}
+
+/* 文件上传 */
+.upload-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.upload-hint {
+  color: #999;
+  font-size: 12px;
+}
+
+.upload-filename {
+  color: #1890ff;
+  font-size: 14px;
 }
 
 /* 选择器弹窗样式 */

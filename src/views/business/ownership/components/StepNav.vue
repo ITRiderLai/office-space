@@ -6,7 +6,8 @@
       class="step-item"
       :class="{ active: index === current }"
     >
-      {{ step.title }}
+      <span class="step-bar"></span>
+      <span class="step-title">{{ step.title }}</span>
     </div>
   </div>
 </template>
@@ -31,6 +32,8 @@ defineProps<{
 }
 
 .step-item {
+  display: flex;
+  align-items: center;
   padding: 15px 20px;
   font-size: 14px;
   color: #666;
@@ -42,8 +45,25 @@ defineProps<{
   background-color: #f5f5f5;
 }
 
+.step-bar {
+  display: none;
+  width: 3px;
+  height: 16px;
+  background: #1890ff;
+  margin-right: 10px;
+}
+
 .step-item.active {
-  background-color: var(--global-checked-color);
-  color: #fff;
+  color: #1890ff;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.step-item.active .step-bar {
+  display: block;
+}
+
+.step-title {
+  flex: 1;
 }
 </style>

@@ -183,11 +183,10 @@ const handleNodeClick = (node: any) => {
   color: #1890ff;
 }
 
-/* 树节点样式 */
 .org-tree :deep(.layui-tree-entry) {
-  padding: 5px 10px;
-  border-radius: 4px;
-  margin: 2px 0;
+  padding: unset;
+  height: unset;
+  line-height: unset;
 }
 
 .org-tree :deep(.layui-tree-entry:hover) {
@@ -210,9 +209,5 @@ const handleNodeClick = (node: any) => {
 /* 隐藏树的虚线 */
 .org-tree :deep(.layui-tree-line) {
   display: none;
-}
-
-.org-tree :deep(.layui-tree-iconClick) {
-  margin-right: 5px;
 }
 </style>

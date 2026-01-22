@@ -3,9 +3,6 @@
     <!-- 左侧图片 -->
     <div class="unit-photo">
       <img :src="unitDetail.panoramaPhoto" alt="单位照片" @click="handlePreviewPhoto" />
-      <lay-button size="sm" class="photo-btn" @click="handlePreviewPhoto">
-        <lay-icon type="layui-icon-picture" /> 查看全景照片
-      </lay-button>
     </div>
 
     <!-- 右侧信息 -->
@@ -56,6 +53,11 @@
           <span class="info-value">{{ unitDetail.officeAddress }}</span>
         </div>
       </div>
+      <div class="info-actions">
+        <lay-button size="sm" @click="handlePreviewPhoto">
+          <lay-icon type="layui-icon-picture" /> 查看全景照片
+        </lay-button>
+      </div>
     </div>
   </div>
 </template>
@@ -93,10 +95,6 @@ const handlePreviewPhoto = () => {
 
 .unit-photo {
   flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
 }
 
 .unit-photo img {
@@ -105,10 +103,6 @@ const handlePreviewPhoto = () => {
   object-fit: cover;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.photo-btn {
-  width: 100%;
 }
 
 .unit-info {
@@ -148,5 +142,9 @@ const handlePreviewPhoto = () => {
 .info-value.highlight {
   color: #1890ff;
   font-weight: bold;
+}
+
+.info-actions {
+  margin-top: 5px;
 }
 </style>

@@ -10,36 +10,46 @@
       </lay-button>
     </div>
     <div class="section-content">
-      <div class="staff-grid">
-        <div class="staff-item">
-          <span class="staff-label">正省级</span>
-          <span class="staff-value">{{ data.provincialLevel }}</span>
-        </div>
-        <div class="staff-item">
-          <span class="staff-label">副省级</span>
-          <span class="staff-value">{{ data.deputyProvincialLevel }}</span>
-        </div>
-        <div class="staff-item">
-          <span class="staff-label">正厅级</span>
-          <span class="staff-value">{{ data.departmentLevel }}</span>
-        </div>
-        <div class="staff-item">
-          <span class="staff-label">副厅级</span>
-          <span class="staff-value">{{ data.deputyDepartmentLevel }}</span>
-        </div>
-        <div class="staff-item">
-          <span class="staff-label">正处级</span>
-          <span class="staff-value">{{ data.divisionLevel }}</span>
-        </div>
-        <div class="staff-item">
-          <span class="staff-label">副处级</span>
-          <span class="staff-value">{{ data.deputyDivisionLevel }}</span>
-        </div>
-        <div class="staff-item">
-          <span class="staff-label">处级以下</span>
-          <span class="staff-value">{{ data.belowDivisionLevel }}</span>
-        </div>
-      </div>
+      <table class="staff-table">
+        <tbody>
+          <tr>
+            <td>
+              <span class="staff-label">正省级</span>
+              <span class="staff-value">{{ data.provincialLevel }}</span>
+            </td>
+            <td>
+              <span class="staff-label">副省级</span>
+              <span class="staff-value">{{ data.deputyProvincialLevel }}</span>
+            </td>
+            <td>
+              <span class="staff-label">正厅级</span>
+              <span class="staff-value">{{ data.departmentLevel }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="staff-label">副厅级</span>
+              <span class="staff-value">{{ data.deputyDepartmentLevel }}</span>
+            </td>
+            <td>
+              <span class="staff-label">正处级</span>
+              <span class="staff-value">{{ data.divisionLevel }}</span>
+            </td>
+            <td>
+              <span class="staff-label">副处级</span>
+              <span class="staff-value">{{ data.deputyDivisionLevel }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="staff-label">处级以下</span>
+              <span class="staff-value">{{ data.belowDivisionLevel }}</span>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -90,29 +100,33 @@ defineEmits(['open-calculation'])
   padding: 15px;
 }
 
-.staff-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px 40px;
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.staff-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+.staff-table td {
+  border: 1px solid #e8e8e8;
+  padding: 0;
+  font-size: 14px;
+}
+
+.staff-table td:empty {
+  border: none;
 }
 
 .staff-label {
-  color: #666;
-  font-size: 14px;
-  min-width: 60px;
+  display: inline-block;
+  width: 80px;
+  padding: 10px 15px;
+  background: #fafafa;
+  color: #333;
+  border-right: 1px solid #e8e8e8;
 }
 
 .staff-value {
+  display: inline-block;
+  padding: 10px 15px;
   color: #333;
-  font-size: 14px;
-  font-weight: 500;
 }
 </style>

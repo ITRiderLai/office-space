@@ -32,6 +32,18 @@ const menus = [
     ]
   },
   {
+    id: "/courtyard",
+    icon: "layui-icon-home",
+    title: "院落管理",
+    children: [
+      {
+        id: "/courtyard/edit",
+        icon: "",
+        title: "院落编辑"
+      }
+    ]
+  },
+  {
     id: "/ledger",
     icon: "layui-icon-table",
     title: "数据台账",

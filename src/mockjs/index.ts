@@ -4,6 +4,7 @@ import user from './user';
 import business from './business';
 import ledger from './ledger';
 import unit from './unit';
+import courtyard from './courtyard';
 
 Mock.mock(/\/user\/login/,'post',(req: any,res: any) =>{
     return user.getLogin(req,res)
@@ -70,6 +71,19 @@ Mock.mock(/\/unit\/detail/,'post',(req: any) =>{
 
 Mock.mock(/\/unit\/area-calculation/,'post',(req: any) =>{
     return unit.getAreaCalculation(req)
+});
+
+// 院落编辑相关接口
+Mock.mock(/\/courtyard\/tree/,'post',(req: any) =>{
+    return courtyard.getCourtyardTree(req)
+});
+
+Mock.mock(/\/courtyard\/floor\/info/,'post',(req: any) =>{
+    return courtyard.getFloorInfo(req)
+});
+
+Mock.mock(/\/courtyard\/floor\/rooms/,'post',(req: any) =>{
+    return courtyard.getFloorRooms(req)
 });
 
 // 设置延迟模拟真实网络

@@ -179,6 +179,18 @@ export default [
       },
     ]
   }, {
+    path: '/courtyard',
+    component: BasicLayout,
+    meta: { title: '院落管理' },
+    children: [
+      {
+        path: '/courtyard/edit',
+        name: 'CourtyardEdit',
+        component: () => import('../../views/courtyard/edit/index.vue'),
+        meta: { title: '院落编辑', requireAuth: true },
+      },
+    ]
+  }, {
     path: '/ledger',
     component: BasicLayout,
     meta: { title: '数据台账' },

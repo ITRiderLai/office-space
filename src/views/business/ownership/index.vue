@@ -1,5 +1,8 @@
 <template>
   <div class="ownership-page">
+    <!-- 顶部操作栏 -->
+    <ActionBar @save="handleSave" @close="handleClose" />
+
     <!-- 业务信息栏 -->
     <BusinessHeader :info="businessInfo" />
 
@@ -10,11 +13,12 @@
 
       <!-- 表单区域 -->
       <div class="ownership-form-wrapper">
-        <ApplicationForm
-          ref="formRef"
-          :business-type="businessInfo.businessType"
-          @save="handleSave"
-        />
+        <lay-scroll height="100%">
+          <ApplicationForm
+            ref="formRef"
+            :business-type="businessInfo.businessType"
+          />
+        </lay-scroll>
       </div>
     </div>
   </div>
@@ -22,11 +26,15 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
-import { layer } from '@layui/layer-vue'
+import { useRouter } from 'vue-router'
+import { layer } from '@layui/layui-vue'
 import { getBusinessInit, saveOwnershipApplication } from '@/api/module/business'
+import ActionBar from './components/ActionBar.vue'
 import BusinessHeader from './components/BusinessHeader.vue'
 import StepNav from './components/StepNav.vue'
 import ApplicationForm from './components/ApplicationForm.vue'
+
+const router = useRouter()
 
 // 业务信息
 const businessInfo = reactive({
@@ -39,7 +47,9 @@ const businessInfo = reactive({
 // 步骤配置
 const currentStep = ref(0)
 const steps = [
-  { title: '申请信息' }
+  { title: '申请信息' },
+  { title: '其他目录' },
+  { title: '其他目录' }
 ]
 
 // 表单引用
@@ -61,7 +71,17 @@ const initPage = async () => {
 }
 
 // 保存处理
-const handleSave = async (formData: any) => {
+const handleSave = async () => {
+  // 验证表单
+  const error = formRef.value?.validate()
+  if (error) {
+    layer.msg(error, { icon: 0 })
+    return
+  }
+
+  // 获取表单数据
+  const formData = formRef.value?.getFormData()
+
   try {
     const { code, msg } = await saveOwnershipApplication(formData)
     if (code === 200) {
@@ -77,6 +97,12 @@ const handleSave = async (formData: any) => {
   } catch (error) {
     layer.msg('保存失败，请稍后重试', { icon: 2 })
   }
+}
+
+// 关闭处理
+const handleClose = () => {
+  // 关闭当前标签页，返回上一页
+  router.back()
 }
 
 onMounted(() => {
@@ -104,6 +130,6 @@ onMounted(() => {
   flex: 1;
   background: #fff;
   border-radius: var(--global-border-radius);
-  overflow: auto;
+  overflow: hidden;
 }
 </style>
