@@ -5,9 +5,14 @@ import business from './business';
 import ledger from './ledger';
 import unit from './unit';
 import courtyard from './courtyard';
+import dashboard from './dashboard';
 
 Mock.mock(/\/user\/login/,'post',(req: any,res: any) =>{
     return user.getLogin(req,res)
+});
+
+Mock.mock(/\/captcha/,'post',() =>{
+    return user.getCaptcha()
 });
 
 Mock.mock(/\/user\/info/,'post',(req: any,res: any) =>{
@@ -84,6 +89,11 @@ Mock.mock(/\/courtyard\/floor\/info/,'post',(req: any) =>{
 
 Mock.mock(/\/courtyard\/floor\/rooms/,'post',(req: any) =>{
     return courtyard.getFloorRooms(req)
+});
+
+// 首页工作台接口
+Mock.mock(/\/dashboard\/overview/,'get',() =>{
+    return dashboard.getDashboardOverview()
 });
 
 // 设置延迟模拟真实网络

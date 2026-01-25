@@ -1,5 +1,6 @@
 import { Result } from "../types/result";
 import { User } from "../types/user";
+import captchaImg from '../assets/login/login-yzm.jpg';
 
 let user: User = {
   'userId': '1992',
@@ -7,6 +8,11 @@ let user: User = {
 }
 
 const menus = [
+  {
+    id: "/workspace/workbench",
+    icon: "layui-icon-home",
+    title: "首页"
+  },
   {
     id: "/business",
     icon: "layui-icon-form",
@@ -137,6 +143,19 @@ const getUpload = (req: any, res: any) => {
   }
 }
 
+// 获取验证码
+const getCaptcha = () => {
+  return {
+    'code': 200,
+    'msg': '操作成功',
+    'data': {
+      'key': 'mock-captcha-key-' + Date.now(),
+      'image': captchaImg
+    },
+    'success': true
+  }
+}
+
 export default {
-  getInfo, getMenu, getLogin, getPermission, getUpload
+  getInfo, getMenu, getLogin, getPermission, getUpload, getCaptcha
 }
