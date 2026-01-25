@@ -1,0 +1,158 @@
+<template>
+  <div class="chart-card">
+    <PanelTitle title="编制人数/办公人数" absolute />
+    <div class="chart-container" ref="chartRef"></div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { ref, onMounted, watch, onUnmounted } from 'vue'
+import * as echarts from 'echarts'
+import PanelTitle from './PanelTitle.vue'
+
+interface StaffData {
+  category: string
+  staffCount: number
+  workCount: number
+}
+
+const props = defineProps<{
+  data: StaffData[]
+}>()
+
+const chartRef = ref<HTMLElement>()
+let chartInstance: echarts.ECharts | null = null
+
+const initChart = () => {
+  if (!chartRef.value) return
+  chartInstance = echarts.init(chartRef.value)
+  updateChart()
+}
+
+const updateChart = () => {
+  if (!chartInstance || !props.data.length) return
+
+  const categories = props.data.map(item => item.category)
+  const staffCounts = props.data.map(item => item.staffCount)
+  const workCounts = props.data.map(item => item.workCount)
+
+  const option: echarts.EChartsOption = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'shadow' },
+      backgroundColor: 'rgba(0, 20, 40, 0.9)',
+      borderColor: 'rgba(0, 212, 255, 0.3)',
+      textStyle: { color: '#fff' }
+    },
+    legend: {
+      data: ['编制人数', '办公人数'],
+      top: 10,
+      textStyle: { color: 'rgba(255, 255, 255, 0.8)', fontSize: 12 },
+      itemWidth: 12,
+      itemHeight: 12
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      top: '20%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      data: categories,
+      axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
+      axisLabel: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: 11,
+        interval: 0,
+        rotate: 0
+      },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value',
+      name: '单位（人）',
+      nameTextStyle: { color: 'rgba(255, 255, 255, 0.6)', fontSize: 11 },
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { color: 'rgba(255, 255, 255, 0.6)', fontSize: 11 },
+      splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
+    },
+    series: [
+      {
+        name: '编制人数',
+        type: 'bar',
+        data: staffCounts,
+        barWidth: 12,
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: '#0066cc' },
+            { offset: 1, color: '#004499' }
+          ]),
+          borderRadius: [4, 4, 0, 0]
+        },
+        label: {
+          show: true,
+          position: 'top',
+          color: 'rgba(255, 255, 255, 0.8)',
+          fontSize: 10
+        }
+      },
+      {
+        name: '办公人数',
+        type: 'bar',
+        data: workCounts,
+        barWidth: 12,
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: '#00d4ff' },
+            { offset: 1, color: '#0099cc' }
+          ]),
+          borderRadius: [4, 4, 0, 0]
+        },
+        label: {
+          show: true,
+          position: 'top',
+          color: 'rgba(255, 255, 255, 0.8)',
+          fontSize: 10
+        }
+      }
+    ]
+  }
+
+  chartInstance.setOption(option)
+}
+
+const handleResize = () => {
+  chartInstance?.resize()
+}
+
+watch(() => props.data, updateChart, { deep: true })
+
+onMounted(() => {
+  initChart()
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+  chartInstance?.dispose()
+})
+</script>
+
+<style scoped>
+.chart-card {
+  position: relative;
+  height: 100%;
+}
+
+.chart-container {
+  height: 100%;
+  padding-top: 40px;
+  box-sizing: border-box;
+  background-image: url('@/assets/dashboard/bg-cont.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+</style>

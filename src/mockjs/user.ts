@@ -14,6 +14,11 @@ const menus = [
     title: "首页"
   },
   {
+    id: "/data-screen",
+    icon: "layui-icon-chart-screen",
+    title: "数据大屏"
+  },
+  {
     id: "/business",
     icon: "layui-icon-form",
     title: "业务申请",

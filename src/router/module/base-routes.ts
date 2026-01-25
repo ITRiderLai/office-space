@@ -1,5 +1,6 @@
 import BasicLayout from '../../layouts/BasicLayout.vue';
 import Login from '../../views/login/index.vue';
+import DataScreen from '../../views/dataScreen/index.vue';
 
 
 export default [
@@ -11,6 +12,12 @@ export default [
     path: '/login',
     component: Login,
     meta: { title: '登录页面' },
+  },
+  {
+    path: '/data-screen',
+    name: 'DataScreen',
+    component: DataScreen,
+    meta: { title: '数据大屏' },
   },
   {
     path: '/workspace',
