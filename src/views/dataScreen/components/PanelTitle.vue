@@ -39,4 +39,18 @@ withDefaults(defineProps<{
   font-weight: 500;
   letter-spacing: 2px;
 }
+
+@media screen and (max-width: 1600px) {
+  .title-text {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .title-text {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+}
 </style>

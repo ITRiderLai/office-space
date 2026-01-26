@@ -77,4 +77,17 @@ const changeSelectedKey = (key: string) => {
   padding-left: 45px;
 }
 
+/* 左侧菜单高亮样式 - 白色背景，主色字体 */
+.layui-nav-tree .layui-this > a,
+.layui-nav-tree.inverted .layui-this > a,
+.layui-nav-tree .layui-nav-child .layui-this > a {
+  background-color: #fff !important;
+}
+
+.layui-nav-tree .layui-this *,
+.layui-nav-tree.inverted .layui-this *,
+.layui-nav-tree .layui-nav-child .layui-this * {
+  color: var(--global-primary-color) !important;
+}
+
 </style>

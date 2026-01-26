@@ -25,10 +25,10 @@ const getDataScreenData = () => {
       ],
       // 管理范围数据
       managementData: [
-        { category: '党政', value: 1130, color: '#3B82F6' },
-        { category: '参公', value: 91, color: '#10B981' },
-        { category: '事业', value: 188, color: '#F59E0B' },
-        { category: '其他', value: 180, color: '#EF4444' }
+        { category: '党政', value: 1130, color: '#0DA4F6', color2: '#0D69F6' },
+        { category: '参公', value: 91, color: '#C87BFF', color2: '#8C33CB' },
+        { category: '事业', value: 188, color: '#FF9392', color2: '#D43D3A' },
+        { category: '其他', value: 180, color: '#FFC692', color2: '#C45920' }
       ],
       // 地图区域数据
       regionData: [
@@ -62,20 +62,20 @@ const getDataScreenData = () => {
         { region: '绿春县', area: 67601.66 },
         { region: '河口瑶族自治县', area: 52000 }
       ],
-      // 房屋使用情况数据
+      // 房屋使用情况数据（环形图）
       usageData: [
-        { name: '自用', value: 60, color: '#3B82F6' },
-        { name: '闲置', value: 15, color: '#F59E0B' },
-        { name: '出租', value: 10, color: '#06B6D4' },
-        { name: '出借', value: 5, color: '#8B5CF6' }
+        { name: '自用', value: 60, color: '#2C80FF' },
+        { name: '闲置', value: 15, color: '#5C6BED' },
+        { name: '出租', value: 10, color: '#D1933C' },
+        { name: '出借', value: 5, color: '#12B5AE' }
       ],
-      // 房屋面积类型数据
+      // 房屋面积类型数据（饼图）
       areaTypeData: [
-        { name: '办公用房', value: 30, color: '#3B82F6' },
-        { name: '服务用房', value: 30, color: '#F59E0B' },
-        { name: '设备用房', value: 20, color: '#06B6D4' },
-        { name: '附属用房', value: 10, color: '#10B981' },
-        { name: '技术业务用房', value: 10, color: '#EF4444' }
+        { name: '办公用房', value: 30, color: '#DF8A81' },
+        { name: '服务用房', value: 30, color: '#3E83E8' },
+        { name: '设备用房', value: 20, color: '#40BEFF' },
+        { name: '附属用房', value: 10, color: '#DAD17E' },
+        { name: '技术业务用房', value: 10, color: '#6AE5B2' }
       ]
     },
     success: true

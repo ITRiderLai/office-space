@@ -7,7 +7,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, watch, onUnmounted } from 'vue'
-import * as echarts from 'echarts'
 import PanelTitle from './PanelTitle.vue'
 
 interface AreaTypeData {
@@ -21,73 +20,109 @@ const props = defineProps<{
 }>()
 
 const chartRef = ref<HTMLElement>()
-let chartInstance: echarts.ECharts | null = null
+let chartInstance: any = null
+
+// 将 hex 颜色转换为带透明度的 rgba
+const hexToRgba = (hex: string, alpha: number) => {
+  const num = parseInt(hex.replace('#', ''), 16)
+  const r = (num >> 16) & 0xFF
+  const g = (num >> 8) & 0xFF
+  const b = num & 0xFF
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
 
 const initChart = () => {
   if (!chartRef.value) return
-  chartInstance = echarts.init(chartRef.value)
-  updateChart()
+  const Highcharts = (window as any).Highcharts
+  if (!Highcharts) {
+    console.error('Highcharts not loaded')
+    return
+  }
+
+  chartInstance = Highcharts.chart(chartRef.value, {
+    chart: {
+      type: 'pie',
+      backgroundColor: 'transparent',
+      options3d: {
+        enabled: true,
+        alpha: 60,
+        beta: 0
+      }
+    },
+    title: {
+      text: ''
+    },
+    credits: {
+      enabled: false
+    },
+    tooltip: {
+      pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>',
+      backgroundColor: 'rgba(0, 20, 40, 0.9)',
+      borderColor: 'rgba(0, 212, 255, 0.3)',
+      style: {
+        color: '#fff'
+      }
+    },
+    legend: {
+      align: 'center',
+      verticalAlign: 'top',
+      layout: 'horizontal',
+      itemStyle: {
+        color: 'rgba(255, 255, 255, 0.8)',
+        fontSize: '11px'
+      },
+      itemHoverStyle: {
+        color: '#00d4ff'
+      }
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        depth: 40,
+        size: '65%',
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+        borderWidth: 1,
+        dataLabels: {
+          enabled: true,
+          format: '{point.percentage:.1f}%',
+          color: 'rgba(255, 255, 255, 0.8)',
+          style: {
+            fontSize: '11px',
+            textOutline: 'none'
+          }
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+      name: '占比',
+      data: props.data.map(item => ({
+        name: item.name,
+        y: item.value,
+        color: hexToRgba(item.color, 0.7),
+        borderColor: '#ffffff',
+        borderWidth: 2
+      }))
+    }]
+  })
 }
 
 const updateChart = () => {
   if (!chartInstance || !props.data.length) return
 
-  const option: echarts.EChartsOption = {
-    tooltip: {
-      trigger: 'item',
-      backgroundColor: 'rgba(0, 20, 40, 0.9)',
-      borderColor: 'rgba(0, 212, 255, 0.3)',
-      textStyle: { color: '#fff' },
-      formatter: (params: any) => {
-        return `${params.name}: ${params.value}%`
-      }
-    },
-    legend: {
-      orient: 'horizontal',
-      top: '8%',
-      left: 'center',
-      textStyle: { color: 'rgba(255, 255, 255, 0.8)', fontSize: 11 },
-      itemWidth: 10,
-      itemHeight: 10,
-      itemGap: 15
-    },
-    series: [
-      {
-        type: 'pie',
-        radius: ['0%', '65%'],
-        center: ['50%', '60%'],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderColor: '#0a1929',
-          borderWidth: 2
-        },
-        label: {
-          show: true,
-          position: 'outside',
-          color: 'rgba(255, 255, 255, 0.8)',
-          fontSize: 11,
-          formatter: '{d}%'
-        },
-        labelLine: {
-          show: true,
-          lineStyle: {
-            color: 'rgba(255, 255, 255, 0.3)'
-          }
-        },
-        data: props.data.map(item => ({
-          name: item.name,
-          value: item.value,
-          itemStyle: { color: item.color }
-        }))
-      }
-    ]
-  }
-
-  chartInstance.setOption(option)
+  chartInstance.series[0].setData(
+    props.data.map(item => ({
+      name: item.name,
+      y: item.value,
+      color: hexToRgba(item.color, 0.7)
+    })),
+    true
+  )
 }
 
 const handleResize = () => {
-  chartInstance?.resize()
+  chartInstance?.reflow()
 }
 
 watch(() => props.data, updateChart, { deep: true })
@@ -99,7 +134,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
-  chartInstance?.dispose()
+  chartInstance?.destroy()
 })
 </script>
 

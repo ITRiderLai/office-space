@@ -66,7 +66,16 @@ const updateChart = () => {
         color: 'rgba(255, 255, 255, 0.7)',
         fontSize: 11,
         interval: 0,
-        rotate: 0
+        rotate: 0,
+        lineHeight: 18,
+        formatter: (value: string) => {
+          if (value === '市级正职') return '市级\n正职'
+          if (value === '市级副职') return '市级\n副职'
+          if (value === '正局(处)级') return '正局\n(处)级'
+          if (value === '副局(处)级') return '副局\n(处)级'
+          if (value === '局(处)级以下') return '局(处)级\n以下'
+          return value
+        }
       },
       axisTick: { show: false }
     },
@@ -87,8 +96,8 @@ const updateChart = () => {
         barWidth: 12,
         itemStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#0066cc' },
-            { offset: 1, color: '#004499' }
+            { offset: 0, color: '#5DB6FF' },
+            { offset: 1, color: '#008CFF' }
           ]),
           borderRadius: [4, 4, 0, 0]
         },
@@ -106,8 +115,8 @@ const updateChart = () => {
         barWidth: 12,
         itemStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#00d4ff' },
-            { offset: 1, color: '#0099cc' }
+            { offset: 0, color: '#85CFA0' },
+            { offset: 1, color: '#32C667' }
           ]),
           borderRadius: [4, 4, 0, 0]
         },
@@ -149,7 +158,7 @@ onUnmounted(() => {
 
 .chart-container {
   height: 100%;
-  padding-top: 40px;
+  padding: 40px 15px 10px;
   box-sizing: border-box;
   background-image: url('@/assets/dashboard/bg-cont.png');
   background-size: 100% 100%;

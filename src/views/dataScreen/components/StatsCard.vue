@@ -82,4 +82,16 @@ const formatValue = (value: number) => {
   color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
 }
+
+@media screen and (max-width: 1600px) {
+  .stat-value .value {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .stat-value .value {
+    font-size: 12px;
+  }
+}
 </style>

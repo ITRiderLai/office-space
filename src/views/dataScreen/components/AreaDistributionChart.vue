@@ -32,6 +32,78 @@ const updateChart = () => {
 
   const regions = props.data.map(item => item.region)
   const areas = props.data.map(item => item.area)
+  const barWidth = 20
+
+  // 计算柱状图高度
+  const computedBarHeight = (value: any, params: any) => {
+    const zeroHeight = chartInstance!.convertToPixel({ yAxisIndex: 0 }, 0)
+    const height = chartInstance!.convertToPixel({ yAxisIndex: 0 }, params.data.yAxis)
+    return [barWidth / 2, zeroHeight - height]
+  }
+
+  // 构建 markPoint 数据
+  const markPointData: any[] = []
+  areas.forEach((v, i) => {
+    // 左侧面
+    markPointData.push({
+      xAxis: regions[i],
+      yAxis: v,
+      symbol: 'rect',
+      symbolSize: computedBarHeight,
+      symbolOffset: ['-50%', '50%'],
+      itemStyle: {
+        color: {
+          type: 'linear',
+          x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [
+            { offset: 0, color: 'rgba(40, 158, 82, 1)' },
+            { offset: 1, color: 'rgba(40, 158, 82, 0.1)' }
+          ]
+        }
+      }
+    })
+    // 右侧面
+    markPointData.push({
+      xAxis: regions[i],
+      yAxis: v,
+      symbol: 'rect',
+      symbolSize: computedBarHeight,
+      symbolOffset: ['50%', '50%'],
+      itemStyle: {
+        color: {
+          type: 'linear',
+          x: 0, y: 0, x2: 0, y2: 1,
+          colorStops: [
+            { offset: 0, color: 'rgba(50, 198, 103, 1)' },
+            { offset: 1, color: 'rgba(50, 198, 103, 0.1)' }
+          ]
+        }
+      }
+    })
+    // 顶部菱形
+    markPointData.push({
+      xAxis: regions[i],
+      yAxis: v,
+      symbol: 'path://M 0 5 L 10 10 L 20 5 L 10 0 L 0 5 Z',
+      symbolSize: [barWidth, barWidth / 2],
+      symbolOffset: [0, 0],
+      itemStyle: {
+        color: '#5DE092'
+      },
+      label: {
+        show: true,
+        position: 'top',
+        color: 'rgba(255, 255, 255, 0.8)',
+        fontSize: 9,
+        formatter: () => {
+          if (v >= 1000) {
+            return (v / 1000).toFixed(1) + 'k'
+          }
+          return v.toString()
+        }
+      }
+    })
+  })
 
   const option: echarts.EChartsOption = {
     tooltip: {
@@ -41,15 +113,18 @@ const updateChart = () => {
       borderColor: 'rgba(0, 212, 255, 0.3)',
       textStyle: { color: '#fff' },
       formatter: (params: any) => {
-        const data = params[0]
-        return `${data.name}<br/>面积: ${data.value.toLocaleString()} m²`
+        const idx = params[0]?.dataIndex
+        if (idx !== undefined) {
+          return `${regions[idx]}<br/>面积: ${areas[idx].toLocaleString()} m²`
+        }
+        return ''
       }
     },
     grid: {
       left: '3%',
       right: '4%',
       bottom: '15%',
-      top: '15%',
+      top: '20%',
       containLabel: true
     },
     xAxis: {
@@ -86,25 +161,13 @@ const updateChart = () => {
       {
         type: 'bar',
         data: areas,
-        barWidth: '60%',
+        barWidth: barWidth,
         itemStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#00d4ff' },
-            { offset: 1, color: '#0066cc' }
-          ]),
-          borderRadius: [4, 4, 0, 0]
+          color: 'transparent'
         },
-        label: {
-          show: true,
-          position: 'top',
-          color: 'rgba(255, 255, 255, 0.8)',
-          fontSize: 9,
-          formatter: (params: any) => {
-            if (params.value >= 1000) {
-              return (params.value / 1000).toFixed(1) + 'k'
-            }
-            return params.value
-          }
+        markPoint: {
+          data: markPointData,
+          animation: false
         }
       }
     ]

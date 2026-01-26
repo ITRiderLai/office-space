@@ -22,7 +22,8 @@ export interface StaffData {
 export interface ManagementData {
   category: string  // 类别
   value: number     // 数量
-  color: string     // 颜色
+  color: string     // 颜色1
+  color2: string    // 颜色2
 }
 
 // 区域数据

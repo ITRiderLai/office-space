@@ -18,10 +18,10 @@ const props = defineProps<{
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
 
-// 红河州GeoJSON数据
+// 红河州GeoJSON数据（使用本地文件）
 const loadGeoJson = async () => {
   try {
-    const response = await fetch('https://geo.datav.aliyun.com/areas_v3/bound/532500_full.json')
+    const response = await fetch('/532500_full.json')
     const geoJson = await response.json()
     echarts.registerMap('honghe', geoJson)
     return true

@@ -14,6 +14,7 @@ interface ManagementData {
   category: string
   value: number
   color: string
+  color2: string
 }
 
 const props = defineProps<{
@@ -35,12 +36,10 @@ const updateChart = () => {
   const categories = props.data.map(item => item.category)
   const values = props.data.map(item => item.value)
   const colors = props.data.map(item => item.color)
-  const maxValue = Math.max(...values)
+  const colors2 = props.data.map(item => item.color2)
 
-  // 3D圆锥体路径 - 主体
+  // 3D圆锥体路径
   const coneBody = 'path://M50,0 L100,100 Q50,115 0,100 L50,0 Z'
-  // 3D圆锥体底部椭圆
-  const coneBottom = 'path://M0,0 Q50,15 100,0 Q50,-15 0,0 Z'
 
   const option: echarts.EChartsOption = {
     tooltip: {
@@ -85,7 +84,7 @@ const updateChart = () => {
       splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
     },
     series: [
-      // 圆锥主体 - 带渐变的立体效果和透明度
+      // 圆锥主体 - 使用双色渐变
       {
         type: 'pictorialBar',
         symbol: coneBody,
@@ -99,8 +98,8 @@ const updateChart = () => {
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
               { offset: 0, color: hexToRgba(colors[i], 0.9) },
               { offset: 0.5, color: hexToRgba(colors[i], 0.8) },
-              { offset: 0.5, color: hexToRgba(shadeColor(colors[i], -30), 0.7) },
-              { offset: 1, color: hexToRgba(shadeColor(colors[i], -30), 0.6) }
+              { offset: 0.5, color: hexToRgba(colors2[i], 0.8) },
+              { offset: 1, color: hexToRgba(colors2[i], 0.7) }
             ])
           }
         })),
@@ -113,21 +112,6 @@ const updateChart = () => {
           offset: [0, -5]
         }
       },
-      // 底部椭圆 - 增强3D效果
-      {
-        type: 'pictorialBar',
-        symbol: coneBottom,
-        symbolSize: ['50', '15'],
-        symbolOffset: [0, 7],
-        symbolPosition: 'end',
-        z: 11,
-        data: values.map((v, i) => ({
-          value: v,
-          itemStyle: {
-            color: hexToRgba(shadeColor(colors[i], -40), 0.8)
-          }
-        }))
-      }
     ]
   }
 
@@ -182,7 +166,7 @@ onUnmounted(() => {
 
 .chart-container {
   height: 100%;
-  padding-top: 40px;
+  padding: 40px 15px 10px;
   box-sizing: border-box;
   background-image: url('@/assets/dashboard/bg-cont.png');
   background-size: 100% 100%;

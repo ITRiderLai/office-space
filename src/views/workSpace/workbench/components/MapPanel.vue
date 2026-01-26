@@ -68,10 +68,10 @@ const regionData = [
   { name: '迪庆藏族自治州', value: 20 }
 ]
 
-// 加载地图数据
+// 加载地图数据（使用本地文件）
 const loadMapData = async () => {
   try {
-    const response = await fetch('https://geo.datav.aliyun.com/areas_v3/bound/530000_full.json')
+    const response = await fetch('/530000_full.json')
     mapData = await response.json()
     echarts.registerMap('yunnan', mapData)
     initChart()

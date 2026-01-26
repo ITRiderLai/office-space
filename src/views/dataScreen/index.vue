@@ -81,7 +81,7 @@ const statsData = ref({
 const staffData = ref<Array<{ category: string; staffCount: number; workCount: number }>>([])
 
 // 管理范围数据
-const managementData = ref<Array<{ category: string; value: number; color: string }>>([])
+const managementData = ref<Array<{ category: string; value: number; color: string; color2: string }>>([])
 
 // 地图区域数据
 const regionData = ref<Array<{ name: string; value: number }>>([])
@@ -203,7 +203,7 @@ onUnmounted(() => {
 }
 
 .distribution-area {
-  height: 240px;
+  height: 280px;
   flex-shrink: 0;
 }
 </style>

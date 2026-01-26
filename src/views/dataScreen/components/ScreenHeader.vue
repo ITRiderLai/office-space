@@ -145,4 +145,18 @@ onUnmounted(() => {
 .header-btn:hover {
   color: #00d4ff;
 }
+
+@media screen and (max-width: 1600px) {
+  .main-title {
+    font-size: 22px;
+    letter-spacing: 2px;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .main-title {
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+}
 </style>
