@@ -235,8 +235,8 @@ onUnmounted(() => {
   position: relative;
   background-color: #0a1628;
   background-image: url('@/assets/dashboard/chat-bg.png');
-  background-size: contain;
-  background-position: center;
+  background-size: 103%;
+  background-position: -25px center;
   background-repeat: no-repeat;
   border-radius: 4px;
   overflow: hidden;
@@ -256,9 +256,9 @@ onUnmounted(() => {
   align-items: center;
   gap: 5px;
   padding: 6px 12px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+  background: rgba(0, 97, 206, 0.2);
+  border: 1px solid rgba(44, 139, 255, 0.6);
+  border-radius: 4px 4px 4px 4px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 13px;
   cursor: pointer;
@@ -303,10 +303,6 @@ onUnmounted(() => {
   bottom: 20px;
   left: 20px;
   display: flex;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .mode-btn {
@@ -315,10 +311,13 @@ onUnmounted(() => {
   font-size: 13px;
   cursor: pointer;
   transition: all 0.3s;
+  background: rgba(34, 79, 167, 0.2);
+  border-radius: 0px 4px 4px 0px;
+  border: 1px solid rgba(44, 139, 255, 0.6);
 }
 
 .mode-btn:first-child {
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px 0px 0px 4px;
 }
 
 .mode-btn:hover {
@@ -326,7 +325,9 @@ onUnmounted(() => {
 }
 
 .mode-btn.active {
-  background: #1890ff;
+  background: linear-gradient(360deg, rgba(27, 193, 200, 0.5) 0%, rgba(27, 193, 200, 0) 100%), #0061CE;
+  border-radius: 4px 0px 0px 4px;
+  border: 1px solid rgba(44, 139, 255, 0.6);
   color: #fff;
 }
 </style>

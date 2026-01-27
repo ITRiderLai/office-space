@@ -25,14 +25,8 @@
       <global-setup-item label="夜间模式">
         <lay-switch v-model="appStore.theme" onswitch-value="dark" unswitch-value="light" size="xs"></lay-switch>
       </global-setup-item>
-      <global-setup-item label="侧边标题">
-        <lay-switch v-model="appStore.logo" size="xs"></lay-switch>
-      </global-setup-item>
       <global-setup-item label="灰色模式">
         <lay-switch v-model="appStore.greyMode" size="xs"></lay-switch>
-      </global-setup-item>
-      <global-setup-item label="面包屑">
-        <lay-switch v-model="appStore.breadcrumb" size="xs"></lay-switch>
       </global-setup-item>
       <global-setup-item label="菜单分栏">
         <lay-switch v-model="appStore.subfield" size="xs"></lay-switch>

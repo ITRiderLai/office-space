@@ -7,182 +7,156 @@
   >
     <lay-layout
       :class="[
+        'top-nav-layout',
         appStore.tab ? 'has-tab' : '',
         appStore.collapse ? 'collapse' : '',
-        appStore.greyMode ? 'grey-mode' : ''
+        appStore.greyMode ? 'grey-mode' : '',
+        isHomePage ? 'home-layout' : ''
       ]"
     >
-      <!-- 遮盖层 -->
-      <div
-        v-if="!appStore.collapse"
-        class="layui-layer-shade hidden-sm-and-up"
-        @click="collapse"
-      ></div>
-      <!-- 核心菜单  -->
-      <lay-side
-        :width="sideWidth"
-        :class="appStore.sideTheme == 'dark' ? 'dark changeBgc' : 'light'"
+      <!-- 头部导航 - 占满整行 -->
+      <lay-header
+        style="display: flex"
+        :class="[
+          appStore.theme !== 'dark' ? 'header-primary' : '',
+          isHomePage ? 'home-header' : ''
+        ]"
       >
-        <lay-logo v-if="appStore.logo"></lay-logo>
-        <div class="side-menu-wrapper">
-          <div
-            class="side-menu1"
-            v-if="appStore.subfield && appStore.subfieldPosition == 'side'"
-          >
-            <global-main-menu
-              :collapse="true"
-              :menus="mainMenus"
-              :selectedKey="mainSelectedKey"
-              @changeSelectedKey="changeMainSelectedKey"
-            ></global-main-menu>
-          </div>
-          <div class="side-menu2">
-            <global-menu
-              :collapse="appStore.collapse"
-              :menus="menus"
-              :openKeys="openKeys"
-              :selectedKey="selectedKey"
-              @changeOpenKeys="changeOpenKeys"
-              @changeSelectedKey="changeSelectedKey"
-            ></global-menu>
-          </div>
+        <!-- 系统名称 -->
+        <div class="header-logo" :class="{ 'home-logo': isHomePage }">
+          <span class="header-title">办公用房管理系统</span>
         </div>
-      </lay-side>
-      <lay-layout style="width: 0px">
-        <!-- 布局头部 -->
-        <lay-header style="display: flex">
-          <lay-menu class="layui-layout-left">
-            <lay-menu-item @click="collapse">
+        <!-- 菜单分组 -->
+        <lay-menu
+          v-if="appStore.subfield && appStore.subfieldPosition == 'head'"
+          class="layui-nav-center"
+          :selectedKey="mainSelectedKey"
+          @changeSelectedKey="changeMainSelectedKey"
+        >
+          <template v-for="(menu, index) in mainMenus" :key="index">
+            <lay-menu-item :id="menu.id" v-if="index < 4">
+              <template #title>{{ menu.title }}</template>
+            </lay-menu-item>
+          </template>
+        </lay-menu>
+        <lay-dropdown
+          v-if="appStore.subfield && appStore.subfieldPosition == 'head'"
+          trigger="hover"
+          placement="bottom"
+        >
+          <lay-icon
+            type="layui-icon-more"
+            style="padding: 0px 15px"
+          ></lay-icon>
+          <template #content>
+            <lay-dropdown-menu>
+              <template v-for="(menu, index) in mainMenus">
+                <lay-dropdown-menu-item
+                  :key="menu.id"
+                  v-if="index >= 4"
+                  @click="changeMainSelectedKey(menu.id)"
+                  >{{ menu.title }}</lay-dropdown-menu-item
+                >
+              </template>
+            </lay-dropdown-menu>
+          </template>
+        </lay-dropdown>
+        <lay-menu class="layui-layout-right">
+          <lay-menu-item>
+            <lay-fullscreen v-slot="{ toggle, isFullscreen }">
               <lay-icon
-                v-if="appStore.collapse"
-                type="layui-icon-spread-left"
+                @click="toggle()"
+                :type="
+                  isFullscreen
+                    ? 'layui-icon-screen-restore'
+                    : 'layui-icon-screen-full'
+                "
               ></lay-icon>
-              <lay-icon v-else type="layui-icon-shrink-right"></lay-icon>
-            </lay-menu-item>
-            <lay-menu-item class="hidden-xs-only" @click="refresh">
-              <lay-icon type="layui-icon-refresh-one"></lay-icon>
-            </lay-menu-item>
-            <lay-menu-item
-              class="hidden-xs-only"
-              v-if="appStore.breadcrumb"
-              style="padding: 0px 15px"
+            </lay-fullscreen>
+          </lay-menu-item>
+          <lay-menu-item>
+            <lay-dropdown updateAtScroll placement="bottom">
+              <lay-icon type="layui-icon-username"></lay-icon>
+              <template #content>
+                <lay-dropdown-menu>
+                  <lay-dropdown-menu-item @click="toUserInfo">
+                    <template #default>用户信息</template>
+                  </lay-dropdown-menu-item>
+                  <lay-dropdown-menu-item @click="toSystemSet">
+                    <template #default>系统设置</template>
+                  </lay-dropdown-menu-item>
+                  <lay-line></lay-line>
+                  <lay-dropdown-menu-item @click="logOut">
+                    <template #default>注销登录</template>
+                  </lay-dropdown-menu-item>
+                </lay-dropdown-menu>
+              </template>
+            </lay-dropdown>
+          </lay-menu-item>
+          <lay-menu-item @click="changeVisible">
+            <lay-icon type="layui-icon-more-vertical"></lay-icon>
+          </lay-menu-item>
+        </lay-menu>
+      </lay-header>
+      <!-- 下方主体区域 -->
+      <lay-layout class="main-container">
+        <!-- 遮盖层 -->
+        <div
+          v-if="!appStore.collapse"
+          class="layui-layer-shade hidden-sm-and-up"
+          @click="collapse"
+        ></div>
+        <!-- 核心菜单  -->
+        <lay-side
+          :width="sideWidth"
+          :class="appStore.sideTheme == 'dark' ? 'dark changeBgc' : 'light'"
+        >
+          <div class="side-menu-wrapper">
+            <div
+              class="side-menu1"
+              v-if="appStore.subfield && appStore.subfieldPosition == 'side'"
             >
-              <GlobalBreadcrumb></GlobalBreadcrumb>
-            </lay-menu-item>
-          </lay-menu>
-          <!-- 菜单分组 -->
-          <lay-menu
-            v-if="appStore.subfield && appStore.subfieldPosition == 'head'"
-            class="layui-nav-center"
-            :selectedKey="mainSelectedKey"
-            @changeSelectedKey="changeMainSelectedKey"
-          >
-            <template v-for="(menu, index) in mainMenus" :key="index">
-              <lay-menu-item :id="menu.id" v-if="index < 4">
-                <template #title>{{ menu.title }}</template>
-              </lay-menu-item>
-            </template>
-          </lay-menu>
-          <lay-dropdown
-            v-if="appStore.subfield && appStore.subfieldPosition == 'head'"
-            trigger="hover"
-            placement="bottom"
-          >
+              <global-main-menu
+                :collapse="true"
+                :menus="mainMenus"
+                :selectedKey="mainSelectedKey"
+                @changeSelectedKey="changeMainSelectedKey"
+              ></global-main-menu>
+            </div>
+            <div class="side-menu2">
+              <global-menu
+                :collapse="appStore.collapse"
+                :menus="menus"
+                :openKeys="openKeys"
+                :selectedKey="selectedKey"
+                @changeOpenKeys="changeOpenKeys"
+                @changeSelectedKey="changeSelectedKey"
+              ></global-menu>
+            </div>
+          </div>
+          <!-- 收起侧边栏按钮 -->
+          <div class="side-collapse-btn" @click="collapse">
             <lay-icon
-              type="layui-icon-more"
-              style="padding: 0px 15px"
+              :type="appStore.collapse ? 'layui-icon-spread-left' : 'layui-icon-shrink-right'"
             ></lay-icon>
-            <template #content>
-              <lay-dropdown-menu>
-                <template v-for="(menu, index) in mainMenus">
-                  <lay-dropdown-menu-item
-                    :key="menu.id"
-                    v-if="index >= 4"
-                    @click="changeMainSelectedKey(menu.id)"
-                    >{{ menu.title }}</lay-dropdown-menu-item
-                  >
-                </template>
-              </lay-dropdown-menu>
-            </template>
-          </lay-dropdown>
-          <lay-menu class="layui-layout-right">
-            <lay-menu-item>
-              <lay-fullscreen v-slot="{ toggle, isFullscreen }">
-                <lay-icon
-                  @click="toggle()"
-                  :type="
-                    isFullscreen
-                      ? 'layui-icon-screen-restore'
-                      : 'layui-icon-screen-full'
-                  "
-                ></lay-icon>
-              </lay-fullscreen>
-            </lay-menu-item>
-            <lay-menu-item>
-              <global-message-tab :flag="flag">
-                <lay-icon
-                  type="layui-icon-notice"
-                  @click="changeDropdown"
-                ></lay-icon>
-              </global-message-tab>
-            </lay-menu-item>
-            <lay-menu-item>
-              <lay-dropdown updateAtScroll placement="bottom">
-                <lay-icon type="layui-icon-website"></lay-icon>
-                <template #content>
-                  <lay-dropdown-menu>
-                    <lay-dropdown-menu-item
-                      @click="() => (appStore.locale = 'zh_CN')"
-                    >
-                      <template #default>中文</template>
-                    </lay-dropdown-menu-item>
-                    <lay-dropdown-menu-item
-                      @click="() => (appStore.locale = 'en_US')"
-                    >
-                      <template #default>英文</template>
-                    </lay-dropdown-menu-item>
-                  </lay-dropdown-menu>
-                </template>
-              </lay-dropdown>
-            </lay-menu-item>
-            <lay-menu-item>
-              <lay-dropdown updateAtScroll placement="bottom">
-                <lay-icon type="layui-icon-username"></lay-icon>
-                <template #content>
-                  <lay-dropdown-menu>
-                    <lay-dropdown-menu-item @click="toUserInfo">
-                      <template #default>用户信息</template>
-                    </lay-dropdown-menu-item>
-                    <lay-dropdown-menu-item @click="toSystemSet">
-                      <template #default>系统设置</template>
-                    </lay-dropdown-menu-item>
-                    <lay-line></lay-line>
-                    <lay-dropdown-menu-item @click="logOut">
-                      <template #default>注销登录</template>
-                    </lay-dropdown-menu-item>
-                  </lay-dropdown-menu>
-                </template>
-              </lay-dropdown>
-            </lay-menu-item>
-            <lay-menu-item @click="changeVisible">
-              <lay-icon type="layui-icon-more-vertical"></lay-icon>
-            </lay-menu-item>
-          </lay-menu>
-        </lay-header>
-        <lay-body>
-          <global-tab
-            :class="
-              appStore.tagsTheme == 'concise'
-                ? ''
-                : appStore.tagsTheme == 'underpainting'
-                ? 'underpainting'
-                : 'designer'
-            "
-          >
-          </global-tab>
-          <global-content></global-content>
-        </lay-body>
-        <lay-footer></lay-footer>
+          </div>
+        </lay-side>
+        <lay-layout style="width: 0px">
+          <lay-body>
+            <global-tab
+              :class="
+                appStore.tagsTheme == 'concise'
+                  ? ''
+                  : appStore.tagsTheme == 'underpainting'
+                  ? 'underpainting'
+                  : 'designer'
+              "
+            >
+            </global-tab>
+            <global-content></global-content>
+          </lay-body>
+          <lay-footer></lay-footer>
+        </lay-layout>
       </lay-layout>
     </lay-layout>
     <global-setup v-model="visible"></global-setup>
@@ -195,12 +169,10 @@ import { useAppStore } from '../store/app'
 import { useUserStore } from '../store/user'
 import GlobalSetup from './global/GlobalSetup.vue'
 import GlobalContent from './global/GlobalContent.vue'
-import GlobalBreadcrumb from './global/GlobalBreadcrumb.vue'
 import GlobalTab from './global/GlobalTab.vue'
 import GlobalMenu from './global/GlobalMenu.vue'
 import GlobalMainMenu from './global/GlobalMainMenu.vue'
-import GlobalMessageTab from './global/GlobalMessageTab.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useMenu } from './composable/useMenu'
 import zh_CN from '../lang/zh_CN'
 import en_US from '../lang/en_US'
@@ -211,9 +183,7 @@ export default {
     GlobalContent,
     GlobalTab,
     GlobalMenu,
-    GlobalBreadcrumb,
-    GlobalMainMenu,
-    GlobalMessageTab
+    GlobalMainMenu
   },
   setup() {
     const appStore = useAppStore()
@@ -228,6 +198,10 @@ export default {
         : '220px'
     )
     const router = useRouter()
+    const route = useRoute()
+
+    // 判断是否是首页
+    const isHomePage = computed(() => route.path === '/workspace/workbench')
 
     const {
       selectedKey,
@@ -285,12 +259,6 @@ export default {
       router.push('/system/menu')
     }
 
-    const flag = ref(false)
-    
-    function changeDropdown() {
-      flag.value = !flag.value
-    }
-
     return {
       sideWidth,
       mainSelectedKey,
@@ -313,52 +281,215 @@ export default {
       locales,
       toUserInfo,
       toSystemSet,
-      changeDropdown,
-      flag
+      isHomePage
     }
   }
 }
 </script>
 
 <style lang="less">
+/* ============================================
+   顶部导航布局 - 头部占满整行
+   ============================================ */
+.top-nav-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 首页背景图 */
+.top-nav-layout.home-layout {
+  background-image: url('@/assets/dashboard/bg-layout.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.top-nav-layout > .layui-header {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.top-nav-layout > .main-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 内容区域布局优化 */
+.top-nav-layout .main-container .layui-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 侧边栏高度调整 */
+.top-nav-layout .layui-side {
+  top: 0;
+  height: 100%;
+}
+
 @media screen and (max-width: 767px) {
   .layui-side {
     position: absolute;
-    height: 100vh;
+    height: 100%;
   }
 }
 
-/*鼠标经过背景色，增加了improtant，否则设置无效*/
+/* ============================================
+   头部导航 - 系统名称
+   ============================================ */
+.header-logo {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  height: 68px;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 22px;
+  color: #FFFFFF;
+  line-height: 31px;
+  letter-spacing: 4px;
+  white-space: nowrap;
+}
+
+/* ============================================
+   头部导航 - 日间模式主色背景样式
+   仅在 appStore.theme !== 'dark' 时添加此类
+   ============================================ */
+.header-primary {
+  background-color: var(--global-primary-color) !important;
+}
+
+/* 首页头部透明背景 */
+.home-layout .header-primary {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 日间主色背景 - 系统名称白色 */
+.header-primary .header-title {
+  color: #fff;
+}
+
+/* 日间主色背景 - 所有文字/图标统一白色 */
+.header-primary .layui-nav *,
+.header-primary .layui-nav-item .layui-icon {
+  color: #fff !important;
+}
+
+/* 日间主色背景 - 图标悬停效果 */
+.header-primary .layui-nav-item .layui-icon:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* 日间主色背景 - 中间菜单选中状态 */
+.header-primary .layui-nav.layui-nav-center .layui-this {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ============================================
+   首页特有样式 - 系统标题居中
+   ============================================ */
+.home-header {
+  justify-content: center;
+}
+
+.home-header .home-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.home-header .home-logo .header-title {
+  font-family: serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: #FFFFFF;
+  line-height: 37px;
+  letter-spacing: 5px;
+  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.home-header .layui-layout-right {
+  position: absolute;
+  right: 0;
+}
+
+/* 首页侧边栏透明 */
+.home-layout .layui-side {
+  background-color: transparent !important;
+}
+
+/* 首页内容区背景透明 */
+.home-layout .layui-body {
+  background: transparent !important;
+}
+
+/* 首页仪表盘背景透明 */
+.home-layout .dashboard-wrapper {
+  background: transparent !important;
+}
+
+/* 首页地图面板背景透明 */
+.home-layout .map-panel {
+  background-color: transparent !important;
+}
+
+/* 首页仪表盘页面无内边距 */
+.home-layout .dashboard-page {
+  padding: 0 !important;
+}
+
+/* 首页标签栏移除上边框 */
+.home-layout .global-tab {
+  border-top: none !important;
+}
+
+/* 首页标签栏移除下拉图标 */
+.home-layout .global-tab .layui-icon-down {
+  display: none !important;
+}
+
+/* 首页标签默认背景色 */
+.home-layout .layui-body>.global-tab>.layui-tab>.layui-tab-head>.layui-tab-title>li {
+  background: rgba(34, 79, 167, 0.2) !important;
+  color: #fff !important;
+}
+
+/* 首页标签高亮背景色 */
+.home-layout .layui-body>.global-tab>.layui-tab>.layui-tab-head>.layui-tab-title>li.layui-this {
+  background: linear-gradient(360deg, rgba(27, 193, 200, 0.5) 0%, rgba(27, 193, 200, 0) 100%), #0061CE !important;
+}
+
+/* ============================================
+   头部导航 - 默认样式（夜间模式或无 header-primary 类时）
+   ============================================ */
+/*鼠标经过背景色*/
 .layui-header .layui-nav-item .layui-icon:hover {
   background: whitesmoke !important;
 }
 
-/*面包屑颜色兼容*/
-.layui-header .layui-nav-item .layui-breadcrumb a {
-  color: #999 !important;
-}
-
-.layui-header .layui-nav-item .layui-breadcrumb a:nth-last-child(2) {
-  color: #666 !important;
-}
-
-/*图标默认颜色修复，指定 .layui-icon 去掉improtant，否则无法设置图标其他颜色*/
+/*图标默认颜色*/
 .layui-header .layui-nav-item .layui-icon {
   color: #666;
 }
 
-/*取消默认a标签的padding:0 20px，否则扩大图标后容器变形*/
+/*取消默认a标签的padding*/
 .layui-header .layui-nav-item > a {
   padding: 0 !important;
 }
 
-/*扩大图标尺寸与所在容器大小一致，默认大小导致鼠标必须点击图标才能触发事件效果*/
+/*扩大图标尺寸*/
 .layui-header .layui-nav-item .layui-icon {
-  height: 50px;
-  padding: 20px;
+  height: 68px;
+  padding: 24px;
 }
 
-/*增加鼠标经过图标时改变图标颜色，颜色为当前系统主题色*/
+/*鼠标经过图标时改变颜色为主题色*/
 .layui-header .layui-nav-item .layui-icon:hover {
   color: var(--global-primary-color) !important;
 }
@@ -370,8 +501,38 @@ export default {
 .side-menu-wrapper {
   width: 100%;
   overflow-y: auto;
-  height: calc(100% - 52px);
+  height: calc(100% - 40px); /* 减去折叠按钮 40px */
   display: flex;
+}
+
+/* 侧边栏折叠按钮 */
+.side-collapse-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.65);
+  transition: all 0.3s;
+}
+
+.side-collapse-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 浅色侧边栏的折叠按钮 */
+.light .side-collapse-btn {
+  color: #666;
+}
+
+.light .side-collapse-btn:hover {
+  color: var(--global-primary-color);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .side-menu-wrapper::-webkit-scrollbar {

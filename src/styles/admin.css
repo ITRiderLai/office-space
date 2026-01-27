@@ -2,13 +2,28 @@
   width: 100%;
   font-size: 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.75);
-  height: 50px !important;
-  line-height: 50px;
+  height: 68px !important;
+  line-height: 68px;
 }
 
 .layui-body {
-  overflow-x: hidden;
-  background-color: whitesmoke;
+  overflow: hidden;
+  padding: 24px;
+  background: #F1F2F6;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.layui-body > .global-content {
+  flex: 1;
+  overflow: auto;
+  height: auto !important;
+}
+
+.layui-body>.global-tab {
+  margin-bottom: 16px;
+  box-shadow: none !important;
 }
 
 .layui-body>.global-tab>.layui-tab {
@@ -23,24 +38,45 @@
   z-index: 999;
   display: block;
   width: 100%;
-  background-color: white;
+  background-color: transparent;
 }
 
 .layui-body>.global-tab>.layui-tab>.layui-tab-head>.layui-tab-title {
   border-bottom: none;
   border-left: none;
+  display: flex;
+  gap: 8px;
 }
 
 .layui-body>.global-tab>.layui-tab>.layui-tab-head>.layui-tab-title>li {
   color: dimgray;
   font-size: 14px;
   line-height: 40px;
-  border-right: 1px solid whitesmoke;
   border-bottom: none;
+  background-color: #fff;
+  border-radius: 4px;
 }
 
 .layui-body>.global-tab>.layui-tab>.layui-tab-head>.layui-tab-title>li.layui-this::after {
   border: none;
+  display: none;
+}
+
+/* 移除 tab 高亮时的圆点 */
+.layui-body>.global-tab .dot {
+  display: none !important;
+}
+
+/* 移除 tab 底部高亮线条 */
+.layui-body>.global-tab .layui-tab-title .layui-this::after {
+  display: none !important;
+}
+
+/* 移除 tab 高亮时的边框，设置高亮背景色（主色 0.1 透明度） */
+.layui-body>.global-tab .layui-tab-title .layui-this {
+  border: none !important;
+  border-bottom: none !important;
+  background-color: color-mix(in srgb, var(--global-primary-color) 10%, transparent) !important;
 }
 
 .layui-header {
@@ -74,8 +110,8 @@
 .layui-header,
 .layui-header .layui-nav,
 .layui-header .layui-nav .layui-nav-item {
-  height: 50px !important;
-  line-height: 50px;
+  height: 68px !important;
+  line-height: 68px;
   background: transparent;
   z-index: 9999;
 }
@@ -99,6 +135,7 @@
 }
 
 .layui-side {
+  position: relative;
   z-index: 10000;
   background: rgb(34, 36, 37, 98%);
   box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
@@ -137,14 +174,9 @@
   left: 60px;
 }
 
-.layui-layout.collapse .layui-header .layui-layout-left {
-  left: 60px;
-}
-
 .layui-layout .layui-logo,
 .layui-layout .layui-side,
-.layui-layout .layui-body,
-.layui-layout .layui-header .layui-layout-left {
+.layui-layout .layui-body {
   transition: all 0.3s;
 }
 

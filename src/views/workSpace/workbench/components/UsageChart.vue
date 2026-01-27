@@ -22,7 +22,12 @@ const props = defineProps<{
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
 
-const colors = ['#1890ff', '#52c41a', '#ffc107', '#fa8c16']
+const colors = [
+  { fill: 'rgba(24, 144, 255, 0.6)', border: '#1890ff' },
+  { fill: 'rgba(82, 196, 26, 0.6)', border: '#52c41a' },
+  { fill: 'rgba(255, 193, 7, 0.6)', border: '#ffc107' },
+  { fill: 'rgba(250, 140, 22, 0.6)', border: '#fa8c16' }
+]
 
 const initChart = () => {
   if (!chartRef.value) return
@@ -81,7 +86,9 @@ const updateChart = () => {
           name: item.type,
           value: item.value,
           itemStyle: {
-            color: colors[index % colors.length]
+            color: colors[index % colors.length].fill,
+            borderColor: colors[index % colors.length].border,
+            borderWidth: 4
           }
         }))
       }

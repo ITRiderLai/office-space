@@ -19,7 +19,7 @@ interface ColorProps {
 
 const props = withDefaults(defineProps<ColorProps>(), {
   modelValue: "#009688",
-  options: () => ['#009688','#36b368','#2d8cf0','#f6ad55','#f56c6c','#3963bc']
+  options: () => ['#009688','#0061CE','#36b368','#2d8cf0','#f6ad55','#f56c6c','#3963bc']
 });
 
 const emits = defineEmits(['update:modelValue'])

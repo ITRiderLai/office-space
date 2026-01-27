@@ -88,18 +88,16 @@ onMounted(() => {
 <style scoped>
 .dashboard-wrapper {
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 100%);
 }
 
 .dashboard-page {
   display: flex;
-  min-width: 1575px;
-  min-height: 800px;
   height: 100%;
   padding: 15px;
-  gap: 15px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .left-panel {

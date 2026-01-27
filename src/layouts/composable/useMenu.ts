@@ -17,6 +17,8 @@ export function useMenu() {
   const isAccordion = computed(() => appStore.accordion);
   const isSubfield = computed(() => appStore.subfield);
   const mainSelectedKey = ref("/workspace");
+  const isInitialized = ref(false);
+  const userCollapsing = ref(false);
 
   const menus = computed(() => {
     if(isSubfield.value) {
@@ -40,18 +42,24 @@ export function useMenu() {
   });
 
   watch(
-    route,
-    () => {
-      selectedKey.value = route.path;
-      const andParents = getParents(menus.value, route.path);
-      if (andParents && andParents.length > 0) {
-        let andParentKeys = andParents.map((item: any) => item.id);
-        if (isAccordion.value) {
-          openKeys.value = [...andParentKeys];
-        } else {
-          openKeys.value = [...andParentKeys, ...openKeys.value];
+    () => route.path,
+    (newPath, oldPath) => {
+      selectedKey.value = newPath;
+      // 首次加载或路由真正变化时才自动展开父菜单，且不是用户主动收起时
+      const isRouteChanged = !isInitialized.value || (oldPath !== undefined && oldPath !== newPath);
+      if (isRouteChanged && !userCollapsing.value) {
+        isInitialized.value = true;
+        const andParents = getParents(menus.value, newPath);
+        if (andParents && andParents.length > 0) {
+          let andParentKeys = andParents.map((item: any) => item.id);
+          if (isAccordion.value) {
+            openKeys.value = [...andParentKeys];
+          } else {
+            openKeys.value = [...andParentKeys, ...openKeys.value];
+          }
         }
       }
+      userCollapsing.value = false;
     },
     { immediate: true }
   );
@@ -82,6 +90,11 @@ export function useMenu() {
   }
 
   function changeOpenKeys(keys: string[]) {
+    // 标记用户正在收起菜单
+    if (keys.length < openKeys.value.length) {
+      userCollapsing.value = true;
+    }
+
     const addArr = diff(openKeys.value, keys);
     if (keys.length > openKeys.value.length && isAccordion.value) {
       var arr = getParents(menus.value, addArr[0]);

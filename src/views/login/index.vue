@@ -1,6 +1,11 @@
 <template>
   <div class="login-page">
     <div class="login-card">
+      <!-- 标题图片 -->
+      <div class="login-title">
+        <img :src="loginTitleImg" alt="登录标题" />
+      </div>
+
       <!-- 用户名 -->
       <div class="form-item">
         <label class="form-label">用户名</label>
@@ -70,6 +75,7 @@ import { useUserStore } from '@/store/user'
 import { layer } from '@layui/layer-vue'
 import { login } from '@/api/module/user'
 import { getCaptcha } from '@/api/module/captcha'
+import loginTitleImg from '@/assets/login/login-title.png'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -186,6 +192,16 @@ onMounted(() => {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+.login-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-title img {
+  max-width: 100%;
+  height: auto;
+}
+
 .form-item {
   margin-bottom: 20px;
 }
@@ -230,18 +246,22 @@ onMounted(() => {
   margin-bottom: 24px;
 }
 
-.remember-row :deep(.layui-checkbox-skin) {
-  border-color: var(--global-primary-color);
-}
-
-.remember-row :deep(.layui-checkbox-skin.layui-checkbox-checked) {
-  background-color: var(--global-primary-color);
-  border-color: var(--global-primary-color);
+.remember-row :deep(.layui-form-checked[lay-skin=primary] i) {
+  border-color: #0061CE;
+  background-color: #0061CE;
+  color: #fff;
 }
 
 .form-item :deep(.layui-btn) {
   height: 44px;
   font-size: 16px;
+  background-color: #0061CE;
+  border-color: #0061CE;
+}
+
+.form-item :deep(.layui-btn:hover) {
+  background-color: #0052b3;
+  border-color: #0052b3;
 }
 
 /* 响应式 */
