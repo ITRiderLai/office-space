@@ -113,8 +113,8 @@ onMounted(() => {
 
 <style scoped>
 .search-form {
-  padding: 15px 20px 0;
-  background: #fff;
+  padding-top: 15px;
+  background: #EBF3FB;
 }
 
 .search-form :deep(.layui-form-item) {

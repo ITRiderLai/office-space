@@ -332,22 +332,23 @@ onMounted(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: #f5f5f5;
+  background: #fff;
+  padding: 16px 24px 24px;
 }
 
 .action-bar {
   display: flex;
   justify-content: flex-end;
-  padding: 15px 20px;
+  padding-bottom: 16px;
   background: #fff;
   gap: 10px;
 }
 
 .table-container {
   flex: 1;
-  padding: 0 20px;
+  padding: 0;
   background: #fff;
-  margin-top: 10px;
+  margin-top: 16px;
   overflow: hidden;
   min-height: 0;
 }
@@ -367,13 +368,23 @@ onMounted(() => {
   overflow-y: auto;
 }
 
+.table-container :deep(.layui-table-header .layui-table-cell) {
+  background: #EBF3FB;
+}
+
+.table-container :deep(.layui-table td),
+.table-container :deep(.layui-table th) {
+  border-color: #E9E9E9;
+}
+
 .pagination-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 16px;
   background: #fff;
-  margin-top: 10px;
+  border: 1px solid #E9E9E9;
+  border-top: none;
 }
 
 .pagination-info {

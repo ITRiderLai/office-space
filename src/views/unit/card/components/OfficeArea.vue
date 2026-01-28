@@ -58,15 +58,17 @@ defineProps<Props>()
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  background: linear-gradient(to right, #e6f7ff, #ffffff);
+  background: #EBF3FB;
+  border-radius: 2px 2px 2px 2px;
 }
 
 .section-title {
   display: flex;
   align-items: center;
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 600;
+  color: #404A6F;
+  line-height: 14px;
 }
 
 .title-bar {
@@ -77,7 +79,7 @@ defineProps<Props>()
 }
 
 .section-content {
-  padding: 15px;
+  padding: 15px 0;
 }
 
 .section-placeholder {
@@ -101,12 +103,12 @@ defineProps<Props>()
 .area-table td {
   padding: 12px 15px;
   text-align: center;
-  border: 1px solid #e8e8e8;
+  border: 1px solid #E9E9E9;
   font-size: 14px;
 }
 
 .area-table th {
-  background: #fafafa;
+  background: #EBF3FB;
   color: #666;
   font-weight: normal;
 }

@@ -1,7 +1,9 @@
 <template>
   <div class="chart-card">
     <PanelTitle title="房屋面积类型" absolute />
-    <div class="chart-container" ref="chartRef"></div>
+    <div class="chart-wrapper">
+      <div class="chart-container" ref="chartRef"></div>
+    </div>
   </div>
 </template>
 
@@ -47,6 +49,18 @@ const initChart = () => {
         enabled: true,
         alpha: 60,
         beta: 0
+      },
+      events: {
+        load: function() {
+          // 微调容器尺寸以刷新图表位置
+          if (chartRef.value) {
+            setTimeout(() => {
+              if (chartRef.value) {
+                chartRef.value.style.height = 'calc(100% - 1px)'
+              }
+            }, 1000)
+          }
+        }
       }
     },
     title: {
@@ -121,19 +135,39 @@ const updateChart = () => {
   )
 }
 
+let resizeTimer: any = null
 const handleResize = () => {
-  chartInstance?.reflow()
+  if (resizeTimer) clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(() => {
+    if (chartInstance && chartRef.value) {
+      const width = chartRef.value.clientWidth
+      const height = chartRef.value.clientHeight
+      chartInstance.setSize(width, height, false)
+    }
+  }, 100)
 }
 
 watch(() => props.data, updateChart, { deep: true })
 
+let resizeObserver: ResizeObserver | null = null
+
 onMounted(() => {
   initChart()
   window.addEventListener('resize', handleResize)
+
+  // 使用 ResizeObserver 监听容器尺寸变化
+  if (chartRef.value) {
+    resizeObserver = new ResizeObserver(() => {
+      handleResize()
+    })
+    resizeObserver.observe(chartRef.value)
+  }
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
+  if (resizeTimer) clearTimeout(resizeTimer)
+  resizeObserver?.disconnect()
   chartInstance?.destroy()
 })
 </script>
@@ -144,12 +178,17 @@ onUnmounted(() => {
   height: 100%;
 }
 
-.chart-container {
+.chart-wrapper {
   height: 100%;
   padding-top: 40px;
   box-sizing: border-box;
   background-image: url('@/assets/dashboard/bg-cont.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
 }
 </style>

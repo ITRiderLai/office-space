@@ -47,6 +47,7 @@ const handleToolClick = (type: string) => {
 <style scoped>
 .quick-tools {
   display: flex;
+  height: 100%;
 }
 
 .tools-content {
@@ -99,5 +100,22 @@ const handleToolClick = (type: string) => {
   font-size: 12px;
   text-align: center;
   white-space: nowrap;
+}
+
+/* 高度小于680px时图标缩小 */
+@media screen and (max-height: 680px) {
+  .tool-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 4px;
+  }
+
+  .tool-name {
+    font-size: 11px;
+  }
+
+  .tool-item {
+    padding: 10px 15px;
+  }
 }
 </style>

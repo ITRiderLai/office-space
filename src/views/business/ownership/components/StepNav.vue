@@ -25,8 +25,9 @@ defineProps<{
 
 <style scoped>
 .step-nav {
-  width: 140px;
-  background: #fff;
+  width: 160px;
+  padding: 24px 0px 24px 8px;
+  background: #EBF3FB;
   border-radius: var(--global-border-radius);
   overflow: hidden;
 }
@@ -56,7 +57,7 @@ defineProps<{
 .step-item.active {
   color: #1890ff;
   font-weight: bold;
-  background-color: transparent;
+  background-color: #fff;
 }
 
 .step-item.active .step-bar {

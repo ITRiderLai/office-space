@@ -118,7 +118,7 @@ const loadCalculationData = async () => {
 }
 
 .calculation-table th {
-  background: #1890ff;
+  background: var(--global-primary-color);
   color: #fff;
   font-weight: normal;
 }
@@ -132,11 +132,11 @@ const loadCalculationData = async () => {
 }
 
 .calculation-table .total-row {
-  background: #e6f7ff;
+  background: #f5f5f5;
 }
 
 .calculation-table .total-row td {
-  color: #1890ff;
+  color: #202020;
 }
 
 .calculation-loading {

@@ -78,15 +78,17 @@ defineEmits(['open-calculation'])
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  background: linear-gradient(to right, #e6f7ff, #ffffff);
+  background: #EBF3FB;
+  border-radius: 2px 2px 2px 2px;
 }
 
 .section-title {
   display: flex;
   align-items: center;
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 600;
+  color: #404A6F;
+  line-height: 14px;
 }
 
 .title-bar {
@@ -97,7 +99,7 @@ defineEmits(['open-calculation'])
 }
 
 .section-content {
-  padding: 15px;
+  padding: 15px 0;
 }
 
 .staff-table {
@@ -106,7 +108,7 @@ defineEmits(['open-calculation'])
 }
 
 .staff-table td {
-  border: 1px solid #e8e8e8;
+  border: 1px solid #E9E9E9;
   padding: 0;
   font-size: 14px;
 }
@@ -119,14 +121,17 @@ defineEmits(['open-calculation'])
   display: inline-block;
   width: 80px;
   padding: 10px 15px;
-  background: #fafafa;
+  background: #EBF3FB;
   color: #333;
-  border-right: 1px solid #e8e8e8;
+  border-right: 1px solid #E9E9E9;
+  text-align: center;
 }
 
 .staff-value {
   display: inline-block;
+  width: calc(100% - 141px);
   padding: 10px 15px;
   color: #333;
+  text-align: center;
 }
 </style>

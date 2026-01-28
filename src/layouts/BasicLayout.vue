@@ -568,6 +568,8 @@ export default {
 }
 
 .underpainting {
+  border-top: none !important;
+
   .layui-tab-title {
     .layui-this {
       color: var(--global-primary-color) !important;

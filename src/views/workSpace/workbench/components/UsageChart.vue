@@ -23,7 +23,7 @@ const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
 
 const colors = [
-  { fill: 'rgba(24, 144, 255, 0.6)', border: '#1890ff' },
+  { fill: 'rgba(30, 223, 247, 0.6)', border: '#1EDFF7' },
   { fill: 'rgba(82, 196, 26, 0.6)', border: '#52c41a' },
   { fill: 'rgba(255, 193, 7, 0.6)', border: '#ffc107' },
   { fill: 'rgba(250, 140, 22, 0.6)', border: '#fa8c16' }
@@ -123,7 +123,7 @@ onUnmounted(() => {
 
 .chart-container {
   height: 100%;
-  padding-top: 40px;
+  padding: 40px 10px 10px;
   box-sizing: border-box;
   background-image: url('@/assets/dashboard/bg-cont.png');
   background-size: 100% 100%;

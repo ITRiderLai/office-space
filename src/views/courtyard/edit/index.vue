@@ -91,7 +91,8 @@ onMounted(() => {
 .courtyard-edit-page {
   height: 100%;
   display: flex;
-  background: #f5f5f5;
+  padding: 24px;
+  background: #fff;
 }
 
 .tree-panel {
@@ -102,6 +103,7 @@ onMounted(() => {
   flex-direction: column;
   position: relative;
   transition: width 0.3s, min-width 0.3s;
+  border: 1px solid #E9E9E9;
 }
 
 .tree-panel.collapsed {
@@ -131,7 +133,7 @@ onMounted(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-left: 10px;
+  padding-left: 16px;
   overflow: hidden;
 }
 
@@ -145,7 +147,7 @@ onMounted(() => {
 }
 
 .content-panel :deep(.layui-tab-head) {
-  padding: 0 20px;
+  padding: 0;
   border-bottom: 1px solid #e8e8e8;
 }
 
@@ -157,7 +159,7 @@ onMounted(() => {
 .content-panel :deep(.layui-tab-content) {
   flex: 1;
   overflow: hidden;
-  padding: 10px;
+  padding: 10px 0 0;
 }
 
 .content-panel :deep(.layui-tab-item) {
@@ -168,7 +170,7 @@ onMounted(() => {
 /* 楼层图纸占位容器 */
 .floor-plan-placeholder {
   height: 100%;
-  border: 1px dashed #d9d9d9;
+  border: 1px solid #E9E9E9;
   border-radius: 4px;
   box-sizing: border-box;
 }

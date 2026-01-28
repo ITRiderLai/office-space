@@ -75,8 +75,8 @@ const updateChart = () => {
           value: (v / maxValue) * 100,
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-              { offset: 0, color: '#0066cc' },
-              { offset: 1, color: '#00d4ff' }
+              { offset: 0, color: '#4AA1FF' },
+              { offset: 1, color: '#3CC8FF' }
             ]),
             borderRadius: [0, 10, 10, 0]
           }
@@ -126,7 +126,7 @@ onUnmounted(() => {
 
 .chart-container {
   height: 100%;
-  padding-top: 40px;
+  padding: 40px 10px 10px;
   box-sizing: border-box;
   background-image: url('@/assets/dashboard/bg-cont.png');
   background-size: 100% 100%;

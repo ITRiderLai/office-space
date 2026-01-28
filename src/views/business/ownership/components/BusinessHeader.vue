@@ -37,7 +37,7 @@ defineProps<{
   display: flex;
   align-items: center;
   padding: 12px 20px;
-  background-color: #f2f2f2;
+  background-color: #EBF3FB;
   border-bottom: 1px solid #e6e6e6;
 }
 
@@ -47,10 +47,16 @@ defineProps<{
 }
 
 .header-item .label {
-  color: #666;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 600;
+  color: #404A6F;
+  line-height: 22px;
 }
 
 .header-item .value {
-  color: #333;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  color: #202020;
+  line-height: 22px;
 }
 </style>

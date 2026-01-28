@@ -207,7 +207,7 @@ onUnmounted(() => {
 
 .chart-container {
   height: 100%;
-  padding-top: 40px;
+  padding: 40px 10px 10px;
   box-sizing: border-box;
   background-image: url('@/assets/dashboard/bg-cont.png');
   background-size: 100% 100%;

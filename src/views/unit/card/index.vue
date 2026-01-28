@@ -130,7 +130,8 @@ onMounted(() => {
 .unit-card-page {
   height: 100%;
   display: flex;
-  background: #f5f5f5;
+  background: #fff;
+  padding: 24px;
 }
 
 .tree-panel {
@@ -141,6 +142,7 @@ onMounted(() => {
   flex-direction: column;
   position: relative;
   transition: width 0.3s, min-width 0.3s;
+  border: 1px solid #E9E9E9;
 }
 
 .tree-panel.collapsed {
@@ -168,7 +170,7 @@ onMounted(() => {
 
 .detail-panel {
   flex: 1;
-  padding: 15px;
+  padding: 0 0 0 15px;
   overflow: hidden;
 }
 

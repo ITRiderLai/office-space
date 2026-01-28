@@ -115,14 +115,16 @@ onMounted(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5;
+  background-color: #fff;
+  padding: 16px 24px 24px;
 }
 
 .ownership-content {
   flex: 1;
   display: flex;
-  padding: 10px;
   gap: 10px;
+  margin-top: 8px;
+  border: 1px solid #E9E9E9;
   overflow: hidden;
 }
 

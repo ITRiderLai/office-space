@@ -137,19 +137,21 @@ const handleNodeClick = (node: any) => {
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  border-bottom: 1px solid #e8e8e8;
+  background: #EBF3FB;
 }
 
 .tree-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 18px;
+  color: #202020;
+  line-height: 25px;
 }
 
 .tree-toggle-icon {
   cursor: pointer;
   font-size: 18px;
-  color: #666;
+  color: #929FAF;
 }
 
 .tree-toggle-icon:hover {
@@ -169,7 +171,8 @@ const handleNodeClick = (node: any) => {
 .tree-content {
   flex: 1;
   overflow: auto;
-  padding: 0 5px;
+  padding: 13px 5px;
+  border-top: 1px solid #E9E9E9;
 }
 
 .tree-loading {

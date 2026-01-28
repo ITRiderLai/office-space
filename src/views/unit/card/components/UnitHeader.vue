@@ -14,7 +14,7 @@
         </div>
         <div class="info-item">
           <span class="info-label">单位级别：</span>
-          <span class="info-value highlight">{{ unitDetail.unitLevel }}</span>
+          <span class="info-value">{{ unitDetail.unitLevel }}</span>
         </div>
       </div>
       <div class="info-row">
@@ -24,7 +24,7 @@
         </div>
         <div class="info-item">
           <span class="info-label">实有人数：</span>
-          <span class="info-value highlight">{{ unitDetail.actualCount }} 人</span>
+          <span class="info-value">{{ unitDetail.actualCount }} 人</span>
         </div>
       </div>
       <div class="info-row">
@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="info-actions">
-        <lay-button size="sm" @click="handlePreviewPhoto">
+        <lay-button size="sm" type="primary" @click="handlePreviewPhoto">
           <lay-icon type="layui-icon-picture" /> 查看全景照片
         </lay-button>
       </div>
@@ -89,6 +89,9 @@ const handlePreviewPhoto = () => {
   gap: 20px;
   padding: 20px;
   background: #fff;
+  background-image: url('@/assets/unitCard/unit-header-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 4px;
   margin-bottom: 15px;
 }
@@ -98,8 +101,8 @@ const handlePreviewPhoto = () => {
 }
 
 .unit-photo img {
-  width: 280px;
-  height: 180px;
+  width: 427px;
+  height: 240px;
   object-fit: cover;
   border-radius: 4px;
   cursor: pointer;
