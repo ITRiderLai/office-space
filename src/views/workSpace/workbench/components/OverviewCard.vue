@@ -115,15 +115,17 @@ defineProps<{
 }
 
 .item-value {
-  font-size: 24px;
-  font-weight: bold;
-  color: #fff;
-  line-height: 1.2;
+  font-family: DINPro, DINPro;
+  font-weight: 500;
+  font-size: 22px;
+  color: #FFFFFF;
 }
 
 .item-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.4;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 14px;
+  color: #FFFFFF;
+  line-height: 20px;
 }
 </style>

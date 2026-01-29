@@ -87,6 +87,7 @@ defineEmits(['open-calculation'])
   align-items: center;
   font-family: PingFang SC, PingFang SC;
   font-weight: 600;
+  font-size: 18px;
   color: #404A6F;
   line-height: 14px;
 }
@@ -110,7 +111,7 @@ defineEmits(['open-calculation'])
 .staff-table td {
   border: 1px solid #E9E9E9;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .staff-table td:empty {
@@ -123,6 +124,7 @@ defineEmits(['open-calculation'])
   padding: 10px 15px;
   background: #EBF3FB;
   color: #333;
+  font-size: 16px;
   border-right: 1px solid #E9E9E9;
   text-align: center;
 }
@@ -132,6 +134,7 @@ defineEmits(['open-calculation'])
   width: calc(100% - 141px);
   padding: 10px 15px;
   color: #333;
+  font-size: 16px;
   text-align: center;
 }
 </style>

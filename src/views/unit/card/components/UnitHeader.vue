@@ -1,5 +1,5 @@
 <template>
-  <div class="unit-header">
+  <div class="unit-header" :class="{ 'show-bg': appStore.theme !== 'dark' }">
     <!-- 左侧图片 -->
     <div class="unit-photo">
       <img :src="unitDetail.panoramaPhoto" alt="单位照片" @click="handlePreviewPhoto" />
@@ -65,6 +65,9 @@
 <script lang="ts" setup>
 import { layer } from '@layui/layui-vue'
 import { UnitDetail } from '@/api/module/unit'
+import { useAppStore } from '@/store/app'
+
+const appStore = useAppStore()
 
 interface Props {
   unitDetail: UnitDetail
@@ -89,20 +92,26 @@ const handlePreviewPhoto = () => {
   gap: 20px;
   padding: 20px;
   background: #fff;
-  background-image: url('@/assets/unitCard/unit-header-bg.png');
-  background-size: cover;
-  background-repeat: no-repeat;
   border-radius: 4px;
   margin-bottom: 15px;
 }
 
+.unit-header.show-bg {
+  background-image: url('@/assets/unitCard/unit-header-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
 .unit-photo {
   flex-shrink: 0;
+  width: 427px;
+  height: 240px;
 }
 
 .unit-photo img {
-  width: 427px;
-  height: 240px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 4px;
   cursor: pointer;
@@ -112,7 +121,7 @@ const handlePreviewPhoto = () => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .info-row {
@@ -124,6 +133,7 @@ const handlePreviewPhoto = () => {
   flex: 1;
   display: flex;
   align-items: baseline;
+  padding: 4px 0;
 }
 
 .info-item.full {
@@ -132,14 +142,21 @@ const handlePreviewPhoto = () => {
 }
 
 .info-label {
-  color: #666;
-  font-size: 14px;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 16px;
+  color: #777777;
+  line-height: 24px;
   white-space: nowrap;
+  margin-right: 16px;
 }
 
 .info-value {
-  color: #333;
-  font-size: 14px;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 16px;
+  color: #202020;
+  line-height: 24px;
 }
 
 .info-value.highlight {

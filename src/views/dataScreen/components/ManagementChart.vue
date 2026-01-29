@@ -1,6 +1,6 @@
 <template>
   <div class="chart-card">
-    <PanelTitle title="管 理 范 围" absolute />
+    <PanelTitle title="管理范围" absolute />
     <div class="chart-container" ref="chartRef"></div>
   </div>
 </template>

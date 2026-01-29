@@ -10,17 +10,17 @@ let user: User = {
 const menus = [
   {
     id: "/workspace/workbench",
-    icon: "layui-icon-home",
+    icon: "svg:home",
     title: "首页"
   },
   {
     id: "/data-screen",
-    icon: "layui-icon-chart-screen",
+    icon: "svg:analysis",
     title: "数据大屏"
   },
   {
     id: "/business",
-    icon: "layui-icon-form",
+    icon: "svg:business",
     title: "业务申请",
     children: [
       {
@@ -32,7 +32,7 @@ const menus = [
   },
   {
     id: "/unit",
-    icon: "layui-icon-group",
+    icon: "svg:unit",
     title: "单位管理",
     children: [
       {
@@ -44,7 +44,7 @@ const menus = [
   },
   {
     id: "/courtyard",
-    icon: "layui-icon-home",
+    icon: "svg:courtyard",
     title: "院落管理",
     children: [
       {
@@ -56,7 +56,7 @@ const menus = [
   },
   {
     id: "/ledger",
-    icon: "layui-icon-table",
+    icon: "svg:ledger",
     title: "数据台账",
     children: [
       {

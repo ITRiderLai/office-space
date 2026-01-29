@@ -186,7 +186,7 @@ onMounted(() => {
 
 .login-card {
   width: 500px;
-  padding: 40px;
+  padding: 40px 56px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -211,6 +211,10 @@ onMounted(() => {
   font-size: 14px;
   color: #333;
   margin-bottom: 8px;
+}
+
+.form-item :deep(.layui-input) {
+  height: 48px;
 }
 
 .captcha-row {
@@ -253,7 +257,7 @@ onMounted(() => {
 }
 
 .form-item :deep(.layui-btn) {
-  height: 44px;
+  height: 54px;
   font-size: 16px;
   background-color: #0061CE;
   border-color: #0061CE;

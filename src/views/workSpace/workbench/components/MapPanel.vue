@@ -235,8 +235,8 @@ onUnmounted(() => {
   position: relative;
   background-color: #0a1628;
   background-image: url('@/assets/dashboard/chat-bg.png');
-  background-size: 103%;
-  background-position: -25px center;
+  background-size: 100%;
+  background-position: center;
   background-repeat: no-repeat;
   border-radius: 4px;
   overflow: hidden;

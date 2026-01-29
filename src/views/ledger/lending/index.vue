@@ -80,24 +80,24 @@ import { saveAs } from 'file-saver'
 
 // 表格列配置
 const columns = [
-  { type: 'checkbox', width: '50px', fixed: 'left' },
-  { title: '单位名称', key: 'unitName', width: '120px', sort: true },
-  { title: '填报单位', key: 'reportUnitId', width: '200px', sort: true },
-  { title: '单位性质', key: 'unitType', width: '100px' },
-  { title: '楼宇', key: 'building', width: '80px' },
-  { title: '出租房产地址', key: 'address', width: '220px' },
-  { title: '产权人', key: 'owner', width: '80px' },
-  { title: '产权证号', key: 'certNo', width: '120px' },
-  { title: '出租面积', key: 'rentArea', width: '100px' },
-  { title: '承租人', key: 'tenant', width: '80px' },
-  { title: '租赁开始时间', key: 'startDate', width: '120px' },
-  { title: '租赁结束时间', key: 'endDate', width: '120px' },
-  { title: '批准部门', key: 'approvalDept', width: '140px' },
-  { title: '是否违规', key: 'violation', width: '90px', customSlot: 'violation' },
-  { title: '违规类型', key: 'violationType', width: '100px' },
-  { title: '整改措施', key: 'rectifyMeasure', width: '150px' },
-  { title: '整改中存在的突出问题', key: 'existingIssue', width: '180px' },
-  { title: '整改后情况', key: 'rectifyStatus', width: '120px' }
+  { type: 'checkbox', width: '60px', fixed: 'left' },
+  { title: '单位名称', key: 'unitName', width: '200px', sort: true },
+  { title: '填报单位', key: 'reportUnitId', width: '280px', sort: true },
+  { title: '单位性质', key: 'unitType', width: '160px' },
+  { title: '楼宇', key: 'building', width: '140px' },
+  { title: '出租房产地址', key: 'address', width: '320px' },
+  { title: '产权人', key: 'owner', width: '140px' },
+  { title: '产权证号', key: 'certNo', width: '200px' },
+  { title: '出租面积', key: 'rentArea', width: '160px' },
+  { title: '承租人', key: 'tenant', width: '140px' },
+  { title: '租赁开始时间', key: 'startDate', width: '200px' },
+  { title: '租赁结束时间', key: 'endDate', width: '200px' },
+  { title: '批准部门', key: 'approvalDept', width: '200px' },
+  { title: '是否违规', key: 'violation', width: '140px', customSlot: 'violation' },
+  { title: '违规类型', key: 'violationType', width: '160px' },
+  { title: '整改措施', key: 'rectifyMeasure', width: '240px' },
+  { title: '整改中存在的突出问题', key: 'existingIssue', width: '280px' },
+  { title: '整改后情况', key: 'rectifyStatus', width: '200px' }
 ]
 
 // 表格数据
@@ -375,6 +375,7 @@ onMounted(() => {
 .table-container :deep(.layui-table td),
 .table-container :deep(.layui-table th) {
   border-color: #E9E9E9;
+  height: 42px;
 }
 
 .pagination-container {
@@ -390,5 +391,10 @@ onMounted(() => {
 .pagination-info {
   font-size: 14px;
   color: #666;
+}
+
+.table-container :deep(.layui-table-cell) {
+  font-size: 16px;
+  color: #202020;
 }
 </style>

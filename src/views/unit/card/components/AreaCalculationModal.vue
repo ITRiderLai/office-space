@@ -114,7 +114,7 @@ const loadCalculationData = async () => {
   padding: 12px 15px;
   text-align: center;
   border: 1px solid #e8e8e8;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .calculation-table th {

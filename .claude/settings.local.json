@@ -6,7 +6,12 @@
       "WebFetch(domain:geo.datav.aliyun.com)",
       "mcp__context7__resolve-library-id",
       "mcp__context7__query-docs",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(dir /s /b \"D:\\\\Rider\\\\External Project\\\\office-space\\\\node_modules\\\\@layui\\\\layui-vue\\\\*\")",
+      "Bash(findstr:*)",
+      "Bash(find:*)",
+      "Bash(dir:*)",
+      "Bash(Get-ChildItem -Path \"D:\\\\Rider\\\\External Project\\\\office-space\\\\src\\\\assets\\\\icons\" -Recurse)"
     ]
   }
 }

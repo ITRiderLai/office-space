@@ -123,7 +123,7 @@ const updateChart = () => {
     grid: {
       left: '3%',
       right: '4%',
-      bottom: '15%',
+      bottom: '5%',
       top: '20%',
       containLabel: true
     },
@@ -135,7 +135,14 @@ const updateChart = () => {
         color: 'rgba(255, 255, 255, 0.7)',
         fontSize: 10,
         interval: 0,
-        rotate: 30
+        lineHeight: 16,
+        formatter: (value: string) => {
+          // 每4个字符换行
+          if (value.length > 4) {
+            return value.replace(/(.{4})/g, '$1\n').trim()
+          }
+          return value
+        }
       },
       axisTick: { show: false }
     },
@@ -208,7 +215,6 @@ onUnmounted(() => {
   color: #fff;
   font-size: 16px;
   font-weight: 500;
-  letter-spacing: 2px;
   flex-shrink: 0;
 }
 

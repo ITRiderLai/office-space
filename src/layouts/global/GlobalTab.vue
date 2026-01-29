@@ -63,6 +63,7 @@ function toChangPage(id: any) {
 <style lang="less">
 .global-tab {
   display: flex;
+  align-items: center;
   position: relative;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   border-top: 1px solid whitesmoke;
@@ -74,22 +75,65 @@ function toChangPage(id: any) {
   width: calc(100% - 40px);
 }
 
+/* Tab滚动按钮样式 */
 .global-tab .layui-tab .layui-tab-bar {
+  width: 14px;
+  height: 32px;
+  background: rgba(119, 119, 119, 0.1);
+  border-radius: 4px;
   border: none;
-  border-left: 1px solid whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.global-tab .layui-tab .layui-tab-bar:hover {
+  background: rgba(119, 119, 119, 0.2);
+}
+
+.global-tab .layui-tab .layui-tab-bar .layui-icon {
+  font-size: 12px;
+  color: #666;
 }
 
 .global-tab .layui-tab .layui-tab-bar.prev {
-  border-left: none;
+  border: none;
+}
+
+/* Tab标题项不被挤压 */
+.global-tab .layui-tab .layui-tab-title.is-top {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 32px !important;
+}
+
+.global-tab .layui-tab .layui-tab-title.is-top > li {
+  flex-shrink: 0;
+}
+
+.layui-body > .global-tab > .layui-tab > .layui-tab-head > .layui-tab-title > li {
+  height: 32px !important;
+  line-height: 32px !important;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 14px;
+  color: #202020;
+}
+
+.layui-body > .global-tab > .layui-tab > .layui-tab-head > .layui-tab-title > li:not(.layui-this) {
+  background: rgba(119, 119, 119, 0.1) !important;
+  background-color: rgba(119, 119, 119, 0.1) !important;
 }
 
 .global-tab > i {
-  width: 40px;
-  background: white;
-  height: 100%;
-  line-height: 40px;
+  width: 32px;
+  background: rgba(119, 119, 119, 0.1);
+  height: 32px;
+  line-height: 32px;
   text-align: center;
-  border-left: 1px solid whitesmoke;
+  border-left: none;
+  border-radius: 4px;
 }
 
 .global-tab .layui-tab .dot {

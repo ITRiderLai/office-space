@@ -3,7 +3,11 @@
         <template v-if="menu.children">
             <lay-sub-menu :id="menu.id">
                 <template #icon>
-                    <lay-icon :type="menu.icon"></lay-icon>
+                    <!-- svg:开头使用SvgIcon，否则使用layui图标 -->
+                    <SvgIcon v-if="menu.icon && menu.icon.startsWith('svg:')"
+                             :name="menu.icon.replace('svg:', '')"
+                             size="16px" />
+                    <lay-icon v-else :type="menu.icon"></lay-icon>
                 </template>
                 <template #title>{{ menu.title }}</template>
                 <GlobalMenuItem :menus="menu.children"></GlobalMenuItem>
@@ -12,7 +16,10 @@
         <template v-else>
             <lay-menu-item :id="menu.id">
                 <template #icon>
-                    <lay-icon :type="menu.icon"></lay-icon>
+                    <SvgIcon v-if="menu.icon && menu.icon.startsWith('svg:')"
+                             :name="menu.icon.replace('svg:', '')"
+                             size="16px" />
+                    <lay-icon v-else :type="menu.icon"></lay-icon>
                 </template>
                 <template #title>{{ menu.title }}</template>
             </lay-menu-item>

@@ -10,6 +10,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import PanelTitle from './PanelTitle.vue'
+import chartBgImage from '@/assets/dataScreen/chart-bg.png'
 
 interface AreaTypeData {
   name: string
@@ -23,6 +24,7 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 let chartInstance: any = null
+let bgImageElement: any = null
 
 // 将 hex 颜色转换为带透明度的 rgba
 const hexToRgba = (hex: string, alpha: number) => {
@@ -51,7 +53,28 @@ const initChart = () => {
         beta: 0
       },
       events: {
-        load: function() {
+        load: function(this: any) {
+          const chart = this
+          const addBgImage = () => {
+            if (!chart.series[0]?.center) return
+            const centerX = chart.plotLeft + chart.series[0].center[0]
+            const centerY = chart.plotTop + chart.series[0].center[1]
+            // 保持原始比例 277:125
+            const imgWidth = Math.min(chart.plotWidth, chart.plotHeight) * 0.8
+            const imgHeight = imgWidth * (125 / 277)
+
+            if (bgImageElement) {
+              bgImageElement.destroy()
+            }
+            bgImageElement = chart.renderer.image(
+              chartBgImage,
+              centerX - imgWidth / 2,
+              centerY - imgHeight / 2 + 40,
+              imgWidth,
+              imgHeight
+            ).attr({ zIndex: 0 }).add()
+          }
+          setTimeout(addBgImage, 100)
           // 微调容器尺寸以刷新图表位置
           if (chartRef.value) {
             setTimeout(() => {
@@ -60,6 +83,21 @@ const initChart = () => {
               }
             }, 1000)
           }
+        },
+        redraw: function(this: any) {
+          const chart = this
+          if (!chart.series[0]?.center || !bgImageElement) return
+          const centerX = chart.plotLeft + chart.series[0].center[0]
+          const centerY = chart.plotTop + chart.series[0].center[1]
+          const imgWidth = Math.min(chart.plotWidth, chart.plotHeight) * 0.8
+          const imgHeight = imgWidth * (125 / 277)
+
+          bgImageElement.attr({
+            x: centerX - imgWidth / 2,
+            y: centerY - imgHeight / 2 + 40,
+            width: imgWidth,
+            height: imgHeight
+          })
         }
       }
     },
@@ -83,7 +121,7 @@ const initChart = () => {
       layout: 'horizontal',
       itemStyle: {
         color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: '11px'
+        fontSize: '14px'
       },
       itemHoverStyle: {
         color: '#00d4ff'

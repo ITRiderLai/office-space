@@ -67,6 +67,7 @@ defineProps<Props>()
   align-items: center;
   font-family: PingFang SC, PingFang SC;
   font-weight: 600;
+  font-size: 18px;
   color: #404A6F;
   line-height: 14px;
 }
@@ -104,7 +105,7 @@ defineProps<Props>()
   padding: 12px 15px;
   text-align: center;
   border: 1px solid #E9E9E9;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .area-table th {

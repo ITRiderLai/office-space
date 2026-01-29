@@ -275,7 +275,7 @@ const handleConfirm = async () => {
 }
 
 .section-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #333;
   padding-bottom: 10px;
@@ -292,6 +292,13 @@ const handleConfirm = async () => {
   width: 100px;
   min-width: 100px;
   flex-shrink: 0;
+}
+
+.form-section :deep(.layui-form-label),
+.form-section :deep(.layui-input),
+.form-section :deep(.layui-select),
+.form-section :deep(.layui-textarea) {
+  font-size: 16px;
 }
 
 .modal-footer {

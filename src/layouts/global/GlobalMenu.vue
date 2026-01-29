@@ -51,7 +51,10 @@ const changeSelectedKey = (key: string) => {
 
 <style>
 .layui-nav-tree * {
-  font-size: 14px;
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 16px !important;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .layui-nav-tree .layui-nav-item > a,
@@ -67,6 +70,14 @@ const changeSelectedKey = (key: string) => {
   padding-left: 10px;
 }
 
+/* 图标容器垂直居中 */
+.layui-nav-tree .layui-nav-item > a > i {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(2px);
+}
+
 .layui-nav-tree .layui-nav-item > a .layui-nav-more {
   font-size: 12px!important;
   padding: 3px 0px;
@@ -77,7 +88,7 @@ const changeSelectedKey = (key: string) => {
   padding-left: 45px;
 }
 
-/* 左侧菜单高亮样式 - 白色背景，主色字体 */
+/* 左侧菜单高亮样式 - 白色背景，主色字体，加粗 */
 .layui-nav-tree .layui-this > a,
 .layui-nav-tree.inverted .layui-this > a,
 .layui-nav-tree .layui-nav-child .layui-this > a {
@@ -88,6 +99,8 @@ const changeSelectedKey = (key: string) => {
 .layui-nav-tree.inverted .layui-this *,
 .layui-nav-tree .layui-nav-child .layui-this * {
   color: var(--global-primary-color) !important;
+  fill: var(--global-primary-color) !important;
+  font-weight: 600 !important;
 }
 
 </style>

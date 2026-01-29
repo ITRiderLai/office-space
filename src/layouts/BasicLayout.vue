@@ -109,7 +109,10 @@
         <!-- 核心菜单  -->
         <lay-side
           :width="sideWidth"
-          :class="appStore.sideTheme == 'dark' ? 'dark changeBgc' : 'light'"
+          :class="[
+            appStore.sideTheme == 'dark' ? 'dark changeBgc' : 'light',
+            appStore.theme !== 'dark' && !isHomePage ? 'theme-light' : ''
+          ]"
         >
           <div class="side-menu-wrapper">
             <div
@@ -194,8 +197,8 @@ export default {
       appStore.collapse
         ? '60px'
         : appStore.subfield && appStore.subfieldPosition == 'side'
-        ? '280px'
-        : '220px'
+        ? '360px'
+        : '300px'
     )
     const router = useRouter()
     const route = useRoute()
@@ -509,14 +512,17 @@ export default {
 .side-collapse-btn {
   position: absolute;
   bottom: 0;
-  right: 0;
-  width: 40px;
+  left: 0;
+  width: 100%;
   height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 15px;
+  box-sizing: border-box;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.65);
+  background: rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
 }
 
@@ -565,6 +571,20 @@ export default {
 
 .changeBgc {
   background-color: #171717 !important;
+}
+
+/* 非夜间模式下的侧边栏样式 */
+.theme-light.changeBgc {
+  background: #062A53 url('@/assets/common/bg-menu.png') no-repeat bottom center / 100% auto !important;
+}
+
+.theme-light .layui-nav-tree .layui-nav-child {
+  background-color: transparent !important;
+}
+
+/* 侧边栏子菜单背景透明 */
+.layui-side .layui-nav-tree .layui-nav-child {
+  background-color: transparent !important;
 }
 
 .underpainting {

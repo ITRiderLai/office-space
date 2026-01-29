@@ -113,12 +113,12 @@ onMounted(() => {
 
 <style scoped>
 .search-form {
-  padding-top: 15px;
+  padding: 10px;
   background: #EBF3FB;
 }
 
 .search-form :deep(.layui-form-item) {
-  margin-bottom: 15px;
+  margin-bottom: 8px;
   flex-wrap: nowrap;
 }
 
@@ -130,5 +130,26 @@ onMounted(() => {
 
 .search-form :deep(.search-btns) {
   padding-left: 30px;
+}
+
+.search-form :deep(.layui-form-label) {
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 16px;
+  color: #202020;
+}
+
+.search-form :deep(.layui-input),
+.search-form :deep(.layui-select) {
+  font-size: 16px;
+}
+
+.search-form :deep(.layui-input),
+.search-form :deep(.layui-select) {
+  height: 34px;
+}
+
+.search-form :deep(.layui-select.has-clear) {
+  width: 100%;
 }
 </style>

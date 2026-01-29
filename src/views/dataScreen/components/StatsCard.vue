@@ -61,7 +61,7 @@ const formatValue = (value: number) => {
 
 .stat-label {
   color: rgba(255, 255, 255, 0.7);
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 8px;
 }
 
@@ -74,7 +74,7 @@ const formatValue = (value: number) => {
 
 .stat-value .value {
   color: #00d4ff;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
 }
 
