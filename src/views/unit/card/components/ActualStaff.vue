@@ -58,6 +58,16 @@ defineProps<Props>()
   border-radius: 2px 2px 2px 2px;
 }
 
+.section-header :deep(.layui-btn) {
+  height: 36px;
+  font-size: 14px;
+  padding: 0 16px;
+}
+
+.section-header :deep(.layui-btn .layui-icon) {
+  margin-right: 7px;
+}
+
 .section-title {
   display: flex;
   align-items: center;

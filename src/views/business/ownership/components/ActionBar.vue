@@ -1,10 +1,10 @@
 <template>
   <div class="action-bar">
     <lay-button type="primary" @click="$emit('save')">
-      <SvgIcon name="save" size="14px" /> 保存
+      <SvgIcon name="save" size="14px" />保存
     </lay-button>
     <lay-button @click="$emit('close')">
-      <SvgIcon name="close" size="14px" /> 关闭
+      <SvgIcon name="close" size="14px" />关闭
     </lay-button>
   </div>
 </template>
@@ -41,8 +41,12 @@ defineEmits(['save', 'close'])
   margin-left: 0;
 }
 
+.action-bar :deep(.layui-btn) {
+  font-size: 16px;
+}
+
 .action-bar :deep(.layui-btn .svg-icon) {
-  margin-right: 4px;
+  margin-right: 7px;
   transform: translateY(-1px);
 }
 </style>

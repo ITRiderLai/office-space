@@ -3,16 +3,16 @@
     <!-- 操作按钮区 -->
     <div class="action-bar">
       <lay-button type="primary" @click="handleAdd">
-        <lay-icon type="layui-icon-add-1" /> 新增
+        <SvgIcon name="add" />新增
       </lay-button>
-      <lay-button type="normal" :disabled="selectedRows.length !== 1" @click="handleEdit">
-        <lay-icon type="layui-icon-edit" /> 编辑
+      <lay-button border="primary" :disabled="selectedRows.length !== 1" @click="handleEdit">
+        <SvgIcon name="edit" />编辑
       </lay-button>
-      <lay-button type="danger" :disabled="selectedRows.length === 0" @click="handleDelete">
-        <lay-icon type="layui-icon-delete" /> 删除
+      <lay-button border="primary" :disabled="selectedRows.length === 0" @click="handleDelete">
+        <SvgIcon name="delete" />删除
       </lay-button>
-      <lay-button @click="handleExport">
-        <lay-icon type="layui-icon-export" /> 导出
+      <lay-button border="primary" @click="handleExport">
+        <SvgIcon name="export" />导出
       </lay-button>
     </div>
 
@@ -77,6 +77,7 @@ import EditModal from './components/EditModal.vue'
 import { getLendingList, deleteLending, LendingRecord, LendingQueryParams } from '@/api/module/ledger'
 import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 // 表格列配置
 const columns = [
@@ -341,7 +342,24 @@ onMounted(() => {
   justify-content: flex-end;
   padding-bottom: 16px;
   background: #fff;
-  gap: 10px;
+  gap: 8px;
+}
+
+.action-bar :deep(.layui-btn) {
+  height: 36px;
+  padding: 0 16px;
+  margin-left: 0;
+}
+
+.action-bar :deep(.layui-btn .svg-icon) {
+  margin-right: 7px;
+  transform: translateY(-1px);
+}
+
+.action-bar :deep(.layui-border-primary) {
+  border-color: var(--global-primary-color) !important;
+  color: var(--global-primary-color) !important;
+  background: transparent !important;
 }
 
 .table-container {

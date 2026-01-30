@@ -6,7 +6,7 @@
         人员编制（单位按照编制人数）
       </div>
       <lay-button size="sm" type="primary" @click="$emit('open-calculation')">
-        <lay-icon type="layui-icon-table" /> 面积核算表
+        <SvgIcon name="area-calculation" size="14px" />面积核算表
       </lay-button>
     </div>
     <div class="section-content">
@@ -56,6 +56,7 @@
 
 <script lang="ts" setup>
 import { StaffEstablishment } from '@/api/module/unit'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 interface Props {
   data: StaffEstablishment
@@ -80,6 +81,17 @@ defineEmits(['open-calculation'])
   padding: 12px 15px;
   background: #EBF3FB;
   border-radius: 2px 2px 2px 2px;
+}
+
+.section-header :deep(.layui-btn) {
+  height: 36px;
+  font-size: 14px;
+  padding: 0 16px;
+}
+
+.section-header :deep(.layui-btn .svg-icon) {
+  margin-right: 7px;
+  transform: translateY(-1px);
 }
 
 .section-title {

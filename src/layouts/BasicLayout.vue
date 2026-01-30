@@ -589,16 +589,16 @@ export default {
 
 .underpainting {
   border-top: none !important;
+}
 
-  .layui-tab-title {
-    .layui-this {
+.layui-tab-title {
+  .layui-this {
+    color: var(--global-primary-color) !important;
+    border-bottom: 2px solid var(--global-primary-color) !important;
+    background-color: #009b8e0d !important;
+
+    .layui-icon {
       color: var(--global-primary-color) !important;
-      border-bottom: 2px solid var(--global-primary-color) !important;
-      background-color: #009b8e0d !important;
-
-      .layui-icon {
-        color: var(--global-primary-color) !important;
-      }
     }
   }
 }

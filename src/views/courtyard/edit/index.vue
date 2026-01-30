@@ -7,6 +7,7 @@
         :tree-data="treeData"
         :loading="treeLoading"
         :selected-id="selectedNodeId"
+        :default-expand-keys="defaultExpandKeys"
         @select="handleSelectNode"
         @refresh="loadTreeData"
         @toggle-collapse="toggleTreePanel"
@@ -37,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import OrgTree from '@/views/unit/card/components/OrgTree.vue'
 import FloorInfo from './components/FloorInfo.vue'
 import FloorRooms from './components/FloorRooms.vue'
@@ -48,6 +49,7 @@ const treeData = ref<CourtyardTreeNode[]>([])
 const treeLoading = ref(false)
 const treeCollapsed = ref(false)
 const selectedNodeId = ref('')
+const defaultExpandKeys = ref<string[]>([])
 
 // 当前选中的楼层ID
 const selectedFloorId = computed(() => {
@@ -57,13 +59,36 @@ const selectedFloorId = computed(() => {
 // 标签页
 const activeTab = ref('floorPlan')
 
+// 查找第一个楼层节点及其父节点路径
+const findFirstFloorNodeWithPath = (nodes: CourtyardTreeNode[], path: string[] = []): { node: CourtyardTreeNode | null, path: string[] } => {
+  for (const node of nodes) {
+    if (node.type === 'floor') {
+      return { node, path }
+    }
+    if (node.children && node.children.length > 0) {
+      const result = findFirstFloorNodeWithPath(node.children, [...path, node.id])
+      if (result.node) return result
+    }
+  }
+  return { node: null, path: [] }
+}
+
 // 加载目录树数据
-const loadTreeData = async (keyword?: string) => {
+const loadTreeData = async (keyword?: string, autoSelectFirst = false) => {
   treeLoading.value = true
   try {
     const { data, code } = await getCourtyardTree(keyword)
     if (code === 200) {
       treeData.value = data || []
+      // 自动选中第一项
+      if (autoSelectFirst && treeData.value.length > 0) {
+        const { node: firstFloor, path } = findFirstFloorNodeWithPath(treeData.value)
+        if (firstFloor) {
+          defaultExpandKeys.value = path
+          await nextTick()
+          handleSelectNode(firstFloor)
+        }
+      }
     }
   } catch (error) {
     console.error('加载目录树失败:', error)
@@ -83,7 +108,7 @@ const toggleTreePanel = () => {
 }
 
 onMounted(() => {
-  loadTreeData()
+  loadTreeData('', true)
 })
 </script>
 
@@ -154,6 +179,12 @@ onMounted(() => {
 .content-panel :deep(.layui-tab-title li) {
   padding: 0 20px;
   font-size: 14px;
+}
+
+.content-panel :deep(.layui-tab-title .layui-this) {
+  background-color: transparent !important;
+  border-bottom: none !important;
+  font-weight: bold;
 }
 
 .content-panel :deep(.layui-tab-content) {

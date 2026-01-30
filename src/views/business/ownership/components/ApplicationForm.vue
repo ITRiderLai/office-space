@@ -390,11 +390,25 @@ defineExpose({
 .input-with-buttons {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .input-with-buttons :deep(.layui-input-wrapper) {
   flex: 1;
+}
+
+.input-with-buttons :deep(.layui-btn+.layui-btn) {
+  margin-left: 0;
+}
+
+/* 输入框placeholder颜色 */
+:deep(.layui-input-wrapper input::placeholder) {
+  color: #9199AE;
+}
+
+/* 禁用输入框背景色 */
+:deep(.layui-input-wrapper.layui-input-disabled) {
+  background: #F1F5FA;
 }
 
 /* 文件上传 */

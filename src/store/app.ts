@@ -22,8 +22,8 @@ export const useAppStore = defineStore({
       tagsTheme: 'concise',
       keepAliveList: [],
       themeVariable: {
-        "--global-checked-color": "#5fb878",
-        "--global-primary-color": "#009688",
+        "--global-checked-color": "#0061CE",
+        "--global-primary-color": "#0061CE",
         "--global-normal-color": "#1e9fff",
         "--global-danger-color": "#ff5722",
         "--global-warm-color": "#ffb800",

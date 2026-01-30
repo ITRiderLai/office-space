@@ -216,6 +216,8 @@ onUnmounted(() => {
   font-size: 16px;
   font-weight: 500;
   flex-shrink: 0;
+  height: 32px;
+  line-height: 32px;
 }
 
 .chart-container {

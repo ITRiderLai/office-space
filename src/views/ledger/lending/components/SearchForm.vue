@@ -46,12 +46,8 @@
         </lay-col>
         <lay-col :md="6">
           <lay-form-item label-width="80" class="search-btns">
-            <lay-button type="primary" @click="handleSearch">
-              <lay-icon type="layui-icon-search" /> 搜索
-            </lay-button>
-            <lay-button @click="handleReset">
-              <lay-icon type="layui-icon-refresh" /> 重置
-            </lay-button>
+            <lay-button type="primary" @click="handleSearch">搜索</lay-button>
+            <lay-button border="primary" @click="handleReset">重置</lay-button>
           </lay-form-item>
         </lay-col>
       </lay-row>
@@ -113,12 +109,12 @@ onMounted(() => {
 
 <style scoped>
 .search-form {
-  padding: 10px;
+  padding: 10px 10px 2px;
   background: #EBF3FB;
 }
 
 .search-form :deep(.layui-form-item) {
-  margin-bottom: 8px;
+  margin-bottom: 0;
   flex-wrap: nowrap;
 }
 
@@ -129,7 +125,25 @@ onMounted(() => {
 }
 
 .search-form :deep(.search-btns) {
-  padding-left: 30px;
+  padding-left: 16px;
+}
+
+.search-form :deep(.search-btns .layui-btn) {
+  height: 32px;
+  font-size: 14px;
+  padding: 0 12px;
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+.search-form :deep(.search-btns .layui-btn:last-child) {
+  margin-right: 0;
+}
+
+.search-form :deep(.search-btns .layui-border-primary) {
+  border-color: var(--global-primary-color) !important;
+  color: var(--global-primary-color) !important;
+  background: transparent !important;
 }
 
 .search-form :deep(.layui-form-label) {
@@ -147,6 +161,10 @@ onMounted(() => {
 .search-form :deep(.layui-input),
 .search-form :deep(.layui-select) {
   height: 34px;
+}
+
+.search-form :deep(.layui-input-wrapper input::placeholder) {
+  color: #919FAE;
 }
 
 .search-form :deep(.layui-select.has-clear) {

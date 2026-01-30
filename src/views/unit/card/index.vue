@@ -7,6 +7,7 @@
         :tree-data="treeData"
         :loading="treeLoading"
         :selected-id="selectedUnitId"
+        :default-expand-keys="defaultExpandKeys"
         @select="handleSelectUnit"
         @refresh="loadTreeData"
         @toggle-collapse="toggleTreePanel"
@@ -56,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import OrgTree from './components/OrgTree.vue'
 import UnitHeader from './components/UnitHeader.vue'
 import StaffEstablishment from './components/StaffEstablishment.vue'
@@ -70,6 +71,7 @@ const treeData = ref<OrgTreeNode[]>([])
 const treeLoading = ref(false)
 const treeCollapsed = ref(false)
 const selectedUnitId = ref('')
+const defaultExpandKeys = ref<string[]>([])
 
 // 单位详情
 const unitDetail = ref<UnitDetail | null>(null)
@@ -77,13 +79,36 @@ const unitDetail = ref<UnitDetail | null>(null)
 // 面积核算表弹窗
 const calculationModalVisible = ref(false)
 
+// 查找第一个单位节点及其父节点路径
+const findFirstUnitNodeWithPath = (nodes: OrgTreeNode[], path: string[] = []): { node: OrgTreeNode | null, path: string[] } => {
+  for (const node of nodes) {
+    if (node.type === 'unit') {
+      return { node, path }
+    }
+    if (node.children && node.children.length > 0) {
+      const result = findFirstUnitNodeWithPath(node.children, [...path, node.id])
+      if (result.node) return result
+    }
+  }
+  return { node: null, path: [] }
+}
+
 // 加载目录树数据
-const loadTreeData = async (keyword?: string) => {
+const loadTreeData = async (keyword?: string, autoSelectFirst = false) => {
   treeLoading.value = true
   try {
     const { data, code } = await getOrgTree(keyword)
     if (code === 200) {
       treeData.value = data || []
+      // 自动选中第一项
+      if (autoSelectFirst && treeData.value.length > 0) {
+        const { node: firstUnit, path } = findFirstUnitNodeWithPath(treeData.value)
+        if (firstUnit) {
+          defaultExpandKeys.value = path
+          await nextTick()
+          handleSelectUnit(firstUnit)
+        }
+      }
     }
   } catch (error) {
     console.error('加载目录树失败:', error)
@@ -122,7 +147,7 @@ const handleOpenCalculation = () => {
 }
 
 onMounted(() => {
-  loadTreeData()
+  loadTreeData('', true)
 })
 </script>
 

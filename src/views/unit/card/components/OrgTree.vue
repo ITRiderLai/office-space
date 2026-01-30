@@ -33,6 +33,7 @@
     <div class="tree-content">
       <lay-tree
         v-if="treeData.length > 0"
+        :key="expandKeys.join(',')"
         :data="treeNodes"
         :showCheckbox="false"
         :showLine="false"
@@ -57,11 +58,13 @@ interface Props {
   treeData: OrgTreeNode[]
   loading?: boolean
   selectedId?: string
+  defaultExpandKeys?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
   loading: false,
-  selectedId: ''
+  selectedId: '',
+  defaultExpandKeys: () => []
 })
 
 const emit = defineEmits(['select', 'refresh', 'collapse'])
@@ -88,6 +91,13 @@ watch(() => props.selectedId, (newVal) => {
     selectedKey.value = newVal
   }
 })
+
+// 监听defaultExpandKeys变化
+watch(() => props.defaultExpandKeys, (newVal) => {
+  if (newVal && newVal.length > 0) {
+    expandKeys.value = [...newVal]
+  }
+}, { immediate: true, deep: true })
 
 // 搜索
 let searchTimer: ReturnType<typeof setTimeout> | null = null

@@ -2,7 +2,7 @@
   <div class="unit-header" :class="{ 'show-bg': appStore.theme !== 'dark' }">
     <!-- 左侧图片 -->
     <div class="unit-photo">
-      <img :src="unitDetail.panoramaPhoto" alt="单位照片" @click="handlePreviewPhoto" />
+      <img :src="defaultUnitPhoto" alt="单位照片" @click="handlePreviewPhoto" />
     </div>
 
     <!-- 右侧信息 -->
@@ -55,7 +55,7 @@
       </div>
       <div class="info-actions">
         <lay-button size="sm" type="primary" @click="handlePreviewPhoto">
-          <lay-icon type="layui-icon-picture" /> 查看全景照片
+          <SvgIcon name="panorama" size="14px" />查看全景照片
         </lay-button>
       </div>
     </div>
@@ -66,6 +66,8 @@
 import { layer } from '@layui/layui-vue'
 import { UnitDetail } from '@/api/module/unit'
 import { useAppStore } from '@/store/app'
+import SvgIcon from '@/components/SvgIcon.vue'
+import defaultUnitPhoto from '@/assets/unitCard/unit-photo.png'
 
 const appStore = useAppStore()
 
@@ -166,5 +168,16 @@ const handlePreviewPhoto = () => {
 
 .info-actions {
   margin-top: 5px;
+}
+
+.info-actions :deep(.layui-btn) {
+  height: 36px;
+  font-size: 14px;
+  padding: 0 16px;
+}
+
+.info-actions :deep(.layui-btn .svg-icon) {
+  margin-right: 7px;
+  transform: translateY(-1px);
 }
 </style>
