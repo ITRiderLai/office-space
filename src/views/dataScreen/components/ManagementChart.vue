@@ -54,11 +54,7 @@ const updateChart = () => {
       }
     },
     legend: {
-      data: categories,
-      top: 10,
-      textStyle: { color: 'rgba(255, 255, 255, 0.8)', fontSize: 12 },
-      itemWidth: 12,
-      itemHeight: 12
+      show: false
     },
     grid: {
       left: '3%',
@@ -94,6 +90,7 @@ const updateChart = () => {
         z: 12,
         data: values.map((v, i) => ({
           value: v,
+          name: categories[i],
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
               { offset: 0, color: hexToRgba(colors[i], 0.9) },

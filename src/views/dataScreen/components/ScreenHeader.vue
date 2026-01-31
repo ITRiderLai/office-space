@@ -14,7 +14,7 @@
     <div class="header-right">
       <div class="user-info">
         <lay-icon type="layui-icon-username" />
-        <span class="username">张小凡</span>
+        <span class="username">{{ username }}</span>
       </div>
       <div class="header-btn" @click="$emit('toggle-fullscreen')">
         <lay-icon :type="isFullscreen ? 'layui-icon-screen-restore' : 'layui-icon-screen-full'" />
@@ -33,7 +33,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useUserStore } from '@/store/user'
+
+const userStore = useUserStore()
+
+const username = computed(() => {
+  return userStore.userInfo?.username || userStore.userInfo?.userName || 'admin'
+})
 
 defineProps<{
   isFullscreen: boolean

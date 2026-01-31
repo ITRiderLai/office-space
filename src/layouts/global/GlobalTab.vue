@@ -151,7 +151,6 @@ function toChangPage(id: any) {
 
 .global-tab .layui-tab .layui-tab-close:hover {
   background: transparent !important;
-  color: #e2e2e2 !important;
 }
 .designer {
   display: flex;
