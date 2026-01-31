@@ -128,4 +128,19 @@ defineProps<{
   color: #FFFFFF;
   line-height: 20px;
 }
+
+@media screen and (max-width: 1600px) {
+  .item-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .item-value {
+    font-size: 18px;
+  }
+
+  .item-label {
+    font-size: 12px;
+  }
+}
 </style>

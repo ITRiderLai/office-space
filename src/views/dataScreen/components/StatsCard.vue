@@ -53,6 +53,7 @@ const formatValue = (value: number) => {
   justify-content: space-around;
   padding: 15px 20px;
   flex-shrink: 0;
+  margin-top: 20px;
 }
 
 .stat-item {
@@ -63,6 +64,18 @@ const formatValue = (value: number) => {
   color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
   margin-bottom: 8px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.stat-label::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(289deg, rgba(216,216,216,0) 0%, #00D9FC 49.79%, rgba(216,216,216,0) 100%);
 }
 
 .stat-value {

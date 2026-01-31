@@ -51,4 +51,10 @@ withDefaults(defineProps<{
   font-weight: 500;
   letter-spacing: 2px;
 }
+
+@media screen and (max-width: 1600px) {
+  .title-text {
+    letter-spacing: 0;
+  }
+}
 </style>
