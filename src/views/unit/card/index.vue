@@ -184,8 +184,8 @@ onMounted(() => {
   background: #fff;
 }
 
-.expand-btn:hover {
-  background: #f5f5f5;
+.expand-btn:hover .layui-icon {
+  color: #1890ff;
 }
 
 .expand-btn .layui-icon {

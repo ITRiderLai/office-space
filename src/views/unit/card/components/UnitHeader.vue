@@ -106,8 +106,8 @@ const handlePreviewPhoto = () => {
 }
 
 .unit-photo {
-  flex-shrink: 0;
-  width: 427px;
+  flex: 1;
+  max-width: 427px;
   height: 240px;
 }
 
