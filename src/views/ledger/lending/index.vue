@@ -334,7 +334,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   background: #fff;
-  padding: 16px 24px 24px;
+  padding: 16px;
 }
 
 .action-bar {

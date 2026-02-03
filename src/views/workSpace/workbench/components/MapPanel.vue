@@ -40,13 +40,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import * as echarts from 'echarts'
 
 const mapRef = ref<HTMLElement>()
 const mapMode = ref('region')
 let chartInstance: echarts.ECharts | null = null
 let mapData: any = null
+const windowWidth = ref(window.innerWidth)
+
+// 根据浏览器宽度计算地图缩放比例
+// 宽度越大，zoom值越大（地图显示更大）
+const mapZoom = computed(() => {
+  const width = windowWidth.value
+  if (width >= 1920) {
+    return 1.0
+  } else if (width >= 1600) {
+    return 0.9
+  } else if (width >= 1366) {
+    return 0.85
+  } else if (width >= 1280) {
+    return 0.75
+  } else {
+    return 0.65
+  }
+})
 
 // 云南省各地区数据
 const regionData = [
@@ -97,7 +115,7 @@ const updateChart = () => {
     geo: {
       map: 'yunnan',
       roam: true,
-      zoom: 0.85,
+      zoom: mapZoom.value,
       center: [101.5, 25],
       label: {
         show: true,
@@ -215,7 +233,16 @@ const handleZoomOut = () => {
 
 // 窗口大小变化
 const handleResize = () => {
+  windowWidth.value = window.innerWidth
   chartInstance?.resize()
+  // 根据新的宽度更新地图缩放
+  if (chartInstance) {
+    chartInstance.setOption({
+      geo: {
+        zoom: mapZoom.value
+      }
+    })
+  }
 }
 
 onMounted(() => {

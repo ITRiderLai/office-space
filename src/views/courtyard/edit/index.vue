@@ -1,7 +1,11 @@
 <template>
   <div class="courtyard-edit-page">
     <!-- 左侧目录树区域 -->
-    <div class="tree-panel" :class="{ collapsed: treeCollapsed }">
+    <div
+      class="tree-panel"
+      :class="{ collapsed: treeCollapsed, dragging: isDragging }"
+      :style="treePanelStyle"
+    >
       <OrgTree
         v-if="!treeCollapsed"
         :tree-data="treeData"
@@ -15,6 +19,12 @@
       <div class="expand-btn" v-if="treeCollapsed" @click="toggleTreePanel">
         <lay-icon type="layui-icon-spread-left" />
       </div>
+      <!-- 右侧边框拖拽区 -->
+      <div
+        v-if="!treeCollapsed"
+        class="tree-edge-resize"
+        @mousedown.prevent="startDrag"
+      />
     </div>
 
     <!-- 右侧内容区域 -->
@@ -38,18 +48,63 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import OrgTree from '@/views/unit/card/components/OrgTree.vue'
 import FloorInfo from './components/FloorInfo.vue'
 import FloorRooms from './components/FloorRooms.vue'
 import { getCourtyardTree, CourtyardTreeNode } from '@/api/module/courtyard'
 
+const TREE_WIDTH_MIN = 240
+const TREE_WIDTH_MAX = 560
+const TREE_WIDTH_DEFAULT = 300
+
 // 目录树相关
 const treeData = ref<CourtyardTreeNode[]>([])
 const treeLoading = ref(false)
 const treeCollapsed = ref(false)
+const treeWidth = ref(TREE_WIDTH_DEFAULT)
 const selectedNodeId = ref('')
 const defaultExpandKeys = ref<string[]>([])
+
+const isDragging = ref(false)
+let dragStartX = 0
+let dragStartWidth = 0
+
+const treePanelStyle = computed(() => {
+  if (treeCollapsed.value) {
+    return { width: '40px', minWidth: '40px' }
+  }
+  const w = Math.min(TREE_WIDTH_MAX, Math.max(TREE_WIDTH_MIN, treeWidth.value))
+  return { width: `${w}px`, minWidth: `${w}px` }
+})
+
+const startDrag = (e: MouseEvent) => {
+  isDragging.value = true
+  dragStartX = e.clientX
+  dragStartWidth = treeWidth.value
+  document.addEventListener('mousemove', onDrag)
+  document.addEventListener('mouseup', stopDrag)
+  document.body.style.cursor = 'col-resize'
+  document.body.style.userSelect = 'none'
+}
+
+const onDrag = (e: MouseEvent) => {
+  const delta = e.clientX - dragStartX
+  treeWidth.value = Math.min(TREE_WIDTH_MAX, Math.max(TREE_WIDTH_MIN, dragStartWidth + delta))
+}
+
+const stopDrag = () => {
+  isDragging.value = false
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', stopDrag)
+  document.body.style.cursor = ''
+  document.body.style.userSelect = ''
+}
+
+onUnmounted(() => {
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', stopDrag)
+})
 
 // 当前选中的楼层ID
 const selectedFloorId = computed(() => {
@@ -116,24 +171,37 @@ onMounted(() => {
 .courtyard-edit-page {
   height: 100%;
   display: flex;
-  padding: 24px;
+  padding: 16px;
   background: #fff;
 }
 
 .tree-panel {
-  width: 320px;
-  min-width: 320px;
   background: #fff;
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: width 0.3s, min-width 0.3s;
+  transition: width 0.2s, min-width 0.2s;
   border: 1px solid #E9E9E9;
+  flex-shrink: 0;
+}
+
+.tree-panel.dragging {
+  transition: none;
 }
 
 .tree-panel.collapsed {
   width: 40px;
   min-width: 40px;
+}
+
+.tree-edge-resize {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 6px;
+  cursor: col-resize;
+  z-index: 1;
 }
 
 .expand-btn {

@@ -1,7 +1,11 @@
 <template>
   <div class="unit-card-page">
     <!-- 左侧目录树区域 -->
-    <div class="tree-panel" :class="{ collapsed: treeCollapsed }">
+    <div
+      class="tree-panel"
+      :class="{ collapsed: treeCollapsed, dragging: isDragging }"
+      :style="treePanelStyle"
+    >
       <OrgTree
         v-if="!treeCollapsed"
         :tree-data="treeData"
@@ -15,6 +19,12 @@
       <div class="expand-btn" v-if="treeCollapsed" @click="toggleTreePanel">
         <lay-icon type="layui-icon-spread-left" />
       </div>
+      <!-- 右侧边框拖拽区 -->
+      <div
+        v-if="!treeCollapsed"
+        class="tree-edge-resize"
+        @mousedown.prevent="startDrag"
+      />
     </div>
 
     <!-- 右侧详情区域 -->
@@ -57,7 +67,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import OrgTree from './components/OrgTree.vue'
 import UnitHeader from './components/UnitHeader.vue'
 import StaffEstablishment from './components/StaffEstablishment.vue'
@@ -66,12 +76,57 @@ import OfficeArea from './components/OfficeArea.vue'
 import AreaCalculationModal from './components/AreaCalculationModal.vue'
 import { getOrgTree, getUnitDetail, OrgTreeNode, UnitDetail } from '@/api/module/unit'
 
+const TREE_WIDTH_MIN = 240
+const TREE_WIDTH_MAX = 560
+const TREE_WIDTH_DEFAULT = 300
+
 // 目录树相关
 const treeData = ref<OrgTreeNode[]>([])
 const treeLoading = ref(false)
 const treeCollapsed = ref(false)
+const treeWidth = ref(TREE_WIDTH_DEFAULT)
 const selectedUnitId = ref('')
 const defaultExpandKeys = ref<string[]>([])
+
+const isDragging = ref(false)
+let dragStartX = 0
+let dragStartWidth = 0
+
+const treePanelStyle = computed(() => {
+  if (treeCollapsed.value) {
+    return { width: '40px', minWidth: '40px' }
+  }
+  const w = Math.min(TREE_WIDTH_MAX, Math.max(TREE_WIDTH_MIN, treeWidth.value))
+  return { width: `${w}px`, minWidth: `${w}px` }
+})
+
+const startDrag = (e: MouseEvent) => {
+  isDragging.value = true
+  dragStartX = e.clientX
+  dragStartWidth = treeWidth.value
+  document.addEventListener('mousemove', onDrag)
+  document.addEventListener('mouseup', stopDrag)
+  document.body.style.cursor = 'col-resize'
+  document.body.style.userSelect = 'none'
+}
+
+const onDrag = (e: MouseEvent) => {
+  const delta = e.clientX - dragStartX
+  treeWidth.value = Math.min(TREE_WIDTH_MAX, Math.max(TREE_WIDTH_MIN, dragStartWidth + delta))
+}
+
+const stopDrag = () => {
+  isDragging.value = false
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', stopDrag)
+  document.body.style.cursor = ''
+  document.body.style.userSelect = ''
+}
+
+onUnmounted(() => {
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', stopDrag)
+})
 
 // 单位详情
 const unitDetail = ref<UnitDetail | null>(null)
@@ -156,23 +211,36 @@ onMounted(() => {
   height: 100%;
   display: flex;
   background: #fff;
-  padding: 24px;
+  padding: 16px;
 }
 
 .tree-panel {
-  width: 320px;
-  min-width: 320px;
   background: #fff;
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: width 0.3s, min-width 0.3s;
+  transition: width 0.2s, min-width 0.2s;
   border: 1px solid #E9E9E9;
+  flex-shrink: 0;
+}
+
+.tree-panel.dragging {
+  transition: none;
 }
 
 .tree-panel.collapsed {
   width: 40px;
   min-width: 40px;
+}
+
+.tree-edge-resize {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 6px;
+  cursor: col-resize;
+  z-index: 1;
 }
 
 .expand-btn {

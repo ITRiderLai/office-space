@@ -106,7 +106,7 @@ onMounted(() => {
 }
 
 .right-panel {
-  width: 55%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 12px;

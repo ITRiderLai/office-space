@@ -223,4 +223,8 @@ const handleNodeClick = (node: any) => {
 .org-tree :deep(.layui-tree-line) {
   display: none;
 }
+
+.org-tree :deep(.layui-tree-pack) {
+  padding-left: 8px;
+}
 </style>

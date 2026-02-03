@@ -196,9 +196,7 @@ export default {
     const sideWidth = computed(() =>
       appStore.collapse
         ? '60px'
-        : appStore.subfield && appStore.subfieldPosition == 'side'
-        ? '360px'
-        : '300px'
+        : '240px'
     )
     const router = useRouter()
     const route = useRoute()
@@ -424,7 +422,7 @@ export default {
 
 /* 首页侧边栏透明 */
 .home-layout .layui-side {
-  background-color: transparent !important;
+  background: linear-gradient(90deg, rgba(30,223,247,0.3) 0%, rgba(30,223,247,0.02) 85.62%, rgba(30,223,247,0) 100%) !important;
 }
 
 /* 首页内容区背景透明 */

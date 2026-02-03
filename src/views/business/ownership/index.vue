@@ -116,7 +116,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  padding: 16px 24px 24px;
+  padding: 16px;
 }
 
 .ownership-content {
