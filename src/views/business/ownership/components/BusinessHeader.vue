@@ -32,10 +32,9 @@ defineProps<{
 }>()
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .business-header {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   padding: 12px 20px;
   background-color: #EBF3FB;
   border-bottom: 1px solid #e6e6e6;

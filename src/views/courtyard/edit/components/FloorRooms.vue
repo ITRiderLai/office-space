@@ -104,17 +104,15 @@ watch(() => props.floorId, () => {
 }, { immediate: true })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .floor-rooms {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
 }
 
 .rooms-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   overflow: hidden;
 }
 
@@ -125,8 +123,7 @@ watch(() => props.floorId, () => {
 
 .floor-rooms :deep(.layui-table-box) {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
 }
 
 .floor-rooms :deep(.layui-table-body) {
@@ -136,8 +133,7 @@ watch(() => props.floorId, () => {
 
 .pagination-wrapper {
   padding: 15px 20px;
-  display: flex;
-  justify-content: flex-end;
+  @include flex(flex-end);
   border-top: 1px solid #e8e8e8;
 }
 

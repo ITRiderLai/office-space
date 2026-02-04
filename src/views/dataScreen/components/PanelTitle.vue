@@ -13,11 +13,9 @@ withDefaults(defineProps<{
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .panel-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex(center, center);
   height: 40px;
   background-image: url('@/assets/dashboard/bg-title.png');
   background-size: 100% 100%;
@@ -27,7 +25,7 @@ withDefaults(defineProps<{
 
 .panel-title.absolute {
   position: absolute;
-  top: -16px;
+  top: px2rem(-16);
   left: 25px;
   right: 25px;
   z-index: 1;
@@ -37,17 +35,5 @@ withDefaults(defineProps<{
   color: #fff;
   font-size: 16px;
   font-weight: 500;
-}
-
-@media screen and (max-width: 1600px) {
-  .title-text {
-    font-size: 14px;
-  }
-}
-
-@media screen and (max-width: 1300px) {
-  .title-text {
-    font-size: 12px;
-  }
 }
 </style>

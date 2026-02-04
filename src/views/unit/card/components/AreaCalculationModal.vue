@@ -90,7 +90,7 @@ const loadCalculationData = async () => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .calculation-content {
   padding: 20px;
 }
@@ -140,9 +140,7 @@ const loadCalculationData = async () => {
 }
 
 .calculation-loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex(center, center);
   gap: 10px;
   padding: 40px;
   color: #666;

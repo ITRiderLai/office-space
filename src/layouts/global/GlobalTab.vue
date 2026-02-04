@@ -60,10 +60,9 @@ function toChangPage(id: any) {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .global-tab {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   position: relative;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   border-top: 1px solid whitesmoke;
@@ -82,9 +81,7 @@ function toChangPage(id: any) {
   background: rgba(119, 119, 119, 0.1);
   border-radius: 4px;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex(center, center);
   transition: background 0.3s;
 }
 
@@ -141,8 +138,7 @@ function toChangPage(id: any) {
   background-color: whitesmoke;
   margin-right: 8px;
   border-radius: 50px;
-  height: 8px;
-  width: 8px;
+  @include size(8);
 }
 
 .global-tab .layui-tab .layui-this .dot {
@@ -186,7 +182,7 @@ function toChangPage(id: any) {
     display: inline-block;
     height: 32px !important;
     line-height: 32px !important;
-    padding: 0px 10px;
+    padding: 0 10px;
     margin-top: 5px;
     background-color: #fff;
     border-radius: 4px;
@@ -197,8 +193,7 @@ function toChangPage(id: any) {
     background-color: whitesmoke;
     margin-right: 8px;
     border-radius: 50px;
-    height: 8px;
-    width: 8px;
+    @include size(8);
   }
 
   .designer-close {
@@ -213,7 +208,6 @@ function toChangPage(id: any) {
     font-size: 14px;
     color: var(--global-neutral-color-8);
     transition: all 0.2s;
-    -webkit-transition: all 0.2s;
   }
 }
 .dot-this {

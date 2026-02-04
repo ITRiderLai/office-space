@@ -103,7 +103,7 @@
     <lay-layer
       v-model="unitSelectorVisible"
       title="选择申请单位"
-      :area="['500px', '400px']"
+      :area="[pxToRem(500), pxToRem(400)]"
     >
       <div class="selector-content">
         <lay-input
@@ -141,7 +141,7 @@
     <lay-layer
       v-model="buildingSelectorVisible"
       title="选择关联楼宇"
-      :area="['500px', '400px']"
+      :area="[pxToRem(500), pxToRem(400)]"
     >
       <div class="selector-content">
         <lay-input
@@ -179,6 +179,7 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
+import { pxToRem } from '@/utils/flexible'
 import { getUnitList, getBuildingList } from '@/api/module/business'
 import AttachmentTable, { AttachmentFile } from './AttachmentTable.vue'
 
@@ -361,7 +362,7 @@ defineExpose({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .application-form {
   padding: 20px;
 }
@@ -373,11 +374,16 @@ defineExpose({
 .application-form :deep(.layui-form-label) {
   width: 80px;
   text-align: right;
+  font-size: 14px;
+}
+
+.application-form :deep(.layui-input input) {
+  font-size: 14px;
 }
 
 /* 首行两列布局 */
 .form-row.two-columns {
-  display: flex;
+  @include flex();
   gap: 40px;
 }
 
@@ -388,8 +394,7 @@ defineExpose({
 
 /* 输入框带按钮 */
 .input-with-buttons {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   gap: 8px;
 }
 
@@ -413,8 +418,7 @@ defineExpose({
 
 /* 文件上传 */
 .upload-wrapper {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   gap: 10px;
   flex-wrap: wrap;
 }
@@ -432,16 +436,20 @@ defineExpose({
 /* 选择器弹窗样式 */
 .selector-content {
   padding: 15px;
+  height: 100%;
+  @include flex(flex-start, stretch, column);
+  box-sizing: border-box;
 }
 
 .selector-list {
   margin-top: 15px;
-  max-height: 265px;
+  flex: 1;
   overflow-y: auto;
+  min-height: 0;
 }
 
 .selector-item {
-  padding: 10px 15px;
+  padding: 10px  15px;
   cursor: pointer;
   border-bottom: 1px solid #f0f0f0;
   transition: background-color 0.3s;

@@ -107,7 +107,7 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .search-form {
   padding: 10px 10px 2px;
   background: #EBF3FB;

@@ -49,7 +49,7 @@ const changeSelectedKey = (key: string) => {
 
 </script>
 
-<style>
+<style lang="scss">
 .layui-nav-tree * {
   font-family: PingFang SC, PingFang SC;
   font-weight: 400;
@@ -79,8 +79,8 @@ const changeSelectedKey = (key: string) => {
 }
 
 .layui-nav-tree .layui-nav-item > a .layui-nav-more {
-  font-size: 12px!important;
-  padding: 3px 0px;
+  font-size: 12px !important;
+  padding: 3px 0;
 }
 
 /* 二级子菜单左边距 */
@@ -102,5 +102,4 @@ const changeSelectedKey = (key: string) => {
   fill: var(--global-primary-color) !important;
   font-weight: 600 !important;
 }
-
 </style>

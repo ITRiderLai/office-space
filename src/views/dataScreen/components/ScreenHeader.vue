@@ -80,15 +80,13 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .screen-header {
   height: 80px;
   background-image: url('@/assets/dataScreen/bg-大标题.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex(space-between, center);
   padding: 0 30px;
   flex-shrink: 0;
 }
@@ -121,15 +119,12 @@ onUnmounted(() => {
 
 .header-right {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  @include flex(flex-end, center);
   gap: 20px;
 }
 
 .user-info {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   gap: 6px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
@@ -140,8 +135,7 @@ onUnmounted(() => {
 }
 
 .header-btn {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   gap: 4px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
@@ -151,19 +145,5 @@ onUnmounted(() => {
 
 .header-btn:hover {
   color: #00d4ff;
-}
-
-@media screen and (max-width: 1600px) {
-  .main-title {
-    font-size: 22px;
-    letter-spacing: 2px;
-  }
-}
-
-@media screen and (max-width: 1300px) {
-  .main-title {
-    font-size: 18px;
-    letter-spacing: 1px;
-  }
 }
 </style>

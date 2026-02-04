@@ -1,21 +1,14 @@
 <template>
   <lay-tab
     type="brief"
-    style="
-      background: #fff;
-      padding: 20px 0;
-      border: 1px solid #eee;
-      border-radius: 2px;
-      height: 70%;
-      margin: 10px;
-    "
+    class="message-tab"
     v-model="currentTab"
     tabPosition="left"
   >
     <lay-tab-item id="system">
       <template #title>
         系统通知
-        <div style="width: 40px; margin-left: 20px; display: inline-block">
+        <div class="mark-wrapper">
           <div v-if="messageInfo.system > 0" class="corner-mark">
             {{ messageInfo.system }}
           </div>
@@ -26,7 +19,7 @@
     <lay-tab-item id="user">
       <template #title>
         用户私信
-        <div style="width: 40px; margin-left: 20px; display: inline-block">
+        <div class="mark-wrapper">
           <div v-if="messageInfo.user > 0" class="corner-mark">
             {{ messageInfo.user }}
           </div>
@@ -37,7 +30,7 @@
     <lay-tab-item id="todo">
       <template #title>
         待办事项
-        <div style="width: 40px; margin-left: 20px; display: inline-block">
+        <div class="mark-wrapper">
           <div v-if="messageInfo.todo > 0" class="corner-mark">
             {{ messageInfo.todo }}
           </div>
@@ -47,6 +40,7 @@
     </lay-tab-item>
   </lay-tab>
 </template>
+
 <script lang="ts">
 import { ref } from 'vue'
 import tableContent from './table.vue'
@@ -71,7 +65,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.message-tab {
+  background: #fff;
+  padding: 20px 0;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  height: 70%;
+  margin: 10px;
+}
+
+.mark-wrapper {
+  width: 40px;
+  margin-left: 20px;
+  display: inline-block;
+}
+
 .corner-mark {
   height: 16px;
   display: inline-block;

@@ -643,15 +643,16 @@ const visible22 = ref(false)
 const title22 = ref('新建')
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .organization-box {
-  width: calc(100vw - 240px);
-  height: calc(100vh - 110px);
+  width: 100%;
+  height: calc(100vh - #{110px});
   margin-top: 10px;
   box-sizing: border-box;
   background-color: #fff;
   overflow: hidden;
 }
+
 .left-tree {
   display: inline-block;
   padding: 20px 15px 0 5px;
@@ -660,6 +661,7 @@ const title22 = ref('新建')
   box-sizing: border-box;
   position: relative;
 }
+
 /* todo layui-tree-entry 设置无效 */
 .layui-tree-entry {
   position: relative;
@@ -668,18 +670,19 @@ const title22 = ref('新建')
   line-height: 20px;
   white-space: nowrap;
 }
+
 .isFold {
   position: absolute;
   top: 36%;
-  right: -10px;
-  width: 26px;
-  height: 26px;
+  right: px2rem(-10);
+  @include size(26);
   line-height: 26px;
   border-radius: 13px;
   background-color: #fff;
   border: 1px solid #e6e6e6;
   cursor: pointer;
 }
+
 .search-input {
   display: inline-block;
   width: 98%;

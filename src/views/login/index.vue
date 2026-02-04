@@ -171,7 +171,7 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .login-page {
   width: 100vw;
   height: 100vh;
@@ -179,9 +179,7 @@ onMounted(() => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex(center, center);
 }
 
 .login-card {

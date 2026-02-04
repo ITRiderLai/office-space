@@ -1,11 +1,11 @@
 <template>
-  <div style="height: 100%; width: 100%">
-    <div style="height: calc(100% - 60px); width: 100%; overflow: auto">
-      <lay-card style="margin: 10px">
+  <div class="intricate-form-container">
+    <div class="scroll-wrapper">
+      <lay-card class="header-card">
         <p class="title">复杂表单</p>
         <p class="describe">复杂表单常见于一次性输入和提交大批量数据的场景。</p>
       </lay-card>
-      <lay-container :fluid="true" style="padding: 10px; padding-top: 0px; position: relative">
+      <lay-container :fluid="true" class="content-container">
         <lay-form :model="formData" ref="layFormRef" required>
           <lay-card title="基本信息">
             <lay-row>
@@ -103,7 +103,7 @@
           </lay-card>
         </lay-form>
 
-        <br />
+        <div class="spacer-v"></div>
 
         <lay-card title="货品列表">
           <lay-table :columns="columns" :data-source="tableData">
@@ -148,7 +148,7 @@
             </template>
           </lay-table>
           <lay-button border="green" border-style="dashed" :fluid="true" @click="addHandler"
-            style="margin-top: 10px">新增</lay-button>
+            class="add-btn">新增</lay-button>
         </lay-card>
       </lay-container>
     </div>
@@ -364,7 +364,37 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+.intricate-form-container {
+  height: 100%;
+  width: 100%;
+  @include flex(flex-start, stretch, column);
+}
+
+.scroll-wrapper {
+  height: calc(100% - #{ 60px});
+  width: 100%;
+  overflow: auto;
+}
+
+.header-card {
+  margin: 10px;
+}
+
+.content-container {
+  padding: 10px;
+  padding-top: 0;
+  position: relative;
+}
+
+.spacer-v {
+  height: 20px;
+}
+
+.add-btn {
+  margin-top: 10px;
+}
+
 .title {
   font-size: 20px;
   font-weight: 500;
@@ -379,14 +409,14 @@ export default {
 
 .footer {
   width: 100%;
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   padding: 10px;
   box-sizing: border-box;
   background-color: #ffffff;
   border-top: 1px solid whitesmoke;
   line-height: 60px;
   height: 60px;
+  position: relative;
 
   .footer-button {
     right: 10px;

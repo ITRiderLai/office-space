@@ -20,7 +20,7 @@ import { useAppStore } from '../../store/app'
 const appStore = useAppStore()
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .global-content {
   height: 100%;
   overflow: auto;
@@ -32,12 +32,12 @@ const appStore = useAppStore()
 }
 
 .global-content::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 .global-content::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #e2e2e2;
+  border-radius: 10px;
+  background-color: #e2e2e2;
 }
 </style>

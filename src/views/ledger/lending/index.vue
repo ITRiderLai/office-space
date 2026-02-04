@@ -328,18 +328,16 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .lending-ledger {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   background: #fff;
   padding: 16px;
 }
 
 .action-bar {
-  display: flex;
-  justify-content: flex-end;
+  @include flex(flex-end);
   padding-bottom: 16px;
   background: #fff;
   gap: 8px;
@@ -347,13 +345,13 @@ onMounted(() => {
 
 .action-bar :deep(.layui-btn) {
   height: 36px;
-  padding: 0 16px;
+  padding: 0  16px;
   margin-left: 0;
 }
 
 .action-bar :deep(.layui-btn .svg-icon) {
   margin-right: 7px;
-  transform: translateY(-1px);
+  transform: translateY(px2rem(-1));
 }
 
 .action-bar :deep(.layui-border-primary) {
@@ -377,8 +375,7 @@ onMounted(() => {
 
 .table-container :deep(.layui-table-box) {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
 }
 
 .table-container :deep(.layui-table-body) {
@@ -397,9 +394,7 @@ onMounted(() => {
 }
 
 .pagination-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(space-between, center);
   padding: 16px;
   background: #fff;
   border: 1px solid #E9E9E9;

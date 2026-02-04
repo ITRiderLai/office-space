@@ -62,7 +62,7 @@ const handleDownload = (file: AttachmentFile) => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .attachment-table {
   margin-top: 10px;
 }

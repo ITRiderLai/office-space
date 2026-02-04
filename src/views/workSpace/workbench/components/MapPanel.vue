@@ -256,7 +256,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .map-panel {
   height: 100%;
   position: relative;
@@ -273,19 +273,18 @@ onUnmounted(() => {
   position: absolute;
   top: 15px;
   left: 15px;
-  display: flex;
+  @include flex();
   gap: 10px;
   z-index: 10;
 }
 
 .toolbar-btn {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   gap: 5px;
   padding: 6px 12px;
   background: rgba(0, 97, 206, 0.2);
   border: 1px solid rgba(44, 139, 255, 0.6);
-  border-radius: 4px 4px 4px 4px;
+  border-radius: 4px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 13px;
   cursor: pointer;
@@ -329,7 +328,7 @@ onUnmounted(() => {
   position: absolute;
   bottom: 20px;
   left: 20px;
-  display: flex;
+  @include flex();
 }
 
 .mode-btn {
@@ -344,7 +343,7 @@ onUnmounted(() => {
 }
 
 .mode-btn:first-child {
-  border-radius: 4px 0px 0px 4px;
+  border-radius: 4px 0 0  4px;
 }
 
 .mode-btn:hover {

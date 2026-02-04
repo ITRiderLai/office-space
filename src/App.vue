@@ -1,8 +1,8 @@
 <template>
   <router-view></router-view>
 </template>
-<style>
-@import "./styles/index.css";
+<style lang="scss">
+@import "@/styles/index.scss";
 
 #app {
   height: 100%;

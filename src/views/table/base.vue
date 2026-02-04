@@ -230,3 +230,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.table-base-container {
+  padding: 10px;
+}
+
+.search-form {
+  margin-top: 20px;
+}
+</style>

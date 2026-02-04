@@ -18,6 +18,17 @@ export default defineConfig({
       }
     ]
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 全局引入 mixins，所有 .vue 和 .scss 文件都可以直接使用
+        additionalData: `@import "@/styles/mixins.scss";`
+      },
+      less: {
+        javascriptEnabled: true
+      }
+    }
+  },
   plugins: [
     AutoImport({
       resolvers: [

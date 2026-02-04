@@ -84,7 +84,7 @@ watch(() => props.floorId, () => {
 }, { immediate: true })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .floor-info {
   padding: 20px;
   height: 100%;

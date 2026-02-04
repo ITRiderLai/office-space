@@ -1,0 +1,278 @@
+/**
+ * SCSS 工具函数 - 自适应缩放
+ * 
+ * 使用说明：
+ * 1. 在组件样式中引入：@import '@/styles/mixins.scss';
+ * 2. 或在 vite.config.ts 中配置全局引入
+ * 
+ * 函数说明：
+ * - px2rem($px): 将 px 转换为 rem，基于设计稿宽度 1920px
+ * - vw($px): 将 px 转换为 vw 单位
+ * - vh($px): 将 px 转换为 vh 单位
+ */
+
+// 设计稿宽度（默认 1920px）
+$design-width: 1920 !default;
+
+// 设计稿高度（默认 1080px）
+$design-height: 1080 !default;
+
+// 根元素基准值（设计稿 1920px 对应 100px）
+$base-font-size: 100 !default;
+
+/**
+ * px 转 rem
+ * @param $px 像素值（不带单位）
+ * @param $base 基准值，默认 100
+ * @return rem 值
+ * 
+ * 使用示例：
+ * .header {
+ *   height: px2rem(68);  // 68px -> 0.68rem
+ *   padding: px2rem(20); // 20px -> 0.2rem
+ * }
+ */
+@function px2rem($px, $base: $base-font-size) {
+  @if (unitless($px)) {
+    @return ($px / $base) * 1rem;
+  } @else {
+    @return ($px / $base) * 1rem;
+  }
+}
+
+/**
+ * px 转 vw
+ * @param $px 像素值（不带单位）
+ * @param $designWidth 设计稿宽度，默认 1920
+ * @return vw 值
+ * 
+ * 使用示例：
+ * .container {
+ *   width: vw(1200);  // 1200px -> 62.5vw
+ * }
+ */
+@function vw($px, $designWidth: $design-width) {
+  @if (unitless($px)) {
+    @return ($px / $designWidth) * 100vw;
+  } @else {
+    @return ($px / $designWidth) * 100vw;
+  }
+}
+
+/**
+ * px 转 vh
+ * @param $px 像素值（不带单位）
+ * @param $designHeight 设计稿高度，默认 1080
+ * @return vh 值
+ * 
+ * 使用示例：
+ * .full-screen {
+ *   height: vh(1080);  // 1080px -> 100vh
+ * }
+ */
+@function vh($px, $designHeight: $design-height) {
+  @if (unitless($px)) {
+    @return ($px / $designHeight) * 100vh;
+  } @else {
+    @return ($px / $designHeight) * 100vh;
+  }
+}
+
+/**
+ * 多个值转换 rem（用于 padding、margin 等）
+ * @param $values 多个 px 值
+ * @return 多个 rem 值
+ * 
+ * 使用示例：
+ * .box {
+ *   padding: px2rem-multiple(10, 20, 10, 20);  // 0.1rem 0.2rem 0.1rem 0.2rem
+ * }
+ */
+@function px2rem-multiple($values...) {
+  $result: ();
+  @each $value in $values {
+    @if (unitless($value)) {
+      $result: append($result, px2rem($value), space);
+    } @else if (unit($value) == 'px') {
+      $result: append($result, px2rem($value / 1px), space);
+    } @else {
+      $result: append($result, $value, space);
+    }
+  }
+  @return $result;
+}
+
+/**
+ * Mixin: 设置宽高（使用 rem）
+ * @param $width 宽度
+ * @param $height 高度（可选，默认等于宽度）
+ * 
+ * 使用示例：
+ * .square {
+ *   @include size(100);  // width: 1rem; height: 1rem;
+ * }
+ * .rect {
+ *   @include size(200, 100);  // width: 2rem; height: 1rem;
+ * }
+ */
+@mixin size($width, $height: $width) {
+  width: px2rem($width);
+  height: px2rem($height);
+}
+
+/**
+ * Mixin: 设置定位（使用 rem）
+ * @param $top 上
+ * @param $right 右（可选）
+ * @param $bottom 下（可选）
+ * @param $left 左（可选）
+ * 
+ * 使用示例：
+ * .absolute-box {
+ *   position: absolute;
+ *   @include position(10, 20);  // top: 0.1rem; right: 0.2rem;
+ * }
+ */
+@mixin position($top: null, $right: null, $bottom: null, $left: null) {
+  @if $top != null {
+    top: px2rem($top);
+  }
+  @if $right != null {
+    right: px2rem($right);
+  }
+  @if $bottom != null {
+    bottom: px2rem($bottom);
+  }
+  @if $left != null {
+    left: px2rem($left);
+  }
+}
+
+/**
+ * Mixin: 文字溢出省略号
+ * @param $line 行数，默认 1
+ * 
+ * 使用示例：
+ * .text {
+ *   @include ellipsis();  // 单行省略
+ * }
+ * .multi-text {
+ *   @include ellipsis(2);  // 两行省略
+ * }
+ */
+@mixin ellipsis($line: 1) {
+  @if $line == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+  }
+}
+
+/**
+ * Mixin: Flex 布局快捷方式
+ * @param $justify 主轴对齐方式
+ * @param $align 交叉轴对齐方式
+ * @param $direction 排列方向
+ * 
+ * 使用示例：
+ * .flex-center {
+ *   @include flex(center, center);
+ * }
+ */
+@mixin flex($justify: flex-start, $align: stretch, $direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+/**
+ * Mixin: 清除浮动
+ * 
+ * 使用示例：
+ * .clearfix {
+ *   @include clearfix();
+ * }
+ */
+@mixin clearfix() {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+/**
+ * Mixin: 响应式断点
+ * @param $breakpoint 断点名称或像素值
+ * 
+ * 使用示例：
+ * .responsive {
+ *   font-size: px2rem(16);
+ *   
+ *   @include respond-to(tablet) {
+ *     font-size: px2rem(14);
+ *   }
+ * }
+ */
+$breakpoints: (
+  'mobile': 768px,
+  'tablet': 1024px,
+  'desktop': 1280px,
+  'large': 1920px,
+  'xlarge': 2560px
+) !default;
+
+@mixin respond-to($breakpoint) {
+  @if type-of($breakpoint) == 'string' {
+    @if map-has-key($breakpoints, $breakpoint) {
+      @media (max-width: map-get($breakpoints, $breakpoint)) {
+        @content;
+      }
+    } @else {
+      @warn "Breakpoint '#{$breakpoint}' not found in $breakpoints map.";
+    }
+  } @else {
+    @media (max-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+/**
+ * Mixin: 响应式字体
+ * 根据屏幕宽度自动调整字体大小
+ * @param $min 最小字体大小（px）
+ * @param $max 最大字体大小（px）
+ * @param $minWidth 最小屏幕宽度（px），默认 1280
+ * @param $maxWidth 最大屏幕宽度（px），默认 2560
+ * 
+ * 使用示例：
+ * .title {
+ *   @include fluid-font(16, 24);
+ * }
+ */
+@mixin fluid-font($min, $max, $minWidth: 1280, $maxWidth: 2560) {
+  font-size: px2rem($min);
+  
+  @media (min-width: #{$minWidth}px) {
+    font-size: calc(#{px2rem($min)} + #{$max - $min} * ((100vw - #{$minWidth}px) / #{$maxWidth - $minWidth}));
+  }
+  
+  @media (min-width: #{$maxWidth}px) {
+    font-size: px2rem($max);
+  }
+}
+
+// 导出变量供 JS 使用
+:export {
+  designWidth: $design-width;
+  designHeight: $design-height;
+  baseFontSize: $base-font-size;
+}

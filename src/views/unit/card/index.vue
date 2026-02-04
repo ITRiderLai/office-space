@@ -206,18 +206,17 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .unit-card-page {
   height: 100%;
-  display: flex;
+  @include flex();
   background: #fff;
   padding: 16px;
 }
 
 .tree-panel {
   background: #fff;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   position: relative;
   transition: width 0.2s, min-width 0.2s;
   border: 1px solid #E9E9E9;
@@ -246,8 +245,7 @@ onMounted(() => {
 .expand-btn {
   width: 100%;
   padding-top: 15px;
-  display: flex;
-  justify-content: center;
+  @include flex(center);
   cursor: pointer;
   background: #fff;
 }
@@ -273,8 +271,6 @@ onMounted(() => {
 
 .detail-empty {
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex(center, center);
 }
 </style>

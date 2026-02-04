@@ -135,17 +135,14 @@ const handleNodeClick = (node: any) => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .org-tree {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
 }
 
 .tree-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(space-between, center);
   padding: 12px 15px;
   background: #EBF3FB;
 }
@@ -174,20 +171,18 @@ const handleNodeClick = (node: any) => {
 
 .tree-actions {
   padding: 0 15px 10px;
-  display: flex;
-  justify-content: flex-end;
+  @include flex(flex-end);
 }
 
 .tree-content {
   flex: 1;
   overflow: auto;
-  padding: 13px 5px;
+  padding: 13px  5px;
   border-top: 1px solid #E9E9E9;
 }
 
 .tree-loading {
-  display: flex;
-  justify-content: center;
+  @include flex(center);
   padding: 20px;
 }
 

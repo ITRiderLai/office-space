@@ -148,7 +148,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .data-screen {
   width: 100vw;
   height: 100vh;
@@ -156,38 +156,34 @@ onUnmounted(() => {
   background-size: cover;
   background-position: center;
   background-color: #0a1929;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   overflow: hidden;
 }
 
 .screen-content {
   flex: 1;
-  display: flex;
-  padding: 15px 20px 20px;
+  @include flex(stretch, stretch);
+  padding: 15px 20px  20px;
   gap: 20px;
   min-height: 0;
 }
 
 .left-panel {
   width: 20%;
-  display: flex;
-  flex-direction: column;
+  @include flex(stretch, stretch, column);
   gap: 15px;
 }
 
 .center-panel {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include flex(stretch, stretch, column);
   gap: 15px;
   min-width: 0;
 }
 
 .right-panel {
   width: 25%;
-  display: flex;
-  flex-direction: column;
+  @include flex(stretch, stretch, column);
   gap: 15px;
 }
 

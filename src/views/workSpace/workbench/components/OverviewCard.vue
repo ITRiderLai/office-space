@@ -77,7 +77,7 @@ defineProps<{
 }>()
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .overview-card {
   background-image: url('@/assets/dashboard/bg-总体概况.png');
   background-size: 100% 100%;
@@ -87,14 +87,12 @@ defineProps<{
 }
 
 .overview-content {
-  display: flex;
-  justify-content: space-around;
+  @include flex(space-around);
   padding: 10px 20px;
 }
 
 .overview-item {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   gap: 10px;
 }
 
@@ -127,20 +125,5 @@ defineProps<{
   font-size: 14px;
   color: #FFFFFF;
   line-height: 20px;
-}
-
-@media screen and (max-width: 1600px) {
-  .item-icon {
-    width: 40px;
-    height: 40px;
-  }
-
-  .item-value {
-    font-size: 18px;
-  }
-
-  .item-label {
-    font-size: 12px;
-  }
 }
 </style>

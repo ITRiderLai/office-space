@@ -252,24 +252,28 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .layui-tag .layui-tag-text {
-  margin: 0 8px 8px 0;
+  margin: 0  8px 8px 0;
 }
+
 .info-user {
   max-width: 400px;
   min-width: 320px;
   padding: 20px;
   margin-right: 10px;
 }
+
 .user-avatar {
-  width: 40%;
-  height: 40%;
+  @include size(120); // 固定尺寸替代百分比，保证缩放效果更好
+  margin: 0 auto;
 }
+
 .user-name {
   font-size: 24px;
   margin: 15px;
 }
+
 .user-briefing {
   color: #0006;
   font-size: 14px;
@@ -289,29 +293,33 @@ export default {
 }
 
 .tab-content {
-  height: 368px;
+  min-height: 368px;
   max-width: 500px;
-  padding: 0 20px;
+  padding: 0  20px;
   background-color: #fff;
 }
+
 .account-item {
-  display: flex;
+  @include flex();
   width: 99%;
-  height: 41px;
-  line-height: 43px;
+  height: auto;
+  min-height: 41px;
   margin-right: 10px;
   padding: 12px 0;
   border-bottom: #ccc solid 1px;
 }
+
 .account-item:last-child {
   border-bottom: none;
 }
+
 .account-desc {
   flex: 1;
   color: #0006;
   line-height: 24px;
   display: inline-block;
 }
+
 .account-option {
   width: 45px;
   display: inline-block;

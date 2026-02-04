@@ -1,3 +1,6 @@
+// 响应式显示/隐藏工具类
+// 注意：媒体查询中的断点使用固定 px 值，不需要转换
+
 @media screen and (max-width: 767px) {
   .hidden-xs-only {
     display: none !important;

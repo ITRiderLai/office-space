@@ -742,14 +742,16 @@ function toCancel() {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .menu-box {
-  width: calc(100vw - 220px);
-  height: calc(100vh - 110px);
+  width: 100%;
+  height: calc(100vh - #{110px});
   margin-top: 10px;
   box-sizing: border-box;
   overflow: hidden;
+  @include flex(flex-start, stretch, column);
 }
+
 .top-search {
   margin-top: 10px;
   padding: 10px;
@@ -757,14 +759,16 @@ function toCancel() {
   border-radius: 4px;
   background-color: #fff;
 }
+
 .table-box {
   margin-top: 10px;
   padding: 10px;
-  height: 700px;
+  flex: 1;
   width: 100%;
   border-radius: 4px;
   box-sizing: border-box;
   background-color: #fff;
+  min-height: 0;
 }
 
 .search-input {
@@ -772,9 +776,11 @@ function toCancel() {
   width: 98%;
   margin-right: 10px;
 }
+
 .table-style {
   margin-top: 10px;
 }
+
 .isChecked {
   display: inline-block;
   background-color: #e8f1ff;

@@ -9,7 +9,7 @@
     </lay-card>
 </template>
 
-<style>
+<style lang="scss" scoped>
 .error-page {
   padding-top: 200px;
   padding-bottom: 200px;

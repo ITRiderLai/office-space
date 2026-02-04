@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <lay-card style="margin: 10px">
+  <div class="form-base-container">
+    <lay-card class="header-card">
       <p class="title">基础表单</p>
       <p class="describe">
         表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。表单域标签也可支持响应式.
       </p>
     </lay-card>
-    <lay-container :fluid="true" style="padding: 10px; padding-top: 0px">
-      <lay-card style="padding: 40px">
+    <lay-container :fluid="true" class="content-container">
+      <lay-card class="form-card">
         <lay-row>
           <lay-col :md="10" :md-offset="7">
             <lay-form :model="model">
@@ -100,7 +100,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.form-base-container {
+  padding: 0;
+}
+
+.header-card {
+  margin: 10px;
+}
+
+.content-container {
+  padding: 10px;
+  padding-top: 0;
+}
+
+.form-card {
+  padding: 40px;
+}
+
 .title {
   font-size: 20px;
   font-weight: 500;

@@ -88,9 +88,9 @@ const handlePreviewPhoto = () => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .unit-header {
-  display: flex;
+  @include flex();
   gap: 20px;
   padding: 20px;
   background: #fff;
@@ -121,20 +121,18 @@ const handlePreviewPhoto = () => {
 
 .unit-info {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   gap: 8px;
 }
 
 .info-row {
-  display: flex;
+  @include flex();
   gap: 40px;
 }
 
 .info-item {
   flex: 1;
-  display: flex;
-  align-items: baseline;
+  @include flex(flex-start, baseline);
   padding: 4px 0;
 }
 
@@ -178,6 +176,6 @@ const handlePreviewPhoto = () => {
 
 .info-actions :deep(.layui-btn .svg-icon) {
   margin-right: 7px;
-  transform: translateY(-1px);
+  transform: translateY(px2rem(-1));
 }
 </style>

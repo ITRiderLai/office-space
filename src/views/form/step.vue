@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <lay-card style="margin: 10px">
+  <div class="form-step-container">
+    <lay-card class="header-card">
       <p class="top-title">分步表单</p>
       <p class="describe">
         表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。表单域标签也可支持响应式.
       </p>
     </lay-card>
-    <lay-container :fluid="true" style="padding: 10px; padding-top: 0px">
-      <lay-card style="padding: 40px">
+    <lay-container :fluid="true" class="content-container">
+      <lay-card class="form-card">
         <lay-step :active="active" current-status="primary" center>
           <lay-step-item title="第一步" content="填写转账信息">
             <template #pace>
@@ -30,7 +30,7 @@
             "
             background="#ecf5ff"
           ></lay-notice-bar>
-          <div style="height: 20px"></div>
+          <div class="spacer-v"></div>
 
           <lay-form
             v-show="active != 2"
@@ -94,27 +94,20 @@
             </lay-form-item>
           </lay-form>
           <div v-if="active == 2" class="option-result">
-            <div style="width: 100%; height: 210px; text-align: center">
+            <div class="result-header">
               <img
                 src="../../assets/common/success.png"
                 alt=""
-                style="width: 80px; height: 80px"
+                class="result-icon"
               />
-              <div
-                style="
-                  font-size: 20px;
-                  color: #101662;
-                  font-weight: 600;
-                  margin-top: 15px;
-                "
-              >
+              <div class="result-title">
                 操作成功
               </div>
-              <div style="font-size: 12px; color: #ccc; margin-top: 5px">
+              <div class="result-desc">
                 预计两小时内到账
               </div>
 
-              <div style="font-size: 10px; color: #ccc; margin-top: 15px">
+              <div class="result-actions">
                 <lay-button size="sm" type="normal" @click="next">
                   在转一笔
                 </lay-button>
@@ -150,12 +143,12 @@
             </lay-row>
           </div>
           <lay-row style="margin-top: 0px" v-if="active < 2">
-            <div style="display: inline-block; width: 120px"></div>
+            <div class="label-spacer"></div>
             <lay-button
               type="primary"
               :style="{
-                marginRight: '15px',
-                marginLeft: active < 1 ? '15px' : '0px'
+                marginRight: 15px,
+                marginLeft: active < 1 ?  15px : '0px'
               }"
               size="sm"
               @click="next"
@@ -175,6 +168,7 @@
 <script setup lang="ts">
 import { ref, watch, reactive } from 'vue'
 import { layer } from '@layui/layer-vue'
+import { px2rem } from '@/utils/flexible' // 注意：如果在模板 style 中使用 px2rem，确保 mixins 已注入
 
 const model = reactive({
   username: 'admin',
@@ -218,7 +212,24 @@ const submit2 = function () {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+.form-step-container {
+  padding: 0;
+}
+
+.header-card {
+  margin: 10px;
+}
+
+.content-container {
+  padding: 10px;
+  padding-top: 0;
+}
+
+.form-card {
+  padding: 40px;
+}
+
 .top-title {
   font-size: 20px;
   font-weight: 500;
@@ -230,34 +241,77 @@ const submit2 = function () {
   font-size: 14px;
   margin-bottom: 12px;
 }
+
+.spacer-v {
+  height: 20px;
+}
+
 .step-form {
   width: 100%;
-  padding: 20px 150px;
+  padding: 20px  150px;
   box-sizing: border-box;
 
-  .layui-row:after,
-  .layui-row:before {
-    display: none;
+  :deep(.layui-row) {
+    &::after,
+    &::before {
+      display: none;
+    }
   }
 }
+
+.label-spacer {
+  display: inline-block;
+  width: 120px;
+}
+
 .option-result {
   width: 100%;
-  height: 400px;
+  min-height: 400px;
   font-size: 14px;
+
+  .result-header {
+    width: 100%;
+    height: 210px;
+    text-align: center;
+  }
+
+  .result-icon {
+    @include size(80);
+  }
+
+  .result-title {
+    font-size: 20px;
+    color: #101662;
+    font-weight: 600;
+    margin-top: 15px;
+  }
+
+  .result-desc {
+    font-size: 12px;
+    color: #ccc;
+    margin-top: 5px;
+  }
+
+  .result-actions {
+    font-size: 10px;
+    color: #ccc;
+    margin-top: 15px;
+  }
 
   .title {
     height: 40px;
     line-height: 40px;
-    padding: 0 10px;
+    padding: 0  10px;
     display: inline-block;
     background: #f7f7f7;
     border-top: 1px solid #e8e8e8;
     border-left: 1px solid #e8e8e8;
   }
+
   .content {
     height: 40px;
     line-height: 40px;
-    padding: 0 3px 0 10px;
+    padding: 0  3px 0  10px;
     border-top: 1px solid #e8e8e8;
     border-left: 1px solid #e8e8e8;
     white-space: nowrap;
@@ -265,9 +319,11 @@ const submit2 = function () {
     text-overflow: ellipsis;
     text-align: left;
   }
+
   .borderR {
     border-right: 1px solid #e8e8e8;
   }
+
   .borderB {
     border-bottom: 1px solid #e8e8e8;
   }

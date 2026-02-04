@@ -1,3 +1,6 @@
+// 管理后台全局样式 - 使用 rem 单位
+
+// Logo 区域
 .layui-logo {
   width: 100%;
   font-size: 20px;
@@ -6,6 +9,7 @@
   line-height: 68px;
 }
 
+// 主体区域
 .layui-body {
   overflow: hidden;
   padding: 16px;
@@ -21,17 +25,18 @@
   height: auto !important;
 }
 
+// 标签页样式
 .layui-body>.global-tab {
   margin-bottom: 16px;
   box-shadow: none !important;
 }
 
 .layui-body>.global-tab>.layui-tab {
-  margin: 0px;
+  margin: 0;
 }
 
 .layui-body>.global-tab>.layui-tab>.layui-tab-content {
-  padding: 0px;
+  padding: 0;
 }
 
 .layui-body>.global-tab>.layui-tab>.layui-tab-head {
@@ -79,12 +84,13 @@
   background-color: color-mix(in srgb, var(--global-primary-color) 10%, transparent) !important;
 }
 
+// 头部样式
 .layui-header {
-  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  box-shadow: 0 1px  4px rgba(0, 21, 41, .08);
 }
 
 .layui-header .layui-nav.layui-nav-center {
-  padding: 0px;
+  padding: 0;
 }
 
 .layui-header .layui-nav.layui-nav-center .layui-this {
@@ -96,7 +102,7 @@
 }
 
 .layui-header .layui-nav.layui-nav-center .layui-nav-item a {
-  margin: 0px 15px;
+  margin: 0  15px;
 }
 
 .layui-header .layui-nav.layui-nav-center .layui-nav-item a * {
@@ -117,11 +123,11 @@
 }
 
 .layui-header .layui-nav {
-  padding: 0 15px;
+  padding: 0  15px;
 }
 
 .layui-header .layui-nav .layui-nav-item>a {
-  padding: 0 20px;
+  padding: 0  20px;
 }
 
 .layui-header .layui-nav.layui-layout-left {
@@ -134,11 +140,12 @@
   color: #393d49;
 }
 
+// 侧边栏样式
 .layui-side {
   position: relative;
   z-index: 10000;
   background: rgb(34, 36, 37, 98%);
-  box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
+  box-shadow: 2px 0  8px 0 rgb(29 35 41 / 5%);
 }
 
 .layui-side.light {
@@ -154,6 +161,7 @@
   background-color: transparent;
 }
 
+// 折叠状态
 .layui-layout.collapse .layui-logo {
   width: 60px;
 }
@@ -174,6 +182,7 @@
   left: 60px;
 }
 
+// 过渡动画
 .layui-layout .layui-logo,
 .layui-layout .layui-side,
 .layui-layout .layui-body {

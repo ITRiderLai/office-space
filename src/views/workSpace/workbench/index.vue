@@ -85,7 +85,7 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .dashboard-wrapper {
   height: 100%;
   overflow: hidden;
@@ -93,7 +93,7 @@ onMounted(() => {
 }
 
 .dashboard-page {
-  display: flex;
+  @include flex(stretch, stretch);
   height: 100%;
   padding: 15px;
   box-sizing: border-box;
@@ -107,8 +107,7 @@ onMounted(() => {
 
 .right-panel {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include flex(stretch, stretch, column);
   gap: 12px;
   min-width: 0;
 }
@@ -156,7 +155,7 @@ onMounted(() => {
 }
 
 .charts-row {
-  display: flex;
+  @include flex(stretch, stretch);
   gap: 12px;
   flex: 1;
   min-height: 0;

@@ -66,7 +66,7 @@ defineProps<Props>()
 defineEmits(['open-calculation'])
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .card-section {
   background: #fff;
   border-radius: 4px;
@@ -75,12 +75,10 @@ defineEmits(['open-calculation'])
 }
 
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(space-between, center);
   padding: 12px 15px;
   background: #EBF3FB;
-  border-radius: 2px 2px 2px 2px;
+  border-radius: 2px;
 }
 
 .section-header :deep(.layui-btn) {
@@ -91,12 +89,11 @@ defineEmits(['open-calculation'])
 
 .section-header :deep(.layui-btn .svg-icon) {
   margin-right: 7px;
-  transform: translateY(-1px);
+  transform: translateY(px2rem(-1));
 }
 
 .section-title {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   font-family: PingFang SC, PingFang SC;
   font-weight: 600;
   font-size: 18px;
@@ -143,8 +140,8 @@ defineEmits(['open-calculation'])
 
 .staff-value {
   display: inline-block;
-  width: calc(100% - 141px);
-  padding: 10px 15px;
+  width: calc(100% - #{141px});
+  padding: 10px  15px;
   color: #333;
   font-size: 16px;
   text-align: center;

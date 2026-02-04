@@ -72,7 +72,7 @@ const handleToolClick = (type: string) => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .quick-tools {
   display: flex;
   height: 100%;
@@ -80,12 +80,11 @@ const handleToolClick = (type: string) => {
 
 .tools-content {
   flex: 1;
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
 }
 
 .tool-items {
-  display: flex;
+  @include flex();
   gap: 20px;
   width: 100%;
   height: 100%;
@@ -99,16 +98,13 @@ const handleToolClick = (type: string) => {
   background-repeat: no-repeat;
   padding: 15px 25px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include flex(center, center, column);
   cursor: pointer;
   transition: transform 0.3s;
 }
 
 .tool-item:hover {
-  transform: translateY(-3px);
+  transform: translateY(px2rem(-3));
 }
 
 .tool-item.active {
@@ -134,22 +130,5 @@ const handleToolClick = (type: string) => {
   line-height: 22px;
   text-align: center;
   white-space: nowrap;
-}
-
-/* 高度小于680px时图标缩小 */
-@media screen and (max-height: 680px) {
-  .tool-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 4px;
-  }
-
-  .tool-name {
-    font-size: 11px;
-  }
-
-  .tool-item {
-    padding: 10px 15px;
-  }
 }
 </style>

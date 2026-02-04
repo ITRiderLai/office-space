@@ -200,14 +200,13 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .distribution-card {
   height: 100%;
   background-image: url('@/assets/dataScreen/bg-房屋面积分布.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
+  @include flex(stretch, stretch, column);
 }
 
 .distribution-title {

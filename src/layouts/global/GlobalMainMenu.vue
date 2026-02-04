@@ -42,7 +42,7 @@ const changeSelectedKey = (key: string) => {
 
 </script>
 
-<style>
+<style lang="scss">
 .layui-nav-tree * {
   font-size: 14px;
 }
@@ -61,7 +61,7 @@ const changeSelectedKey = (key: string) => {
 }
 
 .layui-nav-tree .layui-nav-item > a .layui-nav-more {
-  font-size: 12px!important;
-  padding: 3px 0px;
+  font-size: 12px !important;
+  padding: 3px 0;
 }
 </style>

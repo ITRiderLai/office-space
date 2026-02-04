@@ -118,7 +118,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .chart-card {
   position: relative;
   height: 100%;

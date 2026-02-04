@@ -44,13 +44,12 @@ const formatValue = (value: number) => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .stats-card {
   background-image: url('@/assets/dataScreen/bg-数据卡片.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  display: flex;
-  justify-content: space-around;
+  @include flex(space-around);
   padding: 15px 20px;
   flex-shrink: 0;
   margin-top: 20px;
@@ -79,9 +78,7 @@ const formatValue = (value: number) => {
 }
 
 .stat-value {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
+  @include flex(center, baseline);
   gap: 4px;
 }
 
@@ -94,17 +91,5 @@ const formatValue = (value: number) => {
 .stat-value .unit {
   color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
-}
-
-@media screen and (max-width: 1600px) {
-  .stat-value .value {
-    font-size: 16px;
-  }
-}
-
-@media screen and (max-width: 1300px) {
-  .stat-value .value {
-    font-size: 12px;
-  }
 }
 </style>

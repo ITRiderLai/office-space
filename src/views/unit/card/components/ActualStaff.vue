@@ -41,7 +41,7 @@ interface Props {
 defineProps<Props>()
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .card-section {
   background: #fff;
   border-radius: 4px;
@@ -50,12 +50,10 @@ defineProps<Props>()
 }
 
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(space-between, center);
   padding: 12px 15px;
   background: #EBF3FB;
-  border-radius: 2px 2px 2px 2px;
+  border-radius: 2px;
 }
 
 .section-header :deep(.layui-btn) {
@@ -69,8 +67,7 @@ defineProps<Props>()
 }
 
 .section-title {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   font-family: PingFang SC, PingFang SC;
   font-weight: 600;
   font-size: 18px;

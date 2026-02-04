@@ -249,7 +249,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .table-content {
   width: 100%;
   height: 100%;

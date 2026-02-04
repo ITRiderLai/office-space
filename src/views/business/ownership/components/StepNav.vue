@@ -23,18 +23,17 @@ defineProps<{
 }>()
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .step-nav {
   width: 160px;
-  padding: 24px 0px 24px 8px;
+  padding: 24px 0 24px  8px;
   background: #EBF3FB;
   border-radius: var(--global-border-radius);
   overflow: hidden;
 }
 
 .step-item {
-  display: flex;
-  align-items: center;
+  @include flex(flex-start, center);
   padding: 15px 20px;
   font-size: 14px;
   color: #666;

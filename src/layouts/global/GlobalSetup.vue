@@ -74,7 +74,7 @@ watch(
 )
 </script>
 
-<style>
+<style lang="scss">
 .global-setup {
   padding: 10px;
 }
@@ -82,7 +82,7 @@ watch(
 .global-setup-title {
   font-size: 13px;
   margin-bottom: 10px;
-  padding: 10px 10px 0px 10px;
+  padding: 10px 10px 0 10px;
 }
 
 .global-setup .layui-colorpicker {

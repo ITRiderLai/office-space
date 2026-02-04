@@ -167,18 +167,17 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .courtyard-edit-page {
   height: 100%;
-  display: flex;
+  @include flex();
   padding: 16px;
   background: #fff;
 }
 
 .tree-panel {
   background: #fff;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   position: relative;
   transition: width 0.2s, min-width 0.2s;
   border: 1px solid #E9E9E9;
@@ -207,8 +206,7 @@ onMounted(() => {
 .expand-btn {
   width: 100%;
   padding-top: 15px;
-  display: flex;
-  justify-content: center;
+  @include flex(center);
   cursor: pointer;
   background: #fff;
 }
@@ -224,16 +222,14 @@ onMounted(() => {
 
 .content-panel {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   padding-left: 16px;
   overflow: hidden;
 }
 
 .content-panel :deep(.layui-tab) {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   background: #fff;
   border-radius: var(--global-border-radius);
   margin: 0;

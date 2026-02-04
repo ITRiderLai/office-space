@@ -145,22 +145,27 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.layui-container {
+  padding: 10px !important;
+}
+
 :deep(.card-list-item .layui-card-body img) {
   width: 100%;
 }
 
 :deep(.card-list-item .layui-card-body) {
-  padding: 0px !important;
+  padding: 0 !important;
 }
 
 .button-list {
-  display: flex;
+  @include flex();
 }
 
 .button-list > div {
   flex: 1;
   text-align: center;
   color: #909399;
+  font-size: 14px;
 }
 </style>

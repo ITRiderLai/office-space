@@ -261,9 +261,7 @@ const handleConfirm = async () => {
 }
 </script>
 
-<style scoped>
-
-
+<style lang="scss" scoped>
 .edit-modal-content {
   padding: 20px;
   max-height: 480px;
@@ -302,8 +300,7 @@ const handleConfirm = async () => {
 }
 
 .modal-footer {
-  display: flex;
-  justify-content: flex-end;
+  @include flex(flex-end);
   gap: 10px;
   padding: 0 20px 20px 0;
 }

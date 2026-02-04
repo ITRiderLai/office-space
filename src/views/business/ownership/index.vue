@@ -110,18 +110,17 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .ownership-page {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex(flex-start, stretch, column);
   background-color: #fff;
   padding: 16px;
 }
 
 .ownership-content {
   flex: 1;
-  display: flex;
+  @include flex();
   gap: 10px;
   margin-top: 8px;
   border: 1px solid #E9E9E9;
