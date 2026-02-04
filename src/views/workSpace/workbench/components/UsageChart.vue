@@ -21,6 +21,29 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
+let resizeObserver: ResizeObserver | null = null
+
+const getFontSize = (baseSize: number) => {
+  if (!chartRef.value) return baseSize
+  const width = chartRef.value.clientWidth
+  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
+  return Math.round(baseSize * scale)
+}
+
+const getLegendRight = () => {
+  if (!chartRef.value) return '10%'
+  return chartRef.value.clientWidth < 350 ? '5%' : '10%'
+}
+
+const getPieCenter = () => {
+  if (!chartRef.value) return ['35%', '50%']
+  return chartRef.value.clientWidth < 350 ? ['40%', '50%'] : ['35%', '50%']
+}
+
+const getPieRadius = () => {
+  if (!chartRef.value) return ['45%', '70%']
+  return chartRef.value.clientWidth < 350 ? ['40%', '65%'] : ['45%', '70%']
+}
 
 const colors = [
   { fill: 'rgba(30, 223, 247, 0.6)', border: '#1EDFF7' },
@@ -40,17 +63,18 @@ const updateChart = () => {
   if (!chartInstance || !props.data.length) return
 
   const total = props.data.reduce((sum, item) => sum + item.value, 0)
+  const fontSize = getFontSize(12)
 
   const option: echarts.EChartsOption = {
     legend: {
       orient: 'vertical',
-      right: '10%',
+      right: getLegendRight(),
       top: 'center',
       itemWidth: 10,
       itemHeight: 10,
       textStyle: {
         color: '#fff',
-        fontSize: 13
+        fontSize: getFontSize(13)
       },
       formatter: (name: string) => {
         const item = props.data.find(d => d.type === name)
@@ -63,14 +87,14 @@ const updateChart = () => {
     series: [
       {
         type: 'pie',
-        radius: ['45%', '70%'],
-        center: ['35%', '50%'],
+        radius: getPieRadius(),
+        center: getPieCenter(),
         avoidLabelOverlap: false,
         label: {
           show: true,
           position: 'outside',
           color: '#fff',
-          fontSize: 12,
+          fontSize: fontSize,
           formatter: (params: any) => {
             const percent = ((params.value / total) * 100).toFixed(0)
             return `${percent}%`
@@ -98,19 +122,23 @@ const updateChart = () => {
   chartInstance.setOption(option)
 }
 
-const handleResize = () => {
-  chartInstance?.resize()
-}
-
 watch(() => props.data, updateChart, { deep: true })
 
 onMounted(() => {
   initChart()
-  window.addEventListener('resize', handleResize)
+  resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+      chartInstance?.resize()
+      updateChart()
+    })
+  })
+  if (chartRef.value) {
+    resizeObserver.observe(chartRef.value)
+  }
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
+  resizeObserver?.disconnect()
   chartInstance?.dispose()
 })
 </script>

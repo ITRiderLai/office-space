@@ -97,8 +97,8 @@ defineProps<{
 }
 
 .item-icon {
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   flex-shrink: 0;
 }
 
@@ -115,14 +115,14 @@ defineProps<{
 .item-value {
   font-family: DINPro, DINPro;
   font-weight: 500;
-  font-size: 22px;
+  font-size: 20px;
   color: #FFFFFF;
 }
 
 .item-label {
   font-family: PingFang SC, PingFang SC;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   color: #FFFFFF;
   line-height: 20px;
 }

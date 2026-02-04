@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch, onUnmounted } from 'vue'
+import { ref, onMounted, watch, onUnmounted, computed } from 'vue'
 import * as echarts from 'echarts'
 
 interface RegionData {
@@ -17,6 +17,24 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
+let resizeObserver: ResizeObserver | null = null
+
+const getContainerSize = () => {
+  if (!chartRef.value) return { width: 800, height: 600 }
+  const rect = chartRef.value.getBoundingClientRect()
+  return { width: rect.width, height: rect.height }
+}
+
+const mapZoom = computed(() => {
+  const { width } = getContainerSize()
+  if (width >= 1200) {
+    return 1.2
+  } else if (width >= 800) {
+    return 1.0
+  } else {
+    return 0.85
+  }
+})
 
 // 红河州GeoJSON数据（使用本地文件）
 const loadGeoJson = async () => {
@@ -57,7 +75,7 @@ const updateChart = () => {
     geo: {
       map: 'honghe',
       roam: true,
-      zoom: 1.2,
+      zoom: mapZoom.value,
       center: [103.3, 23.5],
       label: {
         show: true,
@@ -109,17 +127,31 @@ const updateChart = () => {
 
 const handleResize = () => {
   chartInstance?.resize()
+  if (chartInstance) {
+    chartInstance.setOption({
+      geo: {
+        zoom: mapZoom.value
+      }
+    })
+  }
 }
 
 watch(() => props.data, updateChart, { deep: true })
 
 onMounted(() => {
   initChart()
-  window.addEventListener('resize', handleResize)
+  resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+      handleResize()
+    })
+  })
+  if (chartRef.value) {
+    resizeObserver.observe(chartRef.value)
+  }
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
+  resizeObserver?.disconnect()
   chartInstance?.dispose()
 })
 </script>

@@ -112,48 +112,6 @@ onMounted(() => {
   min-width: 0;
 }
 
-/* 高度小于850px时右侧面板可滚动 */
-@media screen and (max-height: 850px) {
-  .right-panel {
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  /* 固定子元素最小高度，使其可以产生溢出 */
-  .right-panel .charts-row {
-    flex: none;
-    height: 200px;
-  }
-
-  .right-panel .tools-row {
-    flex: none;
-    height: 120px;
-  }
-
-  /* 自定义滚动条 - 默认透明 */
-  .right-panel::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .right-panel::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .right-panel::-webkit-scrollbar-thumb {
-    background: transparent;
-    border-radius: 3px;
-  }
-
-  /* 鼠标进入时显示滚动条 */
-  .right-panel:hover::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  .right-panel:hover::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
-  }
-}
-
 .charts-row {
   @include flex(stretch, stretch);
   gap: 12px;

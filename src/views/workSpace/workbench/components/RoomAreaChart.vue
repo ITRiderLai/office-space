@@ -21,6 +21,26 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
+let resizeObserver: ResizeObserver | null = null
+
+const getFontSize = (baseSize: number) => {
+  if (!chartRef.value) return baseSize
+  const width = chartRef.value.clientWidth
+  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
+  return Math.round(baseSize * scale)
+}
+
+const getLineHeight = (baseHeight: number) => {
+  if (!chartRef.value) return baseHeight
+  const width = chartRef.value.clientWidth
+  const scale = Math.min(Math.max(width / 400, 0.9), 1.1)
+  return Math.round(baseHeight * scale)
+}
+
+const getGridLeft = () => {
+  if (!chartRef.value) return '12%'
+  return chartRef.value.clientWidth < 400 ? '20%' : '12%'
+}
 
 const initChart = () => {
   if (!chartRef.value) return
@@ -96,7 +116,7 @@ const updateChart = () => {
         show: true,
         position: 'top',
         color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: 11,
+        fontSize: getFontSize(11),
         formatter: () => v.toLocaleString()
       }
     })
@@ -118,7 +138,7 @@ const updateChart = () => {
       }
     },
     grid: {
-      left: '12%',
+      left: getGridLeft(),
       right: '5%',
       top: '15%',
       bottom: '20%'
@@ -132,7 +152,8 @@ const updateChart = () => {
       axisTick: { show: false },
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.7)',
-        fontSize: 11,
+        fontSize: getFontSize(11),
+        lineHeight: getLineHeight(16),
         interval: 0,
         formatter: (value: string) => {
           if (value.length > 4) {
@@ -148,7 +169,7 @@ const updateChart = () => {
       axisTick: { show: false },
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.6)',
-        fontSize: 12,
+        fontSize: getFontSize(12),
         formatter: (value: number) => {
           if (value >= 1000) {
             return (value / 1000).toFixed(0) + ',000'
@@ -182,19 +203,23 @@ const updateChart = () => {
   chartInstance.setOption(option)
 }
 
-const handleResize = () => {
-  chartInstance?.resize()
-}
-
 watch(() => props.data, updateChart, { deep: true })
 
 onMounted(() => {
   initChart()
-  window.addEventListener('resize', handleResize)
+  resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+      chartInstance?.resize()
+      updateChart()
+    })
+  })
+  if (chartRef.value) {
+    resizeObserver.observe(chartRef.value)
+  }
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
+  resizeObserver?.disconnect()
   chartInstance?.dispose()
 })
 </script>

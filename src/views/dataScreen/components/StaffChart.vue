@@ -22,6 +22,14 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
+let resizeObserver: ResizeObserver | null = null
+
+const getFontSize = (baseSize: number) => {
+  if (!chartRef.value) return baseSize
+  const width = chartRef.value.clientWidth
+  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
+  return Math.round(baseSize * scale)
+}
 
 const initChart = () => {
   if (!chartRef.value) return
@@ -42,12 +50,14 @@ const updateChart = () => {
       axisPointer: { type: 'shadow' },
       backgroundColor: 'rgba(0, 20, 40, 0.9)',
       borderColor: 'rgba(0, 212, 255, 0.3)',
-      textStyle: { color: '#fff' }
+      borderWidth: 1,
+      padding: 8,
+      textStyle: { color: '#fff', fontSize: getFontSize(12) }
     },
     legend: {
       data: ['编制人数', '办公人数'],
       top: 10,
-      textStyle: { color: 'rgba(255, 255, 255, 0.8)', fontSize: 12 },
+      textStyle: { color: 'rgba(255, 255, 255, 0.8)', fontSize: getFontSize(12) },
       itemWidth: 12,
       itemHeight: 12
     },
@@ -64,10 +74,10 @@ const updateChart = () => {
       axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.7)',
-        fontSize: 11,
+        fontSize: getFontSize(11),
         interval: 0,
         rotate: 0,
-        lineHeight: 18,
+        lineHeight: getFontSize(18),
         formatter: (value: string) => {
           if (value === '市级正职') return '市级\n正职'
           if (value === '市级副职') return '市级\n副职'
@@ -82,10 +92,10 @@ const updateChart = () => {
     yAxis: {
       type: 'value',
       name: '单位（人）',
-      nameTextStyle: { color: 'rgba(255, 255, 255, 0.6)', fontSize: 11 },
+      nameTextStyle: { color: 'rgba(255, 255, 255, 0.6)', fontSize: getFontSize(11) },
       axisLine: { show: false },
       axisTick: { show: false },
-      axisLabel: { color: 'rgba(255, 255, 255, 0.6)', fontSize: 11 },
+      axisLabel: { color: 'rgba(255, 255, 255, 0.6)', fontSize: getFontSize(11) },
       splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
     },
     series: [
@@ -141,11 +151,20 @@ watch(() => props.data, updateChart, { deep: true })
 
 onMounted(() => {
   initChart()
-  window.addEventListener('resize', handleResize)
+  resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+      chartInstance?.resize()
+      updateChart()
+    })
+  })
+  if (chartRef.value) {
+    resizeObserver.observe(chartRef.value)
+  }
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
+  resizeObserver?.disconnect()
   chartInstance?.dispose()
 })
 </script>

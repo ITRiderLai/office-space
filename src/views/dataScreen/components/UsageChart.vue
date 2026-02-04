@@ -111,8 +111,12 @@ const initChart = () => {
       pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>',
       backgroundColor: 'rgba(0, 20, 40, 0.9)',
       borderColor: 'rgba(0, 212, 255, 0.3)',
+      borderWidth: 1,
+      padding: 8,
+      shadow: false,
       style: {
-        color: '#fff'
+        color: '#fff',
+        fontSize: '14px'
       }
     },
     legend: {

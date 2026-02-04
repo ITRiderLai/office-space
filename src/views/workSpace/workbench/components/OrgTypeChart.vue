@@ -21,6 +21,14 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
+let resizeObserver: ResizeObserver | null = null
+
+const getFontSize = (baseSize: number) => {
+  if (!chartRef.value) return baseSize
+  const width = chartRef.value.clientWidth
+  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
+  return Math.round(baseSize * scale)
+}
 
 const initChart = () => {
   if (!chartRef.value) return
@@ -35,6 +43,7 @@ const updateChart = () => {
   const names = props.data.map(item => item.name)
   const values = props.data.map(item => item.value)
   const maxValue = Math.max(...values)
+  const fontSize = getFontSize(14)
 
   const option: echarts.EChartsOption = {
     grid: {
@@ -50,7 +59,7 @@ const updateChart = () => {
       axisTick: { show: false },
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.6)',
-        fontSize: 12
+        fontSize: getFontSize(12)
       },
       splitLine: {
         lineStyle: {
@@ -65,7 +74,7 @@ const updateChart = () => {
       axisTick: { show: false },
       axisLabel: {
         color: '#fff',
-        fontSize: 14
+        fontSize: fontSize
       }
     },
     series: [
@@ -86,7 +95,7 @@ const updateChart = () => {
           show: true,
           position: 'right',
           color: '#fff',
-          fontSize: 14,
+          fontSize: fontSize,
           formatter: (params: any) => values[params.dataIndex]
         },
         showBackground: true,
@@ -101,19 +110,23 @@ const updateChart = () => {
   chartInstance.setOption(option)
 }
 
-const handleResize = () => {
-  chartInstance?.resize()
-}
-
 watch(() => props.data, updateChart, { deep: true })
 
 onMounted(() => {
   initChart()
-  window.addEventListener('resize', handleResize)
+  resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+      chartInstance?.resize()
+      updateChart()
+    })
+  })
+  if (chartRef.value) {
+    resizeObserver.observe(chartRef.value)
+  }
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
+  resizeObserver?.disconnect()
   chartInstance?.dispose()
 })
 </script>

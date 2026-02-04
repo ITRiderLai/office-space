@@ -20,6 +20,25 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
+let resizeObserver: ResizeObserver | null = null
+
+const getChartSize = () => {
+  if (!chartRef.value) return { width: 400, height: 200 }
+  const rect = chartRef.value.getBoundingClientRect()
+  return { width: rect.width || 400, height: rect.height || 200 }
+}
+
+const getFontSize = (baseSize: number) => {
+  const { width } = getChartSize()
+  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
+  return Math.round(baseSize * scale)
+}
+
+const getLineHeight = (baseHeight: number) => {
+  const { width } = getChartSize()
+  const scale = Math.min(Math.max(width / 400, 0.9), 1.1)
+  return Math.round(baseHeight * scale)
+}
 
 const initChart = () => {
   if (!chartRef.value) return
@@ -94,7 +113,7 @@ const updateChart = () => {
         show: true,
         position: 'top',
         color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: 9,
+        fontSize: getFontSize(9),
         formatter: () => {
           if (v >= 1000) {
             return (v / 1000).toFixed(1) + 'k'
@@ -111,7 +130,9 @@ const updateChart = () => {
       axisPointer: { type: 'shadow' },
       backgroundColor: 'rgba(0, 20, 40, 0.9)',
       borderColor: 'rgba(0, 212, 255, 0.3)',
-      textStyle: { color: '#fff' },
+      borderWidth: 1,
+      padding: 8,
+      textStyle: { color: '#fff', fontSize: getFontSize(12) },
       formatter: (params: any) => {
         const idx = params[0]?.dataIndex
         if (idx !== undefined) {
@@ -133,9 +154,9 @@ const updateChart = () => {
       axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.7)',
-        fontSize: 10,
+        fontSize: getFontSize(10),
         interval: 0,
-        lineHeight: 16,
+        lineHeight: getLineHeight(16),
         formatter: (value: string) => {
           // 每4个字符换行
           if (value.length > 4) {
@@ -149,12 +170,12 @@ const updateChart = () => {
     yAxis: {
       type: 'value',
       name: '单位（平方米）',
-      nameTextStyle: { color: 'rgba(255, 255, 255, 0.6)', fontSize: 10 },
+      nameTextStyle: { color: 'rgba(255, 255, 255, 0.6)', fontSize: getFontSize(10) },
       axisLine: { show: false },
       axisTick: { show: false },
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.6)',
-        fontSize: 10,
+        fontSize: getFontSize(10),
         formatter: (value: number) => {
           if (value >= 1000) {
             return (value / 1000).toFixed(0) + 'k'
@@ -191,11 +212,20 @@ watch(() => props.data, updateChart, { deep: true })
 
 onMounted(() => {
   initChart()
-  window.addEventListener('resize', handleResize)
+  resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+      chartInstance?.resize()
+      updateChart()
+    })
+  })
+  if (chartRef.value) {
+    resizeObserver.observe(chartRef.value)
+  }
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
+  resizeObserver?.disconnect()
   chartInstance?.dispose()
 })
 </script>

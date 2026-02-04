@@ -264,7 +264,6 @@ const handleConfirm = async () => {
 <style lang="scss" scoped>
 .edit-modal-content {
   padding: 20px;
-  max-height: 480px;
   overflow-y: auto;
 }
 
@@ -303,5 +302,6 @@ const handleConfirm = async () => {
   @include flex(flex-end);
   gap: 10px;
   padding: 0 20px 20px 0;
+  margin-top: 20px;
 }
 </style>

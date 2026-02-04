@@ -140,7 +140,7 @@ defineEmits(['open-calculation'])
 
 .staff-value {
   display: inline-block;
-  width: calc(100% - #{141px});
+  width: calc(100% - #{145px});
   padding: 10px  15px;
   color: #333;
   font-size: 16px;

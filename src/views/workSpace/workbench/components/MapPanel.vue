@@ -47,7 +47,13 @@ const mapRef = ref<HTMLElement>()
 const mapMode = ref('region')
 let chartInstance: echarts.ECharts | null = null
 let mapData: any = null
+let resizeObserver: ResizeObserver | null = null
 const windowWidth = ref(window.innerWidth)
+
+const getFontSize = (baseSize: number) => {
+  const scale = Math.min(Math.max(windowWidth.value / 400, 0.8), 1.2)
+  return Math.round(baseSize * scale)
+}
 
 // 根据浏览器宽度计算地图缩放比例
 // 宽度越大，zoom值越大（地图显示更大）
@@ -120,7 +126,7 @@ const updateChart = () => {
       label: {
         show: true,
         color: 'rgba(255, 255, 255, 0.7)',
-        fontSize: 10
+        fontSize: getFontSize(10)
       },
       itemStyle: {
         areaColor: {
@@ -147,7 +153,7 @@ const updateChart = () => {
         },
         label: {
           color: '#fff',
-          fontSize: 12
+          fontSize: getFontSize(12)
         }
       },
       select: {
@@ -235,7 +241,6 @@ const handleZoomOut = () => {
 const handleResize = () => {
   windowWidth.value = window.innerWidth
   chartInstance?.resize()
-  // 根据新的宽度更新地图缩放
   if (chartInstance) {
     chartInstance.setOption({
       geo: {

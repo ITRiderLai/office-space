@@ -23,6 +23,14 @@ const props = defineProps<{
 
 const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
+let resizeObserver: ResizeObserver | null = null
+
+const getFontSize = (baseSize: number) => {
+  if (!chartRef.value) return baseSize
+  const width = chartRef.value.clientWidth
+  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
+  return Math.round(baseSize * scale)
+}
 
 const initChart = () => {
   if (!chartRef.value) return
@@ -47,7 +55,9 @@ const updateChart = () => {
       axisPointer: { type: 'shadow' },
       backgroundColor: 'rgba(0, 20, 40, 0.9)',
       borderColor: 'rgba(0, 212, 255, 0.3)',
-      textStyle: { color: '#fff' },
+      borderWidth: 1,
+      padding: 8,
+      textStyle: { color: '#fff', fontSize: getFontSize(12) },
       formatter: (params: any) => {
         const data = params[0]
         return `${data.name}: ${data.value} 人`
@@ -67,16 +77,20 @@ const updateChart = () => {
       type: 'category',
       data: categories,
       axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.2)' } },
-      axisLabel: { color: 'rgba(255, 255, 255, 0.7)', fontSize: 12 },
+      axisLabel: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: getFontSize(12),
+        margin: 14
+      },
       axisTick: { show: false }
     },
     yAxis: {
       type: 'value',
       name: '单位（人）',
-      nameTextStyle: { color: 'rgba(255, 255, 255, 0.6)', fontSize: 11 },
+      nameTextStyle: { color: 'rgba(255, 255, 255, 0.6)', fontSize: getFontSize(11) },
       axisLine: { show: false },
       axisTick: { show: false },
-      axisLabel: { color: 'rgba(255, 255, 255, 0.6)', fontSize: 11 },
+      axisLabel: { color: 'rgba(255, 255, 255, 0.6)', fontSize: getFontSize(11) },
       splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
     },
     series: [
@@ -104,7 +118,7 @@ const updateChart = () => {
           show: true,
           position: 'top',
           color: 'rgba(255, 255, 255, 0.9)',
-          fontSize: 12,
+          fontSize: getFontSize(12),
           fontWeight: 'bold',
           offset: [0, -5]
         }
@@ -146,11 +160,20 @@ watch(() => props.data, updateChart, { deep: true })
 
 onMounted(() => {
   initChart()
-  window.addEventListener('resize', handleResize)
+  resizeObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+      chartInstance?.resize()
+      updateChart()
+    })
+  })
+  if (chartRef.value) {
+    resizeObserver.observe(chartRef.value)
+  }
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
+  resizeObserver?.disconnect()
   chartInstance?.dispose()
 })
 </script>
