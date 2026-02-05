@@ -147,8 +147,8 @@
             <lay-button
               type="primary"
               :style="{
-                marginRight: 15px,
-                marginLeft: active < 1 ?  15px : '0px'
+                marginRight: '15px',
+                marginLeft: active < 1 ? '15px' : '0px'
               }"
               size="sm"
               @click="next"
