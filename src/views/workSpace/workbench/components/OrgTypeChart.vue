@@ -43,7 +43,7 @@ const updateChart = () => {
   const names = props.data.map(item => item.name)
   const values = props.data.map(item => item.value)
   const maxValue = Math.max(...values)
-  const fontSize = getFontSize(14)
+  const fontSize = getFontSize(12)
 
   const option: echarts.EChartsOption = {
     grid: {
