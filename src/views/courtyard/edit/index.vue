@@ -49,12 +49,13 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { px2rem } from '@/utils/px2rem-converter'
 import OrgTree from '@/views/unit/card/components/OrgTree.vue'
 import FloorInfo from './components/FloorInfo.vue'
 import FloorRooms from './components/FloorRooms.vue'
 import { getCourtyardTree, CourtyardTreeNode } from '@/api/module/courtyard'
 
-const TREE_WIDTH_MIN = 240
+const TREE_WIDTH_MIN = 300
 const TREE_WIDTH_MAX = 560
 const TREE_WIDTH_DEFAULT = 300
 
@@ -72,10 +73,10 @@ let dragStartWidth = 0
 
 const treePanelStyle = computed(() => {
   if (treeCollapsed.value) {
-    return { width: '40px', minWidth: '40px' }
+    return { width: px2rem(40), minWidth: px2rem(40) }
   }
   const w = Math.min(TREE_WIDTH_MAX, Math.max(TREE_WIDTH_MIN, treeWidth.value))
-  return { width: `${w}px`, minWidth: `${w}px` }
+  return { width: px2rem(w), minWidth: px2rem(w) }
 })
 
 const startDrag = (e: MouseEvent) => {

@@ -24,13 +24,14 @@ let resizeObserver: ResizeObserver | null = null
 
 const getChartSize = () => {
   if (!chartRef.value) return { width: 400, height: 200 }
-  const rect = chartRef.value.getBoundingClientRect()
-  return { width: rect.width || 400, height: rect.height || 200 }
+  const width = chartRef.value.clientWidth || 400
+  const height = chartRef.value.clientHeight || 200
+  return { width, height }
 }
 
 const getFontSize = (baseSize: number) => {
   const { width } = getChartSize()
-  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
+  const scale = width / 800
   return Math.round(baseSize * scale)
 }
 

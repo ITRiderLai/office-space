@@ -68,6 +68,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { px2rem } from '@/utils/px2rem-converter'
 import OrgTree from './components/OrgTree.vue'
 import UnitHeader from './components/UnitHeader.vue'
 import StaffEstablishment from './components/StaffEstablishment.vue'
@@ -76,9 +77,9 @@ import OfficeArea from './components/OfficeArea.vue'
 import AreaCalculationModal from './components/AreaCalculationModal.vue'
 import { getOrgTree, getUnitDetail, OrgTreeNode, UnitDetail } from '@/api/module/unit'
 
-const TREE_WIDTH_MIN = 240
-const TREE_WIDTH_MAX = 560
-const TREE_WIDTH_DEFAULT = 300
+const TREE_WIDTH_MIN = 300
+const TREE_WIDTH_MAX = 660
+const TREE_WIDTH_DEFAULT = 320
 
 // 目录树相关
 const treeData = ref<OrgTreeNode[]>([])
@@ -94,10 +95,10 @@ let dragStartWidth = 0
 
 const treePanelStyle = computed(() => {
   if (treeCollapsed.value) {
-    return { width: '40px', minWidth: '40px' }
+    return { width: px2rem(40), minWidth: px2rem(40) }
   }
   const w = Math.min(TREE_WIDTH_MAX, Math.max(TREE_WIDTH_MIN, treeWidth.value))
-  return { width: `${w}px`, minWidth: `${w}px` }
+  return { width: px2rem(w), minWidth: px2rem(w) }
 })
 
 const startDrag = (e: MouseEvent) => {
@@ -228,8 +229,8 @@ onMounted(() => {
 }
 
 .tree-panel.collapsed {
-  width: 40px;
-  min-width: 40px;
+  width: px2rem(40);
+  min-width: px2rem(40);
 }
 
 .tree-edge-resize {
@@ -237,7 +238,7 @@ onMounted(() => {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 6px;
+  width: px2rem(6);
   cursor: col-resize;
   z-index: 1;
 }

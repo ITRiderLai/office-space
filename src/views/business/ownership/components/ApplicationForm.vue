@@ -436,7 +436,7 @@ defineExpose({
 /* 选择器弹窗样式 */
 .selector-content {
   padding: 15px;
-  height: 100%;
+  height: 348px;
   @include flex(flex-start, stretch, column);
   box-sizing: border-box;
 }

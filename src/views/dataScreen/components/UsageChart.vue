@@ -26,6 +26,20 @@ const chartRef = ref<HTMLElement>()
 let chartInstance: any = null
 let bgImageElement: any = null
 
+const getFontSize = (baseSize: number) => {
+  if (!chartRef.value) return baseSize
+  const width = chartRef.value.clientWidth
+  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
+  return Math.round(baseSize * scale)
+}
+
+const getDataLabelFontSize = () => {
+  if (!chartRef.value) return 11
+  const width = chartRef.value.clientWidth
+  const scale = Math.min(Math.max(width / 400, 0.8), 1.1)
+  return Math.round(11 * scale)
+}
+
 // 将 hex 颜色转换为带透明度的 rgba
 const hexToRgba = (hex: string, alpha: number) => {
   const num = parseInt(hex.replace('#', ''), 16)
@@ -125,7 +139,7 @@ const initChart = () => {
       layout: 'horizontal',
       itemStyle: {
         color: 'rgba(255, 255, 255, 0.8)',
-        fontSize: '14px'
+        fontSize: getFontSize(12) + 'px'
       },
       itemHoverStyle: {
         color: '#00d4ff'
@@ -145,7 +159,7 @@ const initChart = () => {
           format: '{point.percentage:.1f}%',
           color: 'rgba(255, 255, 255, 0.8)',
           style: {
-            fontSize: '11px',
+            fontSize: getDataLabelFontSize() + 'px',
             textOutline: 'none'
           }
         },
@@ -167,6 +181,26 @@ const initChart = () => {
 
 const updateChart = () => {
   if (!chartInstance || !props.data.length) return
+
+  const legendFontSize = getFontSize(12)
+  const dataLabelFontSize = getDataLabelFontSize()
+
+  chartInstance.update({
+    legend: {
+      itemStyle: {
+        fontSize: legendFontSize + 'px'
+      }
+    },
+    plotOptions: {
+      pie: {
+        dataLabels: {
+          style: {
+            fontSize: dataLabelFontSize + 'px'
+          }
+        }
+      }
+    }
+  })
 
   chartInstance.series[0].setData(
     props.data.map(item => ({

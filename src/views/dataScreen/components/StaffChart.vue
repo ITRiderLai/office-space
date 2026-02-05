@@ -115,7 +115,16 @@ const updateChart = () => {
           show: true,
           position: 'top',
           color: 'rgba(255, 255, 255, 0.8)',
-          fontSize: 10
+          fontSize: getFontSize(10),
+          formatter: (params: any) => {
+            const idx = params.dataIndex
+            const staffVal = staffCounts[idx]
+            const workVal = workCounts[idx]
+            if (staffVal >= workVal && staffVal > 0) {
+              return staffVal
+            }
+            return ''
+          }
         }
       },
       {
@@ -134,7 +143,16 @@ const updateChart = () => {
           show: true,
           position: 'top',
           color: 'rgba(255, 255, 255, 0.8)',
-          fontSize: 10
+          fontSize: getFontSize(10),
+          formatter: (params: any) => {
+            const idx = params.dataIndex
+            const staffVal = staffCounts[idx]
+            const workVal = workCounts[idx]
+            if (workVal > staffVal && workVal > 0) {
+              return workVal
+            }
+            return ''
+          }
         }
       }
     ]

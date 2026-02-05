@@ -39,7 +39,15 @@ const getLineHeight = (baseHeight: number) => {
 
 const getGridLeft = () => {
   if (!chartRef.value) return '12%'
-  return chartRef.value.clientWidth < 400 ? '20%' : '12%'
+  return chartRef.value.clientWidth < 400 ? '15%' : '12%'
+}
+
+const getGridBottom = () => {
+  if (!chartRef.value) return '20%'
+  const height = chartRef.value.clientHeight
+  if (height < 200) return '30%'
+  if (height < 280) return '25%'
+  return '20%'
 }
 
 const initChart = () => {
@@ -141,7 +149,7 @@ const updateChart = () => {
       left: getGridLeft(),
       right: '5%',
       top: '15%',
-      bottom: '20%'
+      bottom: getGridBottom()
     },
     xAxis: {
       type: 'category',

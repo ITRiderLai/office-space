@@ -28,11 +28,11 @@ const getContainerSize = () => {
 const mapZoom = computed(() => {
   const { width } = getContainerSize()
   if (width >= 1200) {
-    return 1.2
+    return 1.6
   } else if (width >= 800) {
-    return 1.0
+    return 1.4
   } else {
-    return 0.85
+    return 1.2
   }
 })
 
