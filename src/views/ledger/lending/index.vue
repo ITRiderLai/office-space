@@ -338,7 +338,7 @@ onMounted(() => {
 
 .action-bar {
   @include flex(flex-end);
-  padding-bottom: 16px;
+  padding-bottom: 8px;
   background: #fff;
   gap: 8px;
 }
@@ -364,7 +364,7 @@ onMounted(() => {
   flex: 1;
   padding: 0;
   background: #fff;
-  margin-top: 16px;
+  margin-top: 8px;
   overflow: hidden;
   min-height: 0;
 }

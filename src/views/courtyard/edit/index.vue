@@ -55,7 +55,7 @@ import FloorInfo from './components/FloorInfo.vue'
 import FloorRooms from './components/FloorRooms.vue'
 import { getCourtyardTree, CourtyardTreeNode } from '@/api/module/courtyard'
 
-const TREE_WIDTH_MIN = 300
+const TREE_WIDTH_MIN = 240
 const TREE_WIDTH_MAX = 560
 const TREE_WIDTH_DEFAULT = 300
 

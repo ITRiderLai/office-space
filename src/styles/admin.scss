@@ -27,12 +27,14 @@
 
 // 标签页样式
 .layui-body>.global-tab {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   box-shadow: none !important;
+  border-top: none !important;
 }
 
 .layui-body>.global-tab>.layui-tab {
   margin: 0;
+  border-top: none !important;
 }
 
 .layui-body>.global-tab>.layui-tab>.layui-tab-content {

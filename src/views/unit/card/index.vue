@@ -77,9 +77,9 @@ import OfficeArea from './components/OfficeArea.vue'
 import AreaCalculationModal from './components/AreaCalculationModal.vue'
 import { getOrgTree, getUnitDetail, OrgTreeNode, UnitDetail } from '@/api/module/unit'
 
-const TREE_WIDTH_MIN = 300
+const TREE_WIDTH_MIN = 240
 const TREE_WIDTH_MAX = 660
-const TREE_WIDTH_DEFAULT = 320
+const TREE_WIDTH_DEFAULT = 300
 
 // 目录树相关
 const treeData = ref<OrgTreeNode[]>([])

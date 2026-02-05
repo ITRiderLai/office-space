@@ -21,7 +21,7 @@ defineEmits(['save', 'close'])
 .action-bar {
   @include flex();
   gap: 8px;
-  padding-bottom: 15px;
+  padding-bottom: 8px;
   background: #fff;
 }
 
