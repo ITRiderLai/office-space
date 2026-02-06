@@ -52,7 +52,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import ScreenHeader from './components/ScreenHeader.vue'
+import ScreenHeader from '@/components/ScreenHeader.vue'
 import StatsCard from './components/StatsCard.vue'
 import StaffChart from './components/StaffChart.vue'
 import ManagementChart from './components/ManagementChart.vue'

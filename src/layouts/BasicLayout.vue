@@ -14,16 +14,24 @@
         isHomePage ? 'home-layout' : ''
       ]"
     >
+      <!-- 首页工作台头部 -->
+      <ScreenHeader
+        v-if="isHomePage"
+        :isFullscreen="isFullscreen"
+        @toggle-fullscreen="toggleFullscreen"
+        @go-back="handleGoBack"
+        @logout="handleLogout"
+      />
       <!-- 头部导航 - 占满整行 -->
       <lay-header
+        v-else
         style="display: flex"
         :class="[
-          appStore.theme !== 'dark' ? 'header-primary' : '',
-          isHomePage ? 'home-header' : ''
+          appStore.theme !== 'dark' ? 'header-primary' : ''
         ]"
       >
         <!-- 系统名称 -->
-        <div class="header-logo" :class="{ 'home-logo': isHomePage }">
+        <div class="header-logo">
           <span class="header-title">办公用房管理系统</span>
         </div>
         <!-- 菜单分组 -->
@@ -167,7 +175,7 @@
 </template>
 
 <script lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useAppStore } from '../store/app'
 import { useUserStore } from '../store/user'
 import GlobalSetup from './global/GlobalSetup.vue'
@@ -175,6 +183,8 @@ import GlobalContent from './global/GlobalContent.vue'
 import GlobalTab from './global/GlobalTab.vue'
 import GlobalMenu from './global/GlobalMenu.vue'
 import GlobalMainMenu from './global/GlobalMainMenu.vue'
+import ScreenHeader from '@/components/ScreenHeader.vue'
+import { px2rem } from '../utils/px2rem-converter'
 import { useRouter, useRoute } from 'vue-router'
 import { useMenu } from './composable/useMenu'
 import zh_CN from '../lang/zh_CN'
@@ -186,17 +196,22 @@ export default {
     GlobalContent,
     GlobalTab,
     GlobalMenu,
-    GlobalMainMenu
+    GlobalMainMenu,
+    ScreenHeader
   },
   setup() {
     const appStore = useAppStore()
     const userInfoStore = useUserStore()
     const fullscreenRef = ref()
     const visible = ref(false)
+    const isFullscreen = ref(false)
+    const sideWidthCollapsed = ref(px2rem(50))
+    const sideWidthExpanded = ref(px2rem(200))
+
     const sideWidth = computed(() =>
       appStore.collapse
-        ? '60px'
-        : '240px'
+        ? sideWidthCollapsed.value
+        : sideWidthExpanded.value
     )
     const router = useRouter()
     const route = useRoute()
@@ -215,12 +230,43 @@ export default {
       changeOpenKeys
     } = useMenu()
 
+    // 全屏切换
+    const toggleFullscreen = async () => {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen()
+      } else {
+        await document.exitFullscreen()
+      }
+    }
+
+    // 监听全屏状态变化
+    const handleFullscreenChange = () => {
+      isFullscreen.value = !!document.fullscreenElement
+    }
+
+    // 返回首页工作台
+    const handleGoBack = () => {
+      router.push('/workspace/workbench')
+    }
+
+    // 退出登录
+    const handleLogout = () => {
+      userInfoStore.token = ''
+      userInfoStore.userInfo = {}
+      router.push('/login')
+    }
+
     onMounted(() => {
       if (document.body.clientWidth < 768) {
         appStore.collapse = true
       }
       userInfoStore.loadMenus()
       userInfoStore.loadPermissions()
+      document.addEventListener('fullscreenchange', handleFullscreenChange)
+    })
+
+    onUnmounted(() => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
     })
 
     const changeVisible = () => {
@@ -241,7 +287,6 @@ export default {
     }
 
     const logOut = () => {
-      const userInfoStore = useUserStore()
       userInfoStore.token = ''
       userInfoStore.userInfo = {}
       router.push('/login')
@@ -266,6 +311,7 @@ export default {
       fullscreenRef,
       appStore,
       visible,
+      isFullscreen,
       menus,
       mainMenus,
       userInfoStore,
@@ -282,7 +328,10 @@ export default {
       locales,
       toUserInfo,
       toSystemSet,
-      isHomePage
+      isHomePage,
+      toggleFullscreen,
+      handleGoBack,
+      handleLogout
     }
   }
 }
@@ -365,11 +414,6 @@ export default {
   background-color: var(--global-primary-color) !important;
 }
 
-/* 首页头部透明背景 */
-.home-layout .header-primary {
-  background: rgba(0, 0, 0, 0.1) !important;
-}
-
 /* 日间主色背景 - 系统名称白色 */
 .header-primary .header-title {
   color: #fff;
@@ -393,34 +437,8 @@ export default {
 }
 
 /* ============================================
-   首页特有样式 - 系统标题居中
+   首页侧边栏透明
    ============================================ */
-.home-header {
-  justify-content: center;
-}
-
-.home-header .home-logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.home-header .home-logo .header-title {
-  font-family: serif;
-  font-weight: 700;
-  font-size: 26px;
-  color: #FFFFFF;
-  line-height: 37px;
-  letter-spacing: 5px;
-  text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.3);
-}
-
-.home-header .layui-layout-right {
-  position: absolute;
-  right: 0;
-}
-
-/* 首页侧边栏透明 */
 .home-layout .layui-side {
   background: linear-gradient(90deg, rgba(30,223,247,0.3) 0%, rgba(30,223,247,0.02) 85.62%, rgba(30,223,247,0) 100%) !important;
 }

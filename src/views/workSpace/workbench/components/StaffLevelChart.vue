@@ -9,6 +9,7 @@
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import PanelTitle from './PanelTitle.vue'
+import { useChartResize } from '@/composables/useChartResize'
 
 interface StaffLevelData {
   level: string
@@ -23,19 +24,7 @@ const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
 let resizeObserver: ResizeObserver | null = null
 
-const getFontSize = (baseSize: number) => {
-  if (!chartRef.value) return baseSize
-  const width = chartRef.value.clientWidth
-  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
-  return Math.round(baseSize * scale)
-}
-
-const getLineHeight = (baseHeight: number) => {
-  if (!chartRef.value) return baseHeight
-  const width = chartRef.value.clientWidth
-  const scale = Math.min(Math.max(width / 400, 0.9), 1.1)
-  return Math.round(baseHeight * scale)
-}
+const { getFontSize, getLineHeight } = useChartResize(chartRef)
 
 const getGridLeft = () => {
   if (!chartRef.value) return '12%'

@@ -9,6 +9,7 @@
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import PanelTitle from './PanelTitle.vue'
+import { useChartResize } from '@/composables/useChartResize'
 
 interface StaffData {
   category: string
@@ -24,12 +25,7 @@ const chartRef = ref<HTMLElement>()
 let chartInstance: echarts.ECharts | null = null
 let resizeObserver: ResizeObserver | null = null
 
-const getFontSize = (baseSize: number) => {
-  if (!chartRef.value) return baseSize
-  const width = chartRef.value.clientWidth
-  const scale = Math.min(Math.max(width / 400, 0.8), 1.2)
-  return Math.round(baseSize * scale)
-}
+const { getFontSize } = useChartResize(chartRef)
 
 const initChart = () => {
   if (!chartRef.value) return
