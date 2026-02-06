@@ -20,7 +20,7 @@
         <lay-icon :type="isFullscreen ? 'layui-icon-screen-restore' : 'layui-icon-screen-full'" />
         <span>{{ isFullscreen ? '退出全屏' : '全屏' }}</span>
       </div>
-      <div class="header-btn" @click="$emit('go-back')">
+      <div v-if="showBack !== false" class="header-btn" @click="$emit('go-back')">
         <lay-icon type="layui-icon-return" />
         <span>返回</span>
       </div>
@@ -42,9 +42,10 @@ const username = computed(() => {
   return userStore.userInfo?.username || userStore.userInfo?.userName || 'admin'
 })
 
-defineProps<{
-  isFullscreen: boolean
-}>()
+defineProps({
+  isFullscreen: { type: Boolean, required: true },
+  showBack: { type: Boolean, default: true }
+})
 
 defineEmits<{
   'toggle-fullscreen': []

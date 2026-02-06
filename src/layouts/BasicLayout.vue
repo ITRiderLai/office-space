@@ -18,8 +18,8 @@
       <ScreenHeader
         v-if="isHomePage"
         :isFullscreen="isFullscreen"
+        :showBack="false"
         @toggle-fullscreen="toggleFullscreen"
-        @go-back="handleGoBack"
         @logout="handleLogout"
       />
       <!-- 头部导航 - 占满整行 -->
